@@ -1,0 +1,28 @@
+{
+  "pluginName": "ChromeHistory",
+  "description": "Chrome浏览器历史记录搜索，支持多关键词检索，以空格区分",
+  "main": "index.html",
+  "version": "1.0.0",
+  "homepage": "https://lailin.xyz",
+  "preload": "preload.js",
+  "logo": "chrome.png",
+  "development": {
+    "main": "http://localhost:8080/index.html"
+  },
+  "pluginSetting": {
+    "single": true,
+    "height": 1
+  },
+  "features": [
+    {
+      "code": "mohuishou-chrome-histroy-search",
+      "cmds": ["ch"],
+      "explain": "chrome 历史记录搜索"
+    },
+    {
+      "code": "mohuishou-chrome-histroy-search-setting",
+      "cmds": ["ch-setting"],
+      "explain": "chrome 历史记录搜索设置"
+    }
+  ]
+}

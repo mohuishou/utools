@@ -4,4 +4,4 @@
 
 chrome 历史记录搜索插件
 
-![](./chrome-history/Gif.gif)
+![](https://github.com/mohuishou/utools/raw/master/chrome-history/GIF.gif)

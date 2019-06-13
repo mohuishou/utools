@@ -9,4 +9,4 @@ utools plugin, 搜索chrome浏览器历史记录，支持多个关键字匹配
 
 ## 预览
 
-![](./GIF.gif)
+![](https://github.com/mohuishou/utools/raw/master/chrome-history/GIF.gif)

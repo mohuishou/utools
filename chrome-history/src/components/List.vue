@@ -96,7 +96,7 @@ export default {
     },
     async keyEnter() {
       console.log(this.items[this.active].url);
-      await window.openBrowser(this.items[this.active].url);
+      await Utils.openBrowser(this.items[this.active].url);
     },
     scrollFunc(evt) {
       evt = evt || window.event;

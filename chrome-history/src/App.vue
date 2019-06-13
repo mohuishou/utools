@@ -29,7 +29,7 @@
     <a
       class="footer"
       v-if="setting.github"
-      href="https://github.com/mohuishou/ImageOCR"
+      href="https://github.com/mohuishou/utools"
     >开源代码❤️点击收藏</a>
   </div>
 </template>
@@ -73,21 +73,23 @@ export default {
       console.log(setting);
 
       if (!setting || !setting.data) {
+        this.setting = {
+          path: join(
+            utools.getPath("home"),
+            "/AppData/Local/Google/Chrome/User Data/Default"
+          ),
+          github: true
+        };
         setting = utools.db.put({
           _id: "setting",
-          data: {
-            path: join(
-              utools.getPath("home"),
-              "/AppData/Local/Google/Chrome/User Data/Default"
-            ),
-            github: true
-          },
+          data: this.setting,
           _rev: setting && setting._rev
         });
+        this.rev = setting.rev;
+      } else {
+        this.rev = setting.rev;
+        this.setting = setting.data;
       }
-
-      this.rev = setting._rev || setting.rev;
-      this.setting = setting.data;
     }
   },
 
@@ -103,7 +105,7 @@ export default {
         utools.setSubInput(async ({ text }) => {
           console.log("query: ", text);
           try {
-            this.items = await window.search(text, this.setting.path);
+            this.items = await Utils.search(text, this.setting.path);
           } catch (err) {
             alert(err);
           }

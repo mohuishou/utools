@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:go": "cd src/go && go build -o ../public/chrome-history",
+    "build": "cp README.md public/ && yarn build:go && vue-cli-service build",
+    "build:go": "cd src/go && go build -o ../../public/chrome-history.exe",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -34,6 +34,10 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
+    "globals": {
+      "utools": true,
+      "Utils": true
+    },
     "rules": {
       "no-console": "off"
     },

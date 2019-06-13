@@ -37,12 +37,9 @@ func Search(tx *gorm.DB, queries []string) (urls []URL, err error) {
 		if q != "" {
 			tx = tx.Where("title like ? or url like ?", q, q)
 		}
-
 	}
-	err = tx.Select("DISTINCT title, url").
-		Where("title <> null").
-		Where("title <> ''").
-		Where("url <> null").
+
+	err = tx.Where("title <> ''").
 		Where("url <> ''").
 		Order("last_visit_time desc").
 		Limit(50).

@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "cp README.md public/ && yarn build:go && vue-cli-service build",
-    "build:go": "cd src/go && go build -o ../../public/chrome-history.exe",
+    "build": "yarn build:vue && yarn build:readme",
+    "build:readme": "cp README.md dist/",
+    "build:vue": "vue-cli-service build",
+    "build:go": "cd src/go && gox -output='../../bin/chrome_history_{{.OS}}_{{.Arch}}' -osarch='windows/amd64' -osarch='darwin/amd64' -osarch='windows/386'",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@types/utools": "https://github.com/kyuuseiryuu/utools-types",
     "core-js": "^2.6.5",
     "element-ui": "^2.4.5",
-    "open": "^6.3.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

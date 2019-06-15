@@ -1,4 +1,5 @@
 {
+  "name": "ChromeHistory",
   "pluginName": "ChromeHistory",
   "description": "Chrome浏览器历史记录搜索，支持多关键词检索，以空格区分",
   "main": "index.html",
@@ -6,11 +7,13 @@
   "version": "1.0.0",
   "homepage": "https://lailin.xyz",
   "preload": "preload.js",
-  "platform": ["win32"],
   "logo": "chrome.png",
   "pluginSetting": {
     "single": true,
     "height": 1
+  },
+  "development": {
+    "main": "http://localhost:8080/index.html"
   },
   "features": [
     {

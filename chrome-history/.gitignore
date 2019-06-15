@@ -22,3 +22,6 @@ yarn-error.log*
 
 chrome-history*
 *.db
+*.upx
+
+bin/*

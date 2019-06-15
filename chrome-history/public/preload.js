@@ -1,14 +1,14 @@
 const { exec } = require("child_process");
-const path = require("path");
-const open = require("../node_modules/open");
+const { shell } = require('electron')
+const os = require('os')
 
 window.Utils = {
-  openBrowser: open,
-  search: (query, p) => {
-    let cmd = path.join(__dirname, "chrome-history");
+  platform: os.platform(),
+  openBrowser: shell.openExternal,
+  search: (cmd, query, p) => {
     let tmp = utools.getPath("temp");
-    return new Promise((resolve, reject) => {
-      exec(`${cmd} -p="${p}" -q="${query}" -t="${tmp}"`, (err, stdout, stderr) => {
+    return new Promise(async (resolve, reject) => {
+      exec(`"${cmd}" -p="${p}" -q="${query}" -t="${tmp}"`, (err, stdout) => {
         if (err) {
           console.log(err);
           reject(err);

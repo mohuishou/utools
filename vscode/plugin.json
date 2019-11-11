@@ -1,0 +1,17 @@
+{
+  "pluginName": "vscode",
+  "description": "快速搜索vscode历史项目并且在vscode中打开",
+  "version": "0.0.1",
+  "preload": "preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "vsc",
+      "explain": "vscode历史项目搜索",
+      "cmds": ["vsc"],
+      "icon": "icon.png"
+    }
+  ]
+}

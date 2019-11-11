@@ -9,4 +9,4 @@ utools 插件，搜索 vscode 历史项目，点击回车打开
 
 ### 使用示例
 
-![](./example.gif)
+![](https://raw.githubusercontent.com/mohuishou/utools/master/vscode/example.gif)

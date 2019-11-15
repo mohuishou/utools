@@ -4,11 +4,11 @@ const fs = require("fs");
 /**
  * @description 获取当前 vscode storage.json 路径
  */
-function getStoragePath() {
+function getStoragePath () {
   return path.join(utools.getPath("appData"), "Code", "storage.json");
 }
 
-function search(keyword) {
+function search (keyword) {
   let data = fs.readFileSync(getStoragePath());
   data = JSON.parse(data);
   let files = data.openedPathsList.workspaces3;
@@ -34,7 +34,7 @@ function search(keyword) {
     file = decodeURIComponent(file);
     return {
       title: path.basename(file),
-      description: file.replace(/^.*?\:\/+/, ""),
+      description: file.replace(/^.*?\:\/+/, "").replace(" ", `\\ `),
       icon: "icon.png"
     };
   });

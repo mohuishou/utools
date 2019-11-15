@@ -19,17 +19,18 @@ window.exports = {
       // 用户选择列表中某个条目时被调用
       select: (action, itemData) => {
         window.utools.hideMainWindow();
-        require("child_process").exec(
-          `code ${itemData.description}`,
-          (err, stdout, stderr) => {
-            if (err) {
-              alert(err);
-            }
-            if (stderr) {
-              alert(stderr);
-            }
+        let cmd = `bash -l -c 'code ${itemData.description}'`;
+        if (process.platform == "win32") {
+          cmd = `code ${itemData.description}`;
+        }
+        require("child_process").exec(cmd, (err, stdout, stderr) => {
+          if (err) {
+            alert(err);
           }
-        );
+          if (stderr) {
+            alert(stderr);
+          }
+        });
         window.utools.outPlugin();
       },
       // 子输入框为空时的占位符，默认为字符串"搜索"

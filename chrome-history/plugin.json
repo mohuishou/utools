@@ -1,0 +1,23 @@
+{
+  "pluginName": "Chrome历史记录搜索",
+  "description": "快速搜索Chrome历史记录，支持多个关键词筛选",
+  "version": "1.3.0",
+  "preload": "preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "ch",
+      "explain": "Chrome历史记录搜索",
+      "cmds": ["ch", "Chrome历史记录"],
+      "icon": "chrome.png"
+    },
+    {
+      "code": "chs",
+      "explain": "设置Chrome历史记录DB文件",
+      "cmds": ["chs"],
+      "icon": "chrome.png"
+    }
+  ]
+}

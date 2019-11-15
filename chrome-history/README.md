@@ -2,18 +2,11 @@
 
 utools plugin, 搜索 chrome 浏览器历史记录，支持多个关键字匹配
 
-## 下载地址
+## 使用方法
 
-[点击下载](https://github.com/mohuishou/utools/releases/tag/1.0.0)
-
-**如果觉得不错点个 star ❤️**
-
-## key
-
-`ch`: 搜索
-`ch-setting`: 搜索设置
-`enter`: 访问链接
-↑↓ : 切换条目
+- **如果觉得不错点个 star ❤️, [https://github.com/mohuishou/utools](https://github.com/mohuishou/utools)**
+- 输入 `ch` 触发搜索，支持多个关键词筛选，使用空格间隔
+- 输出 `chs` chrome 目录
 
 ## 预览
 

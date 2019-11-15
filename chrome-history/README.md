@@ -17,4 +17,4 @@ utools plugin, 搜索 chrome 浏览器历史记录，支持多个关键字匹配
 
 ## 预览
 
-![](https://github.com/mohuishou/utools/raw/master/chrome-history/GIF.gif)
+![chrome](https://raw.githubusercontent.com/mohuishou/utools/master/imgs/chrome.gif)

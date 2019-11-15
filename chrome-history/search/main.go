@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"path/filepath"
 	"strings"
 )
 
@@ -25,15 +24,15 @@ func main() {
 	flag.StringVar(&tmp, "t", "", "tmp dir")
 	flag.Parse()
 
-	tmpFile := filepath.Join(tmp, "mohuishou-chrome-histoty.db")
-	_, err := CopyFile(tmpFile, dbPath)
+	// 初始化数据库
+	hisDB, err := InitDB(tmp, dbPath, "History")
 	checkErr(err)
 
-	err = InitDB(tmpFile)
+	favDB, err := (InitDB(tmp, dbPath, "Favicons"))
 	checkErr(err)
 
 	querys := strings.Split(query, " ")
-	urls, err := Search(db, querys)
+	urls, err := Search(hisDB, favDB, querys)
 
 	b, err := json.Marshal(&urls)
 	checkErr(err)

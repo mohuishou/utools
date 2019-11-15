@@ -1,3 +1,4 @@
+const { search } = require("./chrome")
 window.exports = {
   ch: {
     // 注意：键对应的是plugin.json中的features.code
@@ -17,18 +18,7 @@ window.exports = {
       // 用户选择列表中某个条目时被调用
       select: (action, itemData) => {
         window.utools.hideMainWindow();
-        let cmd = `bash -l -c 'code ${itemData.description}'`;
-        if (process.platform == "win32") {
-          cmd = `code ${itemData.description}`;
-        }
-        require("child_process").exec(cmd, (err, stdout, stderr) => {
-          if (err) {
-            alert(err);
-          }
-          if (stderr) {
-            alert(stderr);
-          }
-        });
+        require('electron').shell.openExternal(itemData.url)
         window.utools.outPlugin();
       },
       // 子输入框为空时的占位符，默认为字符串"搜索"

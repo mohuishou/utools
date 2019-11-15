@@ -5,18 +5,13 @@
   "preload": "preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
-  "logo": "icon.png",
+  "logo": "chrome.png",
+  "unpack": "search*",
   "features": [
     {
       "code": "ch",
       "explain": "Chrome历史记录搜索",
       "cmds": ["ch", "Chrome历史记录"],
-      "icon": "chrome.png"
-    },
-    {
-      "code": "chs",
-      "explain": "设置Chrome历史记录DB文件",
-      "cmds": ["chs"],
       "icon": "chrome.png"
     }
   ]

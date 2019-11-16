@@ -19,9 +19,9 @@ window.exports = {
       // 用户选择列表中某个条目时被调用
       select: (action, itemData) => {
         window.utools.hideMainWindow();
-        let cmd = `bash -l -c 'code ${itemData.description}'`;
+        let cmd = `bash -l -c 'code "${itemData.description}"'`;
         if (process.platform == "win32") {
-          cmd = `code ${itemData.description}`;
+          cmd = `code "${itemData.description}"`;
         }
         require("child_process").exec(cmd, (err, stdout, stderr) => {
           if (err) {

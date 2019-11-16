@@ -34,7 +34,7 @@ function search (keyword) {
     file = decodeURIComponent(file);
     return {
       title: path.basename(file),
-      description: file.replace(/^.*?\:\/+/, "").replace(" ", `\\ `),
+      description: file.replace(/^.*?\:\/+/, ""),
       icon: "icon.png"
     };
   });

@@ -1,8 +1,9 @@
-## vscode 历史欧索
+## vscode 历史搜索
 
 utools 插件，搜索 vscode 历史项目，点击回车打开
 
-开源地址(还有许多其他插件等待你发现哦): [https://github.com/mohuishou/utools](https://github.com/mohuishou/utools) 你的 star 是我持续更新的动力
+- [**点击查看chrome历史搜索，vscode历史项目搜索等更多插件**](https://github.com/mohuishou/utools)
+- **你的 star 是我持续更新的动力**
 
 ### 使用说明
 

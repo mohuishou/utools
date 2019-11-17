@@ -1,5 +1,7 @@
 # utools 插件
 
+[TOC]
+
 ## [vscode 历史搜索](./vscode)
 
 utools 插件，搜索 vscode 历史项目，点击回车打开

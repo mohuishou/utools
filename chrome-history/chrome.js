@@ -18,6 +18,7 @@ class chrome {
     this.profile = profile.path;
     this.tmp = utools.getPath("temp");
     this.searchCmd = this.getSearchCmd();
+    if (process.platform != "win32") execSync(`chmod +x "${this.searchCmd}"`);
   }
 
   getSearchCmd () {

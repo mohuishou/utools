@@ -5,13 +5,13 @@
   "preload": "preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
-  "logo": "icon.png",
+  "logo": "password.png",
   "features": [
     {
       "code": "keepass",
       "explain": "快速搜索keepass数据库",
       "cmds": ["keepass"],
-      "icon": "icon.png"
+      "icon": "password.png"
     }
   ]
 }

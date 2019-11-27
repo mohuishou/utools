@@ -21,8 +21,9 @@ jobs:
         run: npm install -g asar
       - name: 打包 vscode
         run: |
-          asar p ./vscode vscode-${{ github.ref }}.asar
-          gzip vscode-${{ github.ref }}.asar > vscode-${{ github.ref }}.upx
+          tag=${${{ github.ref }}#*refs/tags/}
+          asar p ./vscode vscode-$tag.asar
+          gzip vscode-tag}.asar > vscode-$tag.upx
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -40,6 +41,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vscode-${{ github.ref }}.upx
-          asset_name: vscode-${{ github.ref }}.upx
-          asset_content_type: application/zip
+          asset_path: ./vscode-$tag.upx
+          asset_name: vscode-$tag.upx

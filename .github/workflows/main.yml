@@ -27,8 +27,7 @@ jobs:
           echo "::set-env name=vscode::vscode-$tag.upx"
           asar p ./vscode vscode-$tag.asar
           gzip vscode-$tag.asar > vscode-$tag.upx
-      - run: echo $vscode
-      - run: export
+      - run: ls
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -46,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.vscode }}
+          asset_path: ./${{ env.vscode }}
           asset_name: ${{ env.vscode }}
           asset_content_type: application/gzip

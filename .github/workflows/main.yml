@@ -47,4 +47,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./${{ env.vscode }}
           asset_name: ${{ env.vscode }}
-          asset_content_type: application/gzip
+          asset_content_type: application/octet-stream

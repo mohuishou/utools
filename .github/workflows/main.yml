@@ -24,10 +24,11 @@ jobs:
         run: |
           ref="${{ github.ref }}"
           tag=${ref#*refs/tags/}
-          echo $tag
+          export vscode=$tag
           asar p ./vscode vscode-$tag.asar
           gzip vscode-$tag.asar > vscode-$tag.upx
-      - run: echo "${{ toJson(steps) }}"
+      - run: echo $vscode
+      - run: export
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -47,4 +48,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./vscode-$tag.upx
           asset_name: vscode-$tag.upx
-          asset_content_type:
+          asset_content_type: application/gzip

@@ -1,4 +1,6 @@
-on: release
+on:
+  release:
+    type: create
 name: Upload Release Asset
 
 jobs:
@@ -18,7 +20,7 @@ jobs:
         run: |
           ref="${{ github.ref }}"
           tag=${ref#*refs/tags/}
-          echo "::set-env name=vscode::vscode-$tag.upx"
+          echo "::set-env name=vscode::vscode.upx"
       - name: 打包 vscode
         id: build_vscode
         run: |

@@ -22,8 +22,9 @@ jobs:
       - name: 打包 vscode
         run: |
           tag=${${{ github.ref }}#*refs/tags/}
+          echo $tag
           asar p ./vscode vscode-$tag.asar
-          gzip vscode-tag}.asar > vscode-$tag.upx
+          gzip vscode-$tag.asar > vscode-$tag.upx
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0

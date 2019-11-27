@@ -1,17 +1,45 @@
-name: CI
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
-on: [push]
+name: Upload Release Asset
 
 jobs:
   build:
-
+    name: Upload Release Asset
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: 安装 node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: 安装依赖
+        run: npm install -g asar
+      - name: 打包 vscode
+        run: |
+          asar p ./vscode vscode-${{ github.ref }}.asar
+          gzip vscode-${{ github.ref }}.asar > vscode-${{ github.ref }}.upx
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vscode-${{ github.ref }}.upx
+          asset_name: vscode-${{ github.ref }}.upx
+          asset_content_type: application/zip

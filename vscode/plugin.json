@@ -1,7 +1,8 @@
 {
+  "name": "830ef6d0",
   "pluginName": "vscode",
   "description": "快速搜索vscode历史项目并且在vscode中打开",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "preload": "preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",

@@ -1,7 +1,4 @@
-on:
-  release:
-    types: [created]
-
+on: release
 name: Upload Release Asset
 
 jobs:
@@ -28,13 +25,9 @@ jobs:
           asar p ./vscode $vscode.asar
           gzip $vscode.asar > $vscode
       - run: ls
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1.0.1
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: ${{ env.vscode }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./${{ env.vscode }}
-          asset_name: ${{ env.vscode }}
-          asset_content_type: application/octet-stream

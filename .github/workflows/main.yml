@@ -20,11 +20,14 @@ jobs:
       - name: 安装依赖
         run: npm install -g asar
       - name: 打包 vscode
+        id: build_vscode
         run: |
-          tag=${${{ github.ref }}#*refs/tags/}
+          ref="${{ github.ref }}"
+          tag=${ref#*refs/tags/}
           echo $tag
           asar p ./vscode vscode-$tag.asar
           gzip vscode-$tag.asar > vscode-$tag.upx
+          {{ steps.build_vscode.outputs.filename = vscode-$tag.asar }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -44,3 +47,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./vscode-$tag.upx
           asset_name: vscode-$tag.upx
+          asset_content_type:

@@ -24,7 +24,7 @@ jobs:
         run: |
           ref="${{ github.ref }}"
           tag=${ref#*refs/tags/}
-          export vscode=$tag
+          echo "::set-env name=filename_vscode::vscode-$tag.upx"
           asar p ./vscode vscode-$tag.asar
           gzip vscode-$tag.asar > vscode-$tag.upx
       - run: echo $vscode
@@ -46,6 +46,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vscode-$tag.upx
-          asset_name: vscode-$tag.upx
+          asset_path: $filename_vscode
+          asset_name: $filename_vscode
           asset_content_type: application/gzip

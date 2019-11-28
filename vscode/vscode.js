@@ -19,18 +19,27 @@ function search (keyword) {
     for (let i = 0; i < keywords.length; i++) {
       const word = keywords[i];
       files = files.filter((file, index, arr) => {
+        // 适配工作区
+        if (typeof (file) === 'object' && "configURIPath" in file) {
+          file = file.configURIPath
+        }
         return (
+          // 确保不报错
+          typeof (file) === "string" &&
           // 去重
-          arr.indexOf(file) == index &&
+          (file.includes("workspace") || arr.indexOf(file) == index) &&
           // 排除远程开发
-          file.indexOf("vscode-remote") != 0 &&
+          !file.includes("vscode-remote") &&
           // 搜索
-          file.toLowerCase().indexOf(word.trim().toLowerCase()) > -1
+          file.toLowerCase().includes(word.trim().toLowerCase())
         );
       });
     }
 
     return files.map(file => {
+      if (typeof (file) === 'object' && "configURIPath" in file) {
+        file = file.configURIPath
+      }
       // 格式化返回数据
       file = decodeURIComponent(file);
       return {

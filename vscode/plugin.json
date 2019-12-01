@@ -1,18 +1,1 @@
-{
-  "name": "830ef6d0",
-  "pluginName": "vscode",
-  "description": "快速搜索vscode历史项目并且在vscode中打开",
-  "version": "1.3.5",
-  "preload": "preload.js",
-  "author": "莫回首",
-  "homepage": "https://github.com/mohuishou/utools",
-  "logo": "icon.png",
-  "features": [
-    {
-      "code": "vsc",
-      "explain": "vscode历史项目搜索",
-      "cmds": ["vsc"],
-      "icon": "icon.png"
-    }
-  ]
-}
+{"name":"830ef6d0","pluginName":"vscode","description":"快速搜索vscode历史项目并且在vscode中打开","version":"v1.3.5","preload":"preload.js","author":"莫回首","homepage":"https://github.com/mohuishou/utools","logo":"icon.png","features":[{"code":"vsc","explain":"vscode历史项目搜索","cmds":["vsc"],"icon":"icon.png"}]}

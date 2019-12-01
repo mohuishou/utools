@@ -1,0 +1,77 @@
+on: release
+name: build chrome history
+jobs:
+  chrome-history-mac:
+    name: build chrome-history-mac
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.13.4"
+      - run: cd chrome-history/search && go build -trimpath -o  ../search_darwin .
+      - run: ls -alh chrome-history
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: search_darwin
+          path: ./chrome-history/search_darwin
+  chrome-history-win:
+    name: build chrome-history-win
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.13.4"
+      - run: |
+          cd chrome-history/search
+          go build -trimpath -o  ../search_windows.exe .
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: search_windows.exe
+          path: ./chrome-history/search_windows.exe
+  chrome-history-linux:
+    name: build chrome-history-linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.13.4"
+      - run: cd chrome-history/search && go build -trimpath -o  ../search_linux .
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: search_linux
+          path: ./chrome-history/search_linux
+  pack:
+    name: pack
+    runs-on: ubuntu-latest
+    needs: [chrome-history-mac, chrome-history-win, chrome-history-linux]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: actions/download-artifact@v1
+        with:
+          name: search_windows.exe
+      - uses: actions/download-artifact@v1
+        with:
+          name: search_linux
+      - uses: actions/download-artifact@v1
+        with:
+          name: search_darwin
+      - run: ls -alh && mv search_*/* chrome-history/
+      - name: pack chrome-history
+        uses: mohuishou/utools/.github/action@master
+        id: chromeHistory
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          dir: ./chrome-history
+          upload_url: ${{ github.event.release.upload_url }}

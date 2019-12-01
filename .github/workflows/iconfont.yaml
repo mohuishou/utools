@@ -1,0 +1,23 @@
+on:
+  release:
+    types: [created]
+name: build iconfont
+jobs:
+  pack:
+    name: pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: cd iconfont && npm install
+      - name: pack
+        uses: mohuishou/utools/.github/action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          dir: ./iconfont
+          upload_url: ${{ github.event.release.upload_url }}

@@ -6,6 +6,7 @@ class iconfont {
   private static instance: iconfont;
 
   private constructor(r: AxiosInstance) {
+    console.log("init iconfont", new Date());
     this.request = r;
   }
 

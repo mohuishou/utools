@@ -2,6 +2,10 @@
 
 [TOC]
 
+## [iconfont 搜索](./iconfont)
+
+![iconfont](./imgs/iconfont.gif)
+
 ## [vscode 历史搜索](./vscode)
 
 utools 插件，搜索 vscode 历史项目，点击回车打开

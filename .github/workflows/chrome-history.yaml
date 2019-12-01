@@ -1,4 +1,6 @@
-on: release
+on:
+  release:
+    types: [created]
 name: build chrome history
 jobs:
   chrome-history-mac:

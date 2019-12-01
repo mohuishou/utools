@@ -1,6 +1,10 @@
 # utools 插件
 
-[TOC]
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+![badge](https://github.com/mohuishou/utools/workflows/release/badge.svg)
+![badge](https://github.com/mohuishou/utools/workflows/build%20chrome%20history/badge.svg)
+![badge](https://github.com/mohuishou/utools/workflows/build%20iconfont/badge.svg)
+![badge](https://github.com/mohuishou/utools/workflows/build%20vscode/badge.svg)
 
 ## [iconfont 搜索](./iconfont)
 

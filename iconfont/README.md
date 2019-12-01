@@ -11,3 +11,5 @@
 - option/alt + enter 浏览器打开 iconfont
 
 ## 预览
+
+![iconfont](https://img01.sogoucdn.com/app/a/100520146/c15da82300e16dc195d21051142ba77e)

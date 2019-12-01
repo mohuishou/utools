@@ -2,7 +2,7 @@
 
 utools 插件，搜索 vscode 历史项目，点击回车打开
 
-- [**点击查看chrome历史搜索，vscode历史项目搜索等更多插件**](https://github.com/mohuishou/utools)
+- [**点击查看 chrome 历史搜索，vscode 历史项目搜索等更多插件**](https://github.com/mohuishou/utools)
 - **你的 star 是我持续更新的动力**
 
 ### 使用说明
@@ -18,4 +18,4 @@ utools 插件，搜索 vscode 历史项目，点击回车打开
 
 ### 使用示例
 
-![vsc](https://raw.githubusercontent.com/mohuishou/utools/master/imgs/vsc.gif)
+![vsc.gif](https://img02.sogoucdn.com/app/a/100520146/439c45794d604620e19e159a4af65d6b)

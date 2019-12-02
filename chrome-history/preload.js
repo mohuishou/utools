@@ -1,9 +1,9 @@
-const Chrome = require("./chrome")
-let chrome
+const Chrome = require("./chrome");
+let chrome;
 utools.onPluginReady(() => {
-  chrome = new Chrome()
+  chrome = new Chrome();
   if (process.platform != "win32") execSync(`chmod +x "${chrome.searchCmd}"`);
-})
+});
 
 window.exports = {
   ch: {
@@ -50,15 +50,15 @@ window.exports = {
   }
 };
 
-function selected (action, item) {
+function selected(action, item) {
   window.utools.hideMainWindow();
-  if ('url' in item) require('electron').shell.openExternal(itemData.url)
-  if ('copy' in item) {
-    require('electron').clipboard.writeText(item.copy)
-    utools.showNotification(item.description, item.copy)
+  if ("url" in item) require("electron").shell.openExternal(item.url);
+  if ("copy" in item) {
+    require("electron").clipboard.writeText(item.copy);
+    utools.showNotification(item.description, item.copy);
   }
-  if ('path' in item) {
-    chrome.updateProfile(item.path)
+  if ("path" in item) {
+    chrome.updateProfile(item.path);
   }
   window.utools.outPlugin();
 }

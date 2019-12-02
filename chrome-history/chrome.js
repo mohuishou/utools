@@ -21,18 +21,17 @@ class chrome {
     if (process.platform != "win32") execSync(`chmod +x "${this.searchCmd}"`);
   }
 
-  getSearchCmd () {
+  getSearchCmd() {
     let filename = "search_" + process.platform;
     if (process.platform == "win32") filename = "search_windows";
     let cmd = join(__dirname, filename);
-    if (__dirname.indexOf("asar") > -1)
-      cmd = join(__dirname + ".unpacked", filename);
-    return cmd
+    if (__dirname.indexOf("asar") > -1) cmd = join(__dirname + ".unpacked", filename);
+    return cmd;
   }
 
-  search (keywords) {
+  search(keywords) {
     try {
-      let cmd = `"${this.searchCmd}" -p="${this.profile}" -q=${keywords} -t=${this.tmp}`;
+      let cmd = `"${this.searchCmd}" -p="${this.profile}" -q="${keywords}" -t="${this.tmp}"`;
       let stdout = execSync(cmd);
       let items = JSON.parse(stdout);
       let set = new Set();
@@ -52,7 +51,7 @@ class chrome {
     }
   }
 
-  setting (path) {
+  setting(path) {
     path = path.trim();
     if (!path || !fsExistsSync(join(path, "History")))
       return [
@@ -72,14 +71,14 @@ class chrome {
     ];
   }
 
-  updateProfile (path) {
+  updateProfile(path) {
     let profile = utools.db.get(utools.getLocalId());
     if (!profile) profile = { _id: utools.getLocalId() };
     profile.path = path;
     console.log(utools.db.put(profile));
   }
 
-  getDefaultProfile () {
+  getDefaultProfile() {
     let data = utools.getPath("appData");
     switch (process.platform) {
       case "darwin":
@@ -93,7 +92,7 @@ class chrome {
 }
 
 //检测文件或者文件夹存在 nodeJS
-function fsExistsSync (path) {
+function fsExistsSync(path) {
   try {
     fs.accessSync(path, fs.F_OK);
   } catch (e) {

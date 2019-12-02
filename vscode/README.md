@@ -18,4 +18,4 @@ utools 插件，搜索 vscode 历史项目，点击回车打开
 
 ### 使用示例
 
-![vsc.gif](https://img02.sogoucdn.com/app/a/100520146/439c45794d604620e19e159a4af65d6b)
+![vsc.gif](https://i.loli.net/2019/12/03/35QbFJU67LoH1kP.gif)

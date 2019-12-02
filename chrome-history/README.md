@@ -10,4 +10,4 @@ utools plugin, 搜索 chrome 浏览器历史记录，支持多个关键字匹配
 
 ## 预览
 
-![chrome.gif](https://img04.sogoucdn.com/app/a/100520146/5f7db190cd38aa00ce1e5c44618d9b94)
+![chrome.gif](https://i.loli.net/2019/12/03/5OSlsYBd24iCZVK.gif)

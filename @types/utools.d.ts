@@ -41,7 +41,11 @@ declare global {
   var utools: UTools;
 }
 
-export interface FeatureArgsAction {}
+export interface FeatureArgsAction {
+  payload: string;
+  code: string;
+  type: string;
+}
 
 export interface CallbackSetList {
   (items: CallbackListItem[]): void;

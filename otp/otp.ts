@@ -8,6 +8,7 @@ import {
 } from "../@types/utools";
 import { totp, Encoding, TotpOptions } from "speakeasy";
 import { clipboard } from "electron";
+import jsQR from "jsqr";
 
 class Item implements DBItem<OTP> {
   _id: string;
@@ -138,8 +139,19 @@ export class AddQrcode implements FeatureArgs {
   otp: Item;
   enter: FeatureArgsEnter = (action, cb) => {
     console.log("enter", action);
-
-    // action.payload;
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+    let img = document.createElement("img");
+    document.body.appendChild(img);
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0); // Or at whatever offset you like
+      let data = ctx.getImageData(0, 0, img.width, img.height);
+      document.body.appendChild(canvas);
+      console.log(canvas, img, data);
+      let res = jsQR(data.data, data.width, data.height);
+      console.log(res);
+    };
+    img.src = action.payload;
   };
 
   search: FeatureArgsSearch = (action, word, cb) => {

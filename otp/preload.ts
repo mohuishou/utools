@@ -11,7 +11,7 @@ try {
       args: new Add()
     },
     otpQrcode: {
-      mode: "none",
+      mode: "list",
       args: new AddQrcode()
     }
   };

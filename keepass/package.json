@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@types/kdbxweb": "^1.2.0",
-    "@types/node": "^12.12.11",
-    "kdbxweb": "^1.5.6"
-  }
-}

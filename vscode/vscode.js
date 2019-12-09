@@ -13,7 +13,6 @@ function search (keyword) {
     let data = fs.readFileSync(getStoragePath());
     data = JSON.parse(data);
     let files = data.openedPathsList.workspaces3;
-
     // 搜索
     let keywords = keyword.split(/\s+/g);
     for (let i = 0; i < keywords.length; i++) {

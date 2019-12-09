@@ -1,0 +1,34 @@
+{
+  "pluginName": "otp",
+  "description": "otp两步认证，例如Google Auth等",
+  "version": "v1.3.5",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "otp",
+      "explain": "otp",
+      "cmds": ["otp"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "otpAdd",
+      "explain": "新增otp",
+      "cmds": ["otp-add"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "otpQrcode",
+      "explain": "通过二维码添加OTP",
+      "cmds": [
+        {
+          "type": "img",
+          "label": "通过二维码添加OTP"
+        }
+      ],
+      "icon": "icon.png"
+    }
+  ]
+}

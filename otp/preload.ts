@@ -1,5 +1,8 @@
 import { Template } from "../@types/utools";
-import { Search, Add, AddQrcode } from "./otp";
+import { Search } from "./search";
+import { Add } from "./add";
+import { AddQrcode } from "./qrcode";
+
 try {
   let plugins: Template = {
     otp: {

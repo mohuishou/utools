@@ -1,4 +1,3 @@
-
 window.exports = {
   keepass: {
     // 注意：键对应的是plugin.json中的features.code

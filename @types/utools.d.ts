@@ -85,6 +85,6 @@ export interface Feature {
 /**
  * @description 模板插件, feature-code: Featucre
  */
-export interface Template {
+export interface TemplatePlugin {
   [index: string]: Feature;
 }

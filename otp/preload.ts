@@ -1,10 +1,10 @@
-import { Template } from "../@types/utools";
+import { TemplatePlugin } from "../@types/utools";
 import { Search } from "./search";
 import { Add } from "./add";
 import { AddQrcode } from "./qrcode";
 
 try {
-  let plugins: Template = {
+  let plugins: TemplatePlugin = {
     otp: {
       mode: "list",
       args: new Search()

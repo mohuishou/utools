@@ -47,6 +47,6 @@ export class Add implements TplFeatureArgs {
       ]);
     }
 
-    utools.redirect("otp", this.item.data.name);
+    utools.redirect("otp", "");
   };
 }

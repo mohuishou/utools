@@ -12,6 +12,7 @@ export class AddQrcode implements TplFeatureArgs {
   enter: TplFeatureArgsEnter = async (action, cb) => {
     try {
       let r = await this.qrRead(action.payload);
+      if (!r) throw new Error("二维码识别失败");
       let uri = new URL(decodeURIComponent(r.data));
       this.otp = new OTPItem(
         new OTP(uri.searchParams.get("issuer"), uri.searchParams.get("secret"))
@@ -25,6 +26,8 @@ export class AddQrcode implements TplFeatureArgs {
         }
       ]);
     } catch (error) {
+      console.log(action);
+      console.log(error);
       cb([
         {
           title: "错误: " + error.message,

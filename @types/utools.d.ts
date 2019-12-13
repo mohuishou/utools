@@ -108,19 +108,19 @@ export interface UTools {
   /**
    * @description 返回本插件所有动态增加的功能。
    */
-  getFeatures(): Feature[]
+  getFeatures(): Feature[];
 
   /**
    * @description 为本插件动态新增某个功能。
    * @param feature feature
    */
-  setFeature(feature: Feature): Boolean
+  setFeature(feature: Feature): Boolean;
 
   /**
    * @description 动态删除本插件的某个功能。
    * @param code feature.code
    */
-  removeFeature(code: string): Boolean
+  removeFeature(code: string): Boolean;
 
   // 其他
   /**
@@ -134,12 +134,12 @@ export interface UTools {
   /**
    * @description 该方法只适用于在macOS下执行，用于判断uTools是否拥有辅助权限，如果没有可以调用API方法requestPrivilege请求
    */
-  isHadPrivilege(): Boolean
+  isHadPrivilege(): Boolean;
 
   /**
    * @description  该方法只适用于在macOS下执行，该方法调用后会弹出窗口向用户申请辅助权限。
    */
-  requestPrivilege(): Boolean
+  requestPrivilege(): Boolean;
 
   /**
    * @description 你可以通过名称请求以下的路径
@@ -159,41 +159,52 @@ export interface UTools {
    * logs 应用程序的日志文件夹
    * @param name
    */
-  getPath(name: PathName): string
+  getPath(name: PathName): string;
   /**
    * @description 复制文件或文件夹到剪贴板
    * @param paths
    */
-  copyFile(paths: string|Array<string>):Boolean
+  copyFile(paths: string | Array<string>): Boolean;
   /**
    * @description 复制图片到剪贴板
    * @param buffer
    */
-  copyImage(buffer: ArrayBuffer):Boolean
+  copyImage(buffer: ArrayBuffer): Boolean;
   /**
    * @description 屏幕取色
    * @param cb
    */
-  screenColorPick(cb:Function):void
+  screenColorPick(cb: Function): void;
   /**
    * @description 获取当前浏览器URL (呼出uTools前的活动窗口)
    */
-  getCurrentBrowserUrl():string
+  getCurrentBrowserUrl(): string;
   /**
    * @description 获取本地机器唯一ID，可以根据此值区分同一用户的不同设备
    */
-  getLocalId():string
+  getLocalId(): string;
 }
 
-export type PathName = 'home' | 'appData' | 'userData' | 'temp' | 'exe' |
-                       'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'logs'
+export type PathName =
+  | "home"
+  | "appData"
+  | "userData"
+  | "temp"
+  | "exe"
+  | "desktop"
+  | "documents"
+  | "downloads"
+  | "music"
+  | "pictures"
+  | "videos"
+  | "logs";
 
 export interface Feature {
-  code: string
-  explain: string
-  icon?: string
-  platform?: Array<string>
-  cmds: Array<any>
+  code: string;
+  explain: string;
+  icon?: string;
+  platform?: Array<string>;
+  cmds: Array<any>;
 }
 
 export interface onSubInputChangeArg {
@@ -275,7 +286,7 @@ export interface CallbackListItem {
  * @param items 设置条目
  */
 export interface CallbackSetList {
-  (items: CallbackListItem[]): void;
+  (items: CallbackListItem | CallbackListItem[]): void;
 }
 
 /**
@@ -304,11 +315,7 @@ export interface TplFeatureArgsSearch {
  * @description 用户选择列表中某个条目时被调用
  */
 export interface TplFeatureArgsSelect {
-  (
-    action: Action,
-    item: CallbackListItem,
-    cb: CallbackSetList
-  ): void;
+  (action: Action, item: CallbackListItem, cb: CallbackSetList): void;
 }
 
 /**

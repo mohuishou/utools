@@ -1,10 +1,10 @@
 import {
-  FeatureArgsEnter,
-  FeatureArgsSearch,
-  FeatureArgs,
+  TplFeatureArgsEnter,
+  TplFeatureArgsSearch,
+  TplFeatureArgs,
   DBItem,
   CallbackListItem,
-  FeatureArgsSelect
+  TplFeatureArgsSelect
 } from "../@types/utools";
 import { clipboard } from "electron";
 import { OTPItem, OTP } from "./otp";
@@ -36,13 +36,13 @@ let items: CallbackListItem[] = [
   }
 ];
 
-export class Search implements FeatureArgs {
+export class Search implements TplFeatureArgs {
   placeholder = "请输入关键词搜索";
-  enter: FeatureArgsEnter = (action, cb) => {
+  enter: TplFeatureArgsEnter = (action, cb) => {
     this.search(action, "", cb);
   };
 
-  search: FeatureArgsSearch = (action, word, cb) => {
+  search: TplFeatureArgsSearch = (action, word, cb) => {
     let items = OTPItem.search(word);
     cb(
       items.map(
@@ -59,7 +59,7 @@ export class Search implements FeatureArgs {
     );
   };
 
-  select: FeatureArgsSelect = (action, item, cb) => {
+  select: TplFeatureArgsSelect = (action, item, cb) => {
     utools.hideMainWindow();
     item.operate(item);
     utools.outPlugin();

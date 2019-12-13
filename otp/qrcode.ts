@@ -1,11 +1,15 @@
-import { FeatureArgsEnter, FeatureArgs, FeatureArgsSelect } from "../@types/utools";
+import {
+  TplFeatureArgsEnter,
+  TplFeatureArgs,
+  TplFeatureArgsSelect
+} from "../@types/utools";
 import jsQR, { QRCode } from "jsqr";
 import { OTPItem, OTP } from "./otp";
 
-export class AddQrcode implements FeatureArgs {
+export class AddQrcode implements TplFeatureArgs {
   placeholder = "请输入";
   otp: OTPItem;
-  enter: FeatureArgsEnter = async (action, cb) => {
+  enter: TplFeatureArgsEnter = async (action, cb) => {
     try {
       let r = await this.qrRead(action.payload);
       let uri = new URL(decodeURIComponent(r.data));
@@ -30,7 +34,7 @@ export class AddQrcode implements FeatureArgs {
     }
   };
 
-  select: FeatureArgsSelect = (action, item, cb) => {
+  select: TplFeatureArgsSelect = (action, item, cb) => {
     utools.redirect("otp", item.name);
   };
 
@@ -46,8 +50,17 @@ export class AddQrcode implements FeatureArgs {
         context.drawImage(image, 0, 0);
 
         try {
-          const imageData = context.getImageData(0, 0, image.width, image.height);
-          const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
+          const imageData = context.getImageData(
+            0,
+            0,
+            image.width,
+            image.height
+          );
+          const qrCode = jsQR(
+            imageData.data,
+            imageData.width,
+            imageData.height
+          );
           resolve(qrCode);
         } catch (e) {
           reject(e);

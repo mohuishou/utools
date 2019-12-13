@@ -34,6 +34,11 @@
   resolved "https://registry.npm.taobao.org/@types/kdbxweb/download/@types/kdbxweb-1.2.0.tgz#7240b9d1eb98fa9b3c26a6f92d60eeba1f342813"
   integrity sha1-ckC50euY+ps8Jqb5LWDuuh80KBM=
 
+"@types/mousetrap@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.npm.taobao.org/@types/mousetrap/download/@types/mousetrap-1.6.3.tgz#3159a01a2b21c9155a3d8f85588885d725dc987d"
+  integrity sha1-MVmgGishyRVaPY+FWIiF1yXcmH0=
+
 "@types/node@*", "@types/node@^12.0.12", "@types/node@^12.12.11":
   version "12.12.14"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.14.tgz?cache=0&sync_timestamp=1574724301806&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.14.tgz#1c1d6e3c75dba466e0326948d56e8bd72a1903d2"

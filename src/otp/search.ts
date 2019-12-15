@@ -5,7 +5,7 @@ import {
   DBItem,
   CallbackListItem,
   TplFeatureArgsSelect
-} from "../@types/utools";
+} from "../../@types/utools";
 import { OTPItem, OTP } from "./otp";
 import Item from "./item";
 import { EnterKey, resetEnterKey } from "./key";

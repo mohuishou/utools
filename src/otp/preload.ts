@@ -1,4 +1,4 @@
-import { TemplatePlugin } from "../@types/utools";
+import { TemplatePlugin } from "../../@types/utools";
 import { Search } from "./search";
 import { Add } from "./add";
 import { AddQrcode } from "./qrcode";

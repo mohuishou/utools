@@ -1,4 +1,4 @@
-import { CallbackListItem } from "../@types/utools";
+import { CallbackListItem } from "../../@types/utools";
 import { clipboard } from "electron";
 
 let Operate = {

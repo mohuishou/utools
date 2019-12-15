@@ -2,8 +2,9 @@ import {
   TplFeatureArgsEnter,
   TplFeatureArgsSearch,
   TplFeatureArgs,
-  TplFeatureArgsSelect
-} from "../@types/utools";
+  TplFeatureArgsSelect,
+  TemplatePlugin
+} from "../../@types/utools";
 import { OTPItem, OTP } from "./otp";
 
 export class Add implements TplFeatureArgs {
@@ -49,4 +50,8 @@ export class Add implements TplFeatureArgs {
 
     utools.redirect("otp", "");
   };
+}
+
+export class add implements TemplatePlugin {
+  code = "add";
 }

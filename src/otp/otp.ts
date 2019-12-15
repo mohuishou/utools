@@ -1,4 +1,4 @@
-import { DBItem } from "../@types/utools";
+import { DBItem } from "../../@types/utools";
 import { totp, Encoding, TotpOptions } from "speakeasy";
 import "reflect-metadata";
 import { plainToClass } from "class-transformer";
@@ -32,7 +32,6 @@ export class OTPItem implements DBItem<OTP> {
     return utools.db.allDocs<OTP>(name).map(
       (item: DBItem<OTP>): OTPItem => {
         item.data = plainToClass(OTP, item.data);
-        console.log(item);
         return item as OTPItem;
       }
     );

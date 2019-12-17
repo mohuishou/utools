@@ -1,26 +1,49 @@
 const path = require("path");
+const copyPlugin = require("copy-webpack-plugin");
+
+function resolve(file) {
+  return path.resolve(__dirname, file);
+}
 
 module.exports = {
   target: "node",
-  watch: true,
   devtool: "inline-source-map",
-  entry: "./otp/preload.ts",
+  entry: {
+    otp: resolve("src/otp/preload.ts")
+  },
+  output: {
+    filename: "[name]/preload.js",
+    path: resolve("dist")
+  },
+  plugins: [
+    new copyPlugin([
+      {
+        from: "src/**/icon.png",
+        to: "[folder]/[name].[ext]"
+      },
+      {
+        from: "src/**/README.md",
+        to: "[folder]/[name].[ext]"
+      },
+      {
+        from: "src/**/plugin.json",
+        to: "[folder]/[name].[ext]"
+      }
+    ])
+  ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader"
-        // exclude: /node_modules/
+        use: "ts-loader",
+        exclude: /node_modules/
       }
     ]
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
   },
-  output: {
-    filename: "preload.js",
-    path: path.resolve(__dirname, "otp/dist")
-  },
+
   externals: [
     (function() {
       var IGNORES = ["electron"];

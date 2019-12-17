@@ -1,15 +1,9 @@
-import {
-  TplFeatureArgsEnter,
-  TplFeatureArgsSearch,
-  TplFeatureArgs,
-  DBItem,
-  CallbackListItem,
-  TplFeatureArgsSelect
-} from "../../@types/utools";
+import { DBItem } from "../../@types/utools";
 import { OTPItem, OTP } from "./otp";
 import Item from "./item";
 import { EnterKey, resetEnterKey } from "./key";
 import { clipboard } from "electron";
+import { Plugin, ListItem } from "../lib/plugin";
 
 let operates = {
   command: (item: Item<DBItem<OTP>>) => {
@@ -25,31 +19,25 @@ let operates = {
     utools.showNotification("复制成功", "otp");
   }
 };
-export class Search implements TplFeatureArgs {
-  placeholder = "请输入关键词搜索";
 
-  enter: TplFeatureArgsEnter = (action, cb) => {
-    this.search(action, "", cb);
-  };
+export class Search implements Plugin {
+  code = "otp";
 
-  search: TplFeatureArgsSearch = (action, word, cb) => {
+  async search(word: string): Promise<ListItem[]> {
     let items = OTPItem.search(word);
-    cb(
-      items.map(
-        (item: DBItem<OTP>): CallbackListItem => {
-          let otp = <OTP>item.data;
-          let res = new Item<DBItem<OTP>>(item._id, item);
-          res.description = otp.token;
-          return res;
-        }
-      )
+    return items.map(
+      (item: DBItem<OTP>): ListItem => {
+        let otp = <OTP>item.data;
+        let res = new Item<DBItem<OTP>>(item._id, item);
+        res.description = otp.token;
+        return res;
+      }
     );
-  };
+  }
 
-  select: TplFeatureArgsSelect = (action, item: Item<DBItem<OTP>>, cb) => {
-    utools.hideMainWindow();
+  select(item: ListItem): Promise<ListItem[]> {
     operates[EnterKey as keyof typeof operates](item);
     resetEnterKey();
-    utools.outPlugin();
-  };
+    if (EnterKey == "command") return this.search("");
+  }
 }

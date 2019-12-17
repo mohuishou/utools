@@ -3,7 +3,8 @@ import {
   CallbackListItem,
   TplFeature,
   TplFeatureArgs,
-  CallbackSetList
+  CallbackSetList,
+  TemplatePlugin
 } from "../../@types/utools";
 
 export class ListItem<T = any> implements CallbackListItem {
@@ -26,24 +27,25 @@ export class ListItem<T = any> implements CallbackListItem {
   }
 }
 
-export interface TemplatePlugin {
+export interface Plugin {
   code: string;
   mode?: "doc" | "list" | "none";
   placeholder?: string;
-  enter?<T>(action: Action): Promise<ListItem<T>[]>;
-  search?<T>(action: Action, word: string): Promise<ListItem<T>[]>;
-  select<T>(action: Action, item: ListItem<T>): Promise<ListItem<T>[]>;
+  enter?<T = any>(action?: Action): Promise<ListItem<T>[]> | void;
+  search?<T = any>(word: string, action?: Action): Promise<ListItem<T>[]> | void;
+  select<T = any, U = any>(item: ListItem<T>, action?: Action): Promise<ListItem<U>[]> | void;
 }
 
 class Feature implements TplFeature {
-  plugin: TemplatePlugin;
+  plugin: Plugin;
   mode: "list" | "doc" | "none" = "list";
   args: TplFeatureArgs = {
     placeholder: "请输入关键词",
     enter: async (action, cb) => {
       try {
         if (this.plugin.enter) {
-          cb(await this.plugin.enter(action));
+          let items = await this.plugin.enter(action);
+          if (items) cb(items);
           return;
         }
 
@@ -59,14 +61,16 @@ class Feature implements TplFeature {
         if (!this.plugin.search) {
           return;
         }
-        cb(await this.plugin.search(action, word));
+        let items = await this.plugin.search(word, action);
+        if (items) cb(items);
       } catch (error) {
         this.catchError(error, cb);
       }
     },
     select: async (action, item: ListItem, cb) => {
       try {
-        cb(await this.plugin.select(action, item));
+        let items = await this.plugin.select(item, action);
+        if (items) return cb(items);
       } catch (error) {
         this.catchError(error, cb);
       }
@@ -81,15 +85,15 @@ class Feature implements TplFeature {
     });
   }
 
-  constructor(plugin: TemplatePlugin) {
+  constructor(plugin: Plugin) {
     this.plugin = plugin;
     if (plugin.mode) this.mode = plugin.mode;
     if (plugin.placeholder) this.args.placeholder = plugin.placeholder;
   }
 }
 
-export function InitPlugins(plugins: TemplatePlugin[]) {
-  let features = {};
+export function InitPlugins(plugins: Plugin[]) {
+  let features: TemplatePlugin = {};
   plugins.forEach(plugin => {
     features[plugin.code] = new Feature(plugin);
   });

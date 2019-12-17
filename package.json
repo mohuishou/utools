@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "utools plugin",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js"
+    "build": "npx webpack --config webpack.config.js",
+    "dev": "npx webpack -w --config webpack.config.js"
   },
   "dependencies": {
     "@types/kdbxweb": "^1.2.0",
@@ -20,6 +21,7 @@
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
     "electron": "^7.1.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.3",

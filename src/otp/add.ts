@@ -1,57 +1,31 @@
-import {
-  TplFeatureArgsEnter,
-  TplFeatureArgsSearch,
-  TplFeatureArgs,
-  TplFeatureArgsSelect,
-  TemplatePlugin
-} from "../../@types/utools";
 import { OTPItem, OTP } from "./otp";
+import { Plugin, ListItem } from "../lib/plugin";
 
-export class Add implements TplFeatureArgs {
-  placeholder = "请输入";
+export class Add implements Plugin {
+  code = "otpAdd";
   item: OTPItem;
-  enter: TplFeatureArgsEnter = (action, cb) => {
+  async enter(): Promise<ListItem[]> {
     this.item = new OTPItem(new OTP("", ""));
-    this.search(action, "", cb);
-  };
-
-  search: TplFeatureArgsSearch = (action, word, cb) => {
+    return this.search();
+  }
+  async search(word: string = ""): Promise<ListItem[]> {
     let msg = "请输入名称: " + word;
     if (this.item.data.name) {
       msg = "请输入secret: " + word;
     }
-
-    cb([
-      {
-        title: msg,
-        description: msg,
-        word: word
-      }
-    ]);
-  };
-
-  select: TplFeatureArgsSelect = (action, item, cb) => {
+    return [new ListItem(msg, word)];
+  }
+  select(item: ListItem): Promise<ListItem[]> {
     if (!this.item.data.name) {
-      this.item.data.name = item.word;
+      this.item.data.name = item.data;
       utools.setSubInputValue("");
-      return this.search(action, "", cb);
+      return this.search();
     }
-
-    this.item.data.secret = item.word;
+    this.item.data.secret = item.data;
     let res = this.item.save();
-    if (!res.ok) {
-      cb([
-        {
-          title: "保存失败",
-          description: res.error
-        }
-      ]);
-    }
+    console.log(res);
 
+    if (!res.ok) throw new Error("保存失败");
     utools.redirect("otp", "");
-  };
-}
-
-export class add implements TemplatePlugin {
-  code = "add";
+  }
 }

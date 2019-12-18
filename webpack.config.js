@@ -9,7 +9,8 @@ module.exports = {
   target: "node",
   devtool: "inline-source-map",
   entry: {
-    otp: resolve("src/otp/preload.ts")
+    otp: resolve("src/otp/preload.ts"),
+    vscode: resolve("src/vscode/preload.ts")
   },
   output: {
     filename: "[name]/preload.js",

@@ -7,23 +7,30 @@ import {
   TemplatePlugin
 } from "../../@types/utools";
 
+type ListItemParams = {
+  title: string;
+  desc?: string;
+  icon?: string;
+  data?: any;
+};
+
 export class ListItem<T = any> implements CallbackListItem {
   title: string;
   description: string;
   data: T;
   icon?: string;
 
-  constructor(title: string, data?: any) {
+  constructor(title: string, data?: any, desc?: string, icon: string = "icon.png") {
     this.title = title;
-    this.description = title;
-    this.icon = "icon.png";
+    this.description = desc;
+    this.icon = icon;
     this.data = data;
+
+    if (!desc) this.description = title;
   }
 
   static error(msg: string) {
-    let item = new ListItem("错误");
-    item.description = msg;
-    return item;
+    return new ListItem("错误", "", msg);
   }
 }
 
@@ -93,9 +100,13 @@ class Feature implements TplFeature {
 }
 
 export function InitPlugins(plugins: Plugin[]) {
-  let features: TemplatePlugin = {};
-  plugins.forEach(plugin => {
-    features[plugin.code] = new Feature(plugin);
-  });
-  window.exports = features;
+  try {
+    let features: TemplatePlugin = {};
+    plugins.forEach(plugin => {
+      features[plugin.code] = new Feature(plugin);
+    });
+    window.exports = features;
+  } catch (error) {
+    alert(error.message + error.stack);
+  }
 }

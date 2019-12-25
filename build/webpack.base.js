@@ -1,7 +1,9 @@
-module.exports = {
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+let conf = {
   mode: "development",
   target: "electron-main",
-  devtool: "source-map",
+
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -39,3 +41,10 @@ module.exports = {
     })()
   ]
 };
+
+if (process.env.ENV != "prod") {
+  conf.devtool = "source-map";
+  conf.plugins.push(new CleanWebpackPlugin());
+}
+
+module.exports = conf;

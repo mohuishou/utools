@@ -4,8 +4,7 @@
   "description": "utools plugin",
   "scripts": {
     "build": "npx webpack --config build/webpack.config.js",
-    "build:prod": "cross-env ENV=prod npx webpack --config build/webpack.config.js",
-    "dev": "npx webpack -w --config build/webpack.config.js"
+    "dev": "cross-env ENV=dev npx webpack -w --config build/webpack.config.js"
   },
   "dependencies": {
     "axios": "^0.19.0",

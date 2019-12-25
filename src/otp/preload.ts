@@ -1,7 +1,7 @@
-import { Add } from "./add";
-import { Qrcode } from "./qrcode";
 import { InitPlugins } from "../lib/plugin";
 import { Search } from "./search";
+import { Add } from "./add";
+import { Qrcode } from "./qrcode";
 import "./key";
 
 try {

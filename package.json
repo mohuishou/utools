@@ -3,14 +3,10 @@
   "version": "1.0.0",
   "description": "utools plugin",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
-    "dev": "npx webpack -w --config webpack.config.js"
+    "build": "npx webpack --config build/webpack.config.js",
+    "dev": "npx webpack -w --config build/webpack.config.js"
   },
   "dependencies": {
-    "@types/kdbxweb": "^1.2.0",
-    "@types/mousetrap": "^1.6.3",
-    "@types/node": "^12.12.11",
-    "@types/speakeasy": "^2.0.5",
     "axios": "^0.19.0",
     "class-transformer": "^0.2.3",
     "es6-shim": "^0.35.5",
@@ -21,6 +17,10 @@
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
+    "@types/kdbxweb": "^1.2.0",
+    "@types/mousetrap": "^1.6.3",
+    "@types/node": "^12.12.11",
+    "@types/speakeasy": "^2.0.5",
     "copy-webpack-plugin": "^5.1.1",
     "electron": "^7.1.2",
     "ts-loader": "^6.2.1",

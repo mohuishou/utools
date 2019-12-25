@@ -1,8 +1,9 @@
-import { DBItem } from "../../@types/utools";
-import { totp, Encoding, TotpOptions } from "speakeasy";
 import "reflect-metadata";
-import { plainToClass } from "class-transformer";
 import "es6-shim";
+import { plainToClass } from "class-transformer";
+import { totp, Encoding, TotpOptions } from "speakeasy";
+import { DBItem } from "../../@types/utools";
+
 export class OTPItem implements DBItem<OTP> {
   _id: string;
   _rev: string;

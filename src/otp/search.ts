@@ -16,7 +16,7 @@ let operates = {
 
   enter: (item: Item<DBItem<OTP>>) => {
     clipboard.writeText(item.data.data.token);
-    utools.showNotification("复制成功", "otp");
+    utools.showNotification(item.data.data.token + "复制成功", "otp");
   }
 };
 
@@ -29,7 +29,7 @@ export class Search implements Plugin {
       (item: DBItem<OTP>): ListItem => {
         let otp = <OTP>item.data;
         let res = new Item<DBItem<OTP>>(item._id, item);
-        res.description = otp.token;
+        res.description = otp.token + " (enter: 复制, command/ctrl + enter: 删除)";
         return res;
       }
     );
@@ -38,6 +38,10 @@ export class Search implements Plugin {
   select(item: ListItem): Promise<ListItem[]> {
     operates[EnterKey as keyof typeof operates](item);
     resetEnterKey();
-    if (EnterKey == "command") return this.search("");
+    if (EnterKey === "command") return this.search("");
+    if (EnterKey === "enter") {
+      utools.hideMainWindow();
+      utools.outPlugin();
+    }
   }
 }

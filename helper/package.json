@@ -4,6 +4,9 @@
   "main": "dist/plugin.js",
   "types": "dist/plugin.d.ts",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "@types/node": "^13.1.0"
   }

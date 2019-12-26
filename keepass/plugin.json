@@ -1,17 +1,17 @@
 {
   "pluginName": "keepass搜索",
   "description": "快速搜索keepass数据库中",
-  "version": "1.4.0",
-  "preload": "preload.js",
+  "version": "1.0.0",
+  "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
-  "logo": "password.png",
+  "logo": "icon.png",
   "features": [
     {
       "code": "keepass",
       "explain": "快速搜索keepass数据库",
       "cmds": ["keepass"],
-      "icon": "password.png"
+      "icon": "icon.png"
     }
   ]
 }

@@ -6,19 +6,22 @@ import {
   CallbackSetList,
   TemplatePlugin
 } from "../@types/utools";
+import { shell, clipboard } from "electron";
+import { execSync } from "child_process";
 
-type ListItemParams = {
-  title: string;
-  desc?: string;
-  icon?: string;
-  data?: any;
-};
+type operateType = "url" | "items" | "shell" | "copy";
+let operates = new Map<operateType, any>();
+operates.set("url", shell.openExternal);
+operates.set("shell", execSync);
+operates.set("copy", clipboard.writeText);
 
 export class ListItem<T = any> implements CallbackListItem {
   title: string;
   description: string;
   data: T;
   icon?: string;
+  operate: operateType = "url";
+  [index: string]: any;
 
   constructor(title: string, data?: any, desc?: string, icon: string = "icon.png") {
     this.title = title;
@@ -40,7 +43,7 @@ export interface Plugin {
   placeholder?: string;
   enter?<T = any>(action?: Action): Promise<ListItem<T>[]> | void;
   search?<T = any>(word: string, action?: Action): Promise<ListItem<T>[]> | void;
-  select<T = any, U = any>(item: ListItem<T>, action?: Action): Promise<ListItem<U>[]> | void;
+  select?<T = any, U = any>(item: ListItem<T>, action?: Action): Promise<ListItem<U>[]> | void;
 }
 
 class Feature implements TplFeature {
@@ -76,6 +79,12 @@ class Feature implements TplFeature {
     },
     select: async (action, item: ListItem, cb) => {
       try {
+        if (!this.plugin.select) {
+          if (item.operate == "items") {
+            return cb(item.data);
+          }
+          return operates.get(item.operate)[item.data];
+        }
         let items = await this.plugin.select(item, action);
         if (items) return cb(items);
       } catch (error) {

@@ -1,7 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const electron_1 = require("electron");
+const child_process_1 = require("child_process");
+let operates = new Map();
+operates.set("url", electron_1.shell.openExternal);
+operates.set("shell", child_process_1.execSync);
+operates.set("copy", electron_1.clipboard.writeText);
 class ListItem {
     constructor(title, data, desc, icon = "icon.png") {
+        this.operate = "url";
         this.title = title;
         this.description = desc;
         this.icon = icon;
@@ -50,6 +57,12 @@ class Feature {
             },
             select: async (action, item, cb) => {
                 try {
+                    if (!this.plugin.select) {
+                        if (item.operate == "items") {
+                            return cb(item.data);
+                        }
+                        return operates.get(item.operate)[item.data];
+                    }
                     let items = await this.plugin.select(item, action);
                     if (items)
                         return cb(items);

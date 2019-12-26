@@ -60,11 +60,7 @@ export interface UTools {
    * @param placeholder 自输入框提示
    * @param isFocus 是否聚焦
    */
-  setSubInput(
-    onChange: onSubInputChange,
-    placeholder?: string,
-    isFocus?: Boolean
-  ): Boolean;
+  setSubInput(onChange: onSubInputChange, placeholder?: string, isFocus?: Boolean): Boolean;
 
   /**
    * @description 移出先前设置的子输入框，在插件切换到其他页面时可以重新设置子输入框为其所用。

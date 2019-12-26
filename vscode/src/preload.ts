@@ -1,4 +1,4 @@
-import { InitPlugins } from "../lib/plugin";
+import { InitPlugins } from "utools-helper";
 import { VSCode } from "./vscode";
 
 InitPlugins([new VSCode()]);

@@ -1,0 +1,11 @@
+{
+  "name": "utools-vscode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "@types/node": "^13.1.0",
+    "utools-helper": "../helper"
+  }
+}

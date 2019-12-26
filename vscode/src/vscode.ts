@@ -1,4 +1,4 @@
-import { Plugin, ListItem } from "../lib/plugin";
+import { Plugin, ListItem } from "utools-helper";
 import { join, basename } from "path";
 import { readFileSync } from "fs";
 

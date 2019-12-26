@@ -14,7 +14,6 @@
     "utools-helper": "../helper"
   },
   "devDependencies": {
-    "electron": "^6.0.0",
     "@types/mousetrap": "^1.6.3",
     "@types/speakeasy": "^2.0.5",
     "cross-env": "^6.0.3"

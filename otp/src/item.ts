@@ -1,4 +1,4 @@
-import { CallbackListItem } from "../../@types/utools";
+import { CallbackListItem } from "utools-helper/@types/utools";
 
 export default class Item<T> implements CallbackListItem {
   title: string;

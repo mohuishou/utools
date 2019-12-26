@@ -1,5 +1,5 @@
-import { CallbackListItem } from "../../@types/utools";
 import { clipboard } from "electron";
+import { CallbackListItem } from "utools-helper/@types/utools";
 
 let Operate = {
   delete(item: CallbackListItem) {

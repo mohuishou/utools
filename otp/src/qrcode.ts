@@ -1,7 +1,7 @@
-import { Action } from "../../@types/utools";
+import { Action } from "utools-helper/@types/utools";
 import jsQR, { QRCode } from "jsqr";
 import { OTPItem, OTP } from "./otp";
-import { Plugin, ListItem } from "../lib/plugin";
+import { Plugin, ListItem } from "utools-helper";
 
 export class Qrcode implements Plugin {
   code = "otpQrcode";

@@ -1,9 +1,9 @@
-import { DBItem } from "../../@types/utools";
+import { DBItem } from "utools-helper/@types/utools";
 import { OTPItem, OTP } from "./otp";
 import Item from "./item";
 import { EnterKey, resetEnterKey } from "./key";
 import { clipboard } from "electron";
-import { Plugin, ListItem } from "../lib/plugin";
+import { Plugin, ListItem } from "utools-helper";
 
 let operates = {
   command: (item: Item<DBItem<OTP>>) => {

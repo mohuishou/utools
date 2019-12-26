@@ -5,7 +5,7 @@ import {
   TplFeatureArgs,
   CallbackSetList,
   TemplatePlugin
-} from "../../@types/utools";
+} from "../@types/utools";
 
 type ListItemParams = {
   title: string;

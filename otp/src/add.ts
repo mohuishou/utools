@@ -1,5 +1,5 @@
 import { OTPItem, OTP } from "./otp";
-import { Plugin, ListItem } from "../lib/plugin";
+import { Plugin, ListItem } from "utools-helper";
 
 export class Add implements Plugin {
   code = "otpAdd";

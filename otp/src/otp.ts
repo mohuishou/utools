@@ -2,7 +2,7 @@ import "reflect-metadata";
 import "es6-shim";
 import { plainToClass } from "class-transformer";
 import { totp, Encoding, TotpOptions } from "speakeasy";
-import { DBItem } from "../../@types/utools";
+import { DBItem } from "utools-helper/@types/utools";
 
 export class OTPItem implements DBItem<OTP> {
   _id: string;

@@ -2,7 +2,7 @@
   "pluginName": "otp",
   "description": "otp两步认证，例如Google Auth等，支持二维码识别",
   "version": "v1.5.1",
-  "preload": "runtime.js",
+  "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
   "logo": "icon.png",

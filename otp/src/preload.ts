@@ -1,4 +1,4 @@
-import { InitPlugins } from "../lib/plugin";
+import { InitPlugins } from "utools-helper";
 import { Search } from "./search";
 import { Add } from "./add";
 import { Qrcode } from "./qrcode";

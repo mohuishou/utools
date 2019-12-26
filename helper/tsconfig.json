@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "ES2018",
+    "experimentalDecorators": true,
+    "declaration": true
+  }
+}

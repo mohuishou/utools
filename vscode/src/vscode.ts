@@ -25,7 +25,7 @@ export class VSCode implements Plugin {
         return decodeURIComponent(file);
       })
       .filter(file => !file.includes("vscode-remote"))
-      .map(file => file.replace(/^.*?\:\/+/, ""));
+      .map(file => file.replace(/^.*?\:\/\//, ""));
   }
 
   async enter() {
@@ -42,7 +42,9 @@ export class VSCode implements Plugin {
       });
     });
 
-    return files.map((file: any): ListItem => new ListItem(basename(file), file, file));
+    return files.map(
+      (file: any): ListItem => new ListItem(basename(file), file, file)
+    );
   }
 
   select(item: ListItem) {

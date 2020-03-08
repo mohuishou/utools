@@ -18,3 +18,9 @@
   保存 TOTP 两步验证，如 Google Auth 等
 - [sourcetree 项目搜索](./sourcetree)
   搜索并打开 sourcetree 项目
+
+## 插件安装
+
+> 大部分插件已经上架插件中心，chrome 历史搜索由于包含二进制文件无法上架，最新版也可以通过 release 下载
+
+- [点击查看最新版本](https://github.com/mohuishou/utools/releases/latest)

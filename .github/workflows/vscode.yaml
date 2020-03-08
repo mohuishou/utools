@@ -9,6 +9,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: install node v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: build
+        run: |
+          cd vscode
+          yarn
+          tsc
       - name: pack vscode
         uses: mohuishou/utools/.github/action@master
         id: vscode

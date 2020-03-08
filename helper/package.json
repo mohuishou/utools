@@ -1,9 +1,14 @@
 {
   "name": "utools-helper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "dist/plugin.js",
   "types": "dist/plugin.d.ts",
   "license": "MIT",
+  "author": {
+    "email": "1@lailin.xyz",
+    "name": "mohuishou",
+    "url": "https://lailin.xyz"
+  },
   "scripts": {
     "build": "tsc"
   },

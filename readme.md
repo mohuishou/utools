@@ -1,10 +1,13 @@
 # utools 插件
 
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-![badge](https://github.com/mohuishou/utools/workflows/release/badge.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mohuishou/utools)
+[![Github All Releases](https://img.shields.io/github/downloads/mohuishou/utools/total.svg)](https://github.com/mohuishou/utools/releases/latest)
+
 ![badge](https://github.com/mohuishou/utools/workflows/build%20chrome%20history/badge.svg)
 ![badge](https://github.com/mohuishou/utools/workflows/build%20iconfont/badge.svg)
 ![badge](https://github.com/mohuishou/utools/workflows/build%20vscode/badge.svg)
+![badge](https://github.com/mohuishou/utools/workflows/build%20otp/badge.svg)
+![badge](https://github.com/mohuishou/utools/workflows/build%20sourcetree/badge.svg)
 
 ## 插件列表
 

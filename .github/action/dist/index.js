@@ -18293,18 +18293,16 @@ try {
     let outputDir = core.getInput("output_dir")
     if (!filename) filename = path.basename(dir)
 
-    // 1. 更改版本号
+    // 1. 获取版本号
     let pluginPath = path.join(dir, "plugin.json")
     let plugin = JSON.parse(fs.readFileSync(pluginPath))
-    plugin.version = tag
-    fs.writeFileSync(pluginPath, JSON.stringify(plugin))
 
     // 2. asar 打包
     let asarDest = path.join(outputDir, filename + ".asar")
     await asar.createPackage(dir, asarDest)
 
     // 3. 压缩
-    let output = path.join(outputDir, filename + "-" + tag + ".upx")
+    let output = path.join(outputDir, filename + "-" + plugin.version + ".upx")
     let compressed = await gzip.gzip(fs.readFileSync(asarDest))
     fs.writeFileSync(output, compressed)
     core.setOutput("filepath", output)

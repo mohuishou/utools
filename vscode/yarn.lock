@@ -7,7 +7,9 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.1.0.tgz#225cbaac5fdb2b9ac651b02c070d8aa3c37cc812"
   integrity sha1-Ily6rF/bK5rGUbAsBw2Ko8N8yBI=
 
-utools-helper@../helper:
-  version "1.0.0"
+utools-helper@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-0.1.1.tgz#6afda2d46aae0798dc4bcdd3e027a5fbd2a04361"
+  integrity sha512-vlFekVVjwe5kedbN7T8b4WdyJX+++KwtBS0dnBmQWtC9n/433pq3C/e2Z2Qe0sMespfaaug1RTQ2U2j1fT+ePA==
   dependencies:
     "@types/node" "^13.1.0"

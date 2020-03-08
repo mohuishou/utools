@@ -6,6 +6,6 @@
   "devDependencies": {},
   "dependencies": {
     "@types/node": "^13.1.0",
-    "utools-helper": "../helper"
+    "utools-helper": "^0.1.1"
   }
 }

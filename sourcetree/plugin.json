@@ -1,0 +1,18 @@
+{
+  "pluginName": "sourcetree",
+  "description": "快速搜索sourcetree项目并打开",
+  "version": "v0.1.0",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "platform": ["darwin"],
+  "features": [
+    {
+      "code": "sourcetree",
+      "explain": "快速搜索sourcetree项目",
+      "cmds": ["st", "sourcetree"],
+      "icon": "icon.png"
+    }
+  ]
+}

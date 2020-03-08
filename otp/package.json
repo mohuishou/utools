@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "tsc -w"
+  },
   "dependencies": {
     "class-transformer": "^0.2.3",
     "es6-shim": "^0.35.5",

@@ -95,9 +95,9 @@ speakeasy@^2.0.0:
     base32.js "0.0.1"
 
 utools-helper@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-0.1.3.tgz#557b7e5ecbd7a934dba8fec6372f8888ed3f11c3"
-  integrity sha512-C3mK2XYUq2ftJG4e1Bxlmvoh+VRNMKkhPiqFh3Q3RF2AfIhS34aD3x++tnFjMwA9wMwJT9XXfRoyUQ98u938Rg==
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-0.1.5.tgz#726bcf1365eb0320719b24af72170b2b35f5d615"
+  integrity sha512-MTHdJunmRNy5nA8JZD0kIdUNx2wp+5pYxGeI+YkePGpuAbGE1sL63Q79jfAyb6dbGUENxC37ZXU9EKAL0oWeCA==
 
 which@^2.0.1:
   version "2.0.2"

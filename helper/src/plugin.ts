@@ -13,7 +13,7 @@ export class ListItem<T = any> implements CallbackListItem {
   description: string;
   data: T;
   icon?: string;
-  operate: string;
+  operate?: string;
   [index: string]: any;
 
   constructor(

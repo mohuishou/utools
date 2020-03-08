@@ -1,23 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const electron_1 = require("electron");
-const child_process_1 = require("child_process");
-let operates = new Map();
-operates.set("url", electron_1.shell.openExternal);
-operates.set("shell", child_process_1.execSync);
-operates.set("copy", electron_1.clipboard.writeText);
 class ListItem {
-    constructor(title, data, desc, icon = "icon.png") {
-        this.operate = "url";
+    constructor(title, desc, data, icon = "icon.png") {
         this.title = title;
-        this.description = desc;
+        this.description = desc ? desc : title;
+        this.data = data ? data : this.description;
         this.icon = icon;
-        this.data = data;
-        if (!desc)
-            this.description = title;
     }
     static error(msg) {
-        return new ListItem("错误", "", msg);
+        return new ListItem("错误", msg);
     }
 }
 exports.ListItem = ListItem;
@@ -58,10 +49,7 @@ class Feature {
             select: async (action, item, cb) => {
                 try {
                     if (!this.plugin.select) {
-                        if (item.operate == "items") {
-                            return cb(item.data);
-                        }
-                        return operates.get(item.operate)[item.data];
+                        return;
                     }
                     let items = await this.plugin.select(item, action);
                     if (items)
@@ -80,10 +68,15 @@ class Feature {
     }
     catchError(error, cb) {
         console.error(error);
-        cb({
-            title: "错误:" + error.message,
-            description: error.message + error.stack
-        });
+        if (cb) {
+            cb({
+                title: "错误:" + error.message,
+                description: error.message + error.stack
+            });
+        }
+        else {
+            alert(error.message);
+        }
     }
 }
 function InitPlugins(plugins) {

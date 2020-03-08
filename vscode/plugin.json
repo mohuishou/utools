@@ -8,6 +8,46 @@
   "homepage": "https://github.com/mohuishou/utools",
   "logo": "icon.png",
   "features": [
-    { "code": "vsc", "explain": "vscode历史项目搜索", "cmds": ["vsc"], "icon": "icon.png" }
+    {
+      "code": "vsc",
+      "explain": "vscode历史项目搜索",
+      "cmds": ["vsc"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "vsc-setting",
+      "explain": "vscode storage.json 路径设置",
+      "cmds": ["vsc-setting"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "vsc-storage",
+      "explain": "vscode storage.json 路径设置",
+      "cmds": [
+        {
+          "type": "files",
+          "label": "设置为 vscode storage.json 文件路径",
+          "fileType": "file",
+          "match": "/.*.json/",
+          "minNum": 1,
+          "maxNum": 1
+        }
+      ],
+      "icon": "icon.png"
+    },
+    {
+      "code": "vsc-path",
+      "explain": "vscode 可执行文件 路径设置",
+      "cmds": [
+        {
+          "type": "files",
+          "label": "设置为 vscode 可执行文件路径",
+          "fileType": "file",
+          "minNum": 1,
+          "maxNum": 1
+        }
+      ],
+      "icon": "icon.png"
+    }
   ]
 }

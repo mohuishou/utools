@@ -4,51 +4,53 @@ import {
   TplFeature,
   TplFeatureArgs,
   CallbackSetList,
-  TemplatePlugin
+  TemplatePlugin,
+  TplFeatureMode
 } from "../@types/utools";
-import { shell, clipboard } from "electron";
-import { execSync } from "child_process";
-
-type operateType = "url" | "items" | "shell" | "copy";
-let operates = new Map<operateType, any>();
-operates.set("url", shell.openExternal);
-operates.set("shell", execSync);
-operates.set("copy", clipboard.writeText);
 
 export class ListItem<T = any> implements CallbackListItem {
   title: string;
   description: string;
   data: T;
   icon?: string;
-  operate: operateType = "url";
+  operate: string;
   [index: string]: any;
 
-  constructor(title: string, data?: any, desc?: string, icon: string = "icon.png") {
+  constructor(
+    title: string,
+    desc?: string,
+    data?: any,
+    icon: string = "icon.png"
+  ) {
     this.title = title;
-    this.description = desc;
+    this.description = desc ? desc : title;
+    this.data = data ? data : this.description;
     this.icon = icon;
-    this.data = data;
-
-    if (!desc) this.description = title;
   }
 
   static error(msg: string) {
-    return new ListItem("错误", "", msg);
+    return new ListItem("错误", msg);
   }
 }
 
 export interface Plugin {
   code: string;
-  mode?: "doc" | "list" | "none";
+  mode?: TplFeatureMode;
   placeholder?: string;
   enter?<T = any>(action?: Action): Promise<ListItem<T>[]> | void;
-  search?<T = any>(word: string, action?: Action): Promise<ListItem<T>[]> | void;
-  select?<T = any, U = any>(item: ListItem<T>, action?: Action): Promise<ListItem<U>[]> | void;
+  search?<T = any>(
+    word: string,
+    action?: Action
+  ): Promise<ListItem<T>[]> | void;
+  select?<T = any, U = any>(
+    item: ListItem<T>,
+    action?: Action
+  ): Promise<ListItem<U>[]> | void;
 }
 
 class Feature implements TplFeature {
   plugin: Plugin;
-  mode: "list" | "doc" | "none" = "list";
+  mode: TplFeatureMode = "list";
   args: TplFeatureArgs = {
     placeholder: "请输入关键词",
     enter: async (action, cb) => {
@@ -80,10 +82,7 @@ class Feature implements TplFeature {
     select: async (action, item: ListItem, cb) => {
       try {
         if (!this.plugin.select) {
-          if (item.operate == "items") {
-            return cb(item.data);
-          }
-          return operates.get(item.operate)[item.data];
+          return;
         }
         let items = await this.plugin.select(item, action);
         if (items) return cb(items);
@@ -95,10 +94,14 @@ class Feature implements TplFeature {
 
   catchError(error: Error, cb: CallbackSetList) {
     console.error(error);
-    cb({
-      title: "错误:" + error.message,
-      description: error.message + error.stack
-    });
+    if (cb) {
+      cb({
+        title: "错误:" + error.message,
+        description: error.message + error.stack
+      });
+    } else {
+      alert(error.message);
+    }
   }
 
   constructor(plugin: Plugin) {

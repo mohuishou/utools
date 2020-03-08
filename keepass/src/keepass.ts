@@ -47,10 +47,10 @@ export class keepass implements Plugin {
       (entry): ListItem => {
         let items: ListItem[];
         for (const key in entry.fields) {
-          items.push(new ListItem(key, entry.fields[key]));
+          items.push(new ListItem(key, "", entry.fields[key]));
         }
 
-        let item = new ListItem(entry.fields["title"] as string, items);
+        let item = new ListItem(entry.fields["title"] as string, "", items);
         item.operate = "items";
         return item;
       }

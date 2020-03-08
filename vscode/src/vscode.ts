@@ -1,10 +1,14 @@
 import { Plugin, ListItem } from "utools-helper";
 import { join, basename } from "path";
 import { readFileSync } from "fs";
+import { GetPath } from "./cmd";
+import { GetStorage } from "./storage";
+
+export const STORAGE = "vscode_storage";
 
 export class VSCode implements Plugin {
   code = "vsc";
-  storage: string;
+  _storage: string;
 
   get files() {
     let data = JSON.parse(readFileSync(this.storage).toString());
@@ -28,8 +32,12 @@ export class VSCode implements Plugin {
       .map(file => file.replace(/^.*?\:\/\//, ""));
   }
 
+  get storage(): string {
+    if (!this._storage) this._storage = GetStorage();
+    return this._storage;
+  }
+
   async enter() {
-    this.storage = join(utools.getPath("appData"), "Code", "storage.json");
     return await this.search("");
   }
 
@@ -43,15 +51,16 @@ export class VSCode implements Plugin {
     });
 
     return files.map(
-      (file: any): ListItem => new ListItem(basename(file), file, file)
+      (file: any): ListItem => new ListItem(basename(file), file)
     );
   }
 
   select(item: ListItem) {
-    let cmd = `bash -l -c 'code "${item.description}"'`;
-    if (process.platform == "win32") {
-      cmd = `code "${item.description}"`;
+    let cmd = `${GetPath()} "${item.description}"`;
+    if (process.platform !== "win32") {
+      cmd = `bash -l -c  '${cmd}'`;
     }
+
     let res = require("child_process").execSync(cmd);
     if (res.toString() !== "") throw res.toString();
     utools.outPlugin();

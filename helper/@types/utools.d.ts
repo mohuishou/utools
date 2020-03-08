@@ -60,7 +60,11 @@ export interface UTools {
    * @param placeholder 自输入框提示
    * @param isFocus 是否聚焦
    */
-  setSubInput(onChange: onSubInputChange, placeholder?: string, isFocus?: Boolean): Boolean;
+  setSubInput(
+    onChange: onSubInputChange,
+    placeholder?: string,
+    isFocus?: Boolean
+  ): Boolean;
 
   /**
    * @description 移出先前设置的子输入框，在插件切换到其他页面时可以重新设置子输入框为其所用。
@@ -258,8 +262,8 @@ export interface DBRes<T> {
   error?: any;
 }
 
-export interface Action {
-  payload: string;
+export interface Action<T = any> {
+  payload: T;
   code: string;
   type: string;
 }
@@ -324,11 +328,13 @@ export interface TplFeatureArgs {
   placeholder: string;
 }
 
+export type TplFeatureMode = "list" | "doc" | "none";
+
 /**
  * @description 模板插件 Feature
  */
 export interface TplFeature {
-  mode: "list" | "doc" | "none";
+  mode: TplFeatureMode;
   args: TplFeatureArgs;
 }
 

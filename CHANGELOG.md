@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.5](https://github.com/mohuishou/utools/compare/v1.6.4...v1.6.5) (2020-03-08)
+
+
+### Bug Fixes
+
+* readme err ([17a84ba](https://github.com/mohuishou/utools/commit/17a84ba18eff0862e0db2939b96dad3f39dcd46c))
+* **helper:** 修复ListItem字段问题 ([3cadb97](https://github.com/mohuishou/utools/commit/3cadb97ed0e9a9b1fe80c1e979a67361de78903f))
+
 ### [1.6.4](https://github.com/mohuishou/utools/compare/v1.6.3...v1.6.4) (2020-03-08)
 
 

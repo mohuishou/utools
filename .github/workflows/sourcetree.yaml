@@ -1,0 +1,29 @@
+on:
+  release:
+    types: [created]
+name: build sourcetree
+jobs:
+  pack:
+    name: pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: install node v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: build
+        run: |
+          cd sourcetree
+          yarn
+          tsc
+      - name: pack sourcetree
+        uses: mohuishou/utools/.github/action@master
+        id: sourcetree
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          dir: ./sourcetree
+          upload_url: ${{ github.event.release.upload_url }}

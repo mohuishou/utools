@@ -1,0 +1,29 @@
+on:
+  release:
+    types: [created]
+name: build otp
+jobs:
+  pack:
+    name: pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: install node v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: build
+        run: |
+          cd otp
+          yarn
+          tsc
+      - name: pack otp
+        uses: mohuishou/utools/.github/action@master
+        id: otp
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          dir: ./otp
+          upload_url: ${{ github.event.release.upload_url }}

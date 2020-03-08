@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^13.1.0"
+  },
   "dependencies": {
-    "@types/node": "^13.1.0",
     "utools-helper": "^0.1.1"
   }
 }

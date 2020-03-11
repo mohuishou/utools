@@ -183,6 +183,11 @@ export interface UTools {
    * @description 获取本地机器唯一ID，可以根据此值区分同一用户的不同设备
    */
   getLocalId(): string;
+
+  /**
+   * robotjs是一个优秀的自动化库，可以实现控制鼠标、键盘、获取屏幕信息等功能，可以实现很多自动化操作。
+   */
+  robot: any;
 }
 
 export type PathName =

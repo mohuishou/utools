@@ -16,32 +16,27 @@
 ## 插件列表
 
 - [iconfont 搜索](./plugins/iconfont)
-
-  ![badge](https://github.com/mohuishou/utools/workflows/build%20iconfont/badge.svg)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20iconfont?label=iconfont)
 
   iconfont 图标搜索，支持下载
 
 - [vscode 历史搜索](./plugins/vscode)
-
-  ![badge](https://github.com/mohuishou/utools/workflows/build%20vscode/badge.svg)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20vscode?label=vscode)
 
   utools 插件，搜索 vscode 历史项目，点击回车打开
 
 - [chrome-history](./plugins/chrome-history)
-
-  ![badge](https://github.com/mohuishou/utools/workflows/build%20chrome%20history/badge.svg)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20chrome-history?label=ch)
 
   chrome 历史记录搜索插件
 
 - [otp 两步验证](./plugins/otp)
-
-  ![badge](https://github.com/mohuishou/utools/workflows/build%20otp/badge.svg)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20otp?label=otp)
 
   保存 TOTP 两步验证，如 Google Auth 等
 
 - [sourcetree 项目搜索](./plugins/sourcetree)
-
-  ![badge](https://github.com/mohuishou/utools/workflows/build%20sourcetree/badge.svg)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20sourcetree?label=sourcetree)
 
   搜索并打开 sourcetree 项目
 

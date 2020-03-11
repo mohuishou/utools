@@ -12,13 +12,13 @@ jobs:
       - uses: actions/setup-go@v1
         with:
           go-version: "1.13.4"
-      - run: cd chrome-history/search && go build -trimpath -o  ../search_darwin .
+      - run: cd plugins/chrome-history/search && go build -trimpath -o  ../search_darwin .
       - run: ls -alh chrome-history
       - name: upload
         uses: actions/upload-artifact@v1
         with:
           name: search_darwin
-          path: ./chrome-history/search_darwin
+          path: ./plugins/chrome-history/search_darwin
   chrome-history-win:
     name: build chrome-history-win
     runs-on: windows-latest
@@ -29,13 +29,13 @@ jobs:
         with:
           go-version: "1.13.4"
       - run: |
-          cd chrome-history/search
+          cd plugins/chrome-history/search
           go build -trimpath -o  ../search_windows.exe .
       - name: upload
         uses: actions/upload-artifact@v1
         with:
           name: search_windows.exe
-          path: ./chrome-history/search_windows.exe
+          path: ./plugins/chrome-history/search_windows.exe
   chrome-history-linux:
     name: build chrome-history-linux
     runs-on: ubuntu-latest
@@ -45,12 +45,12 @@ jobs:
       - uses: actions/setup-go@v1
         with:
           go-version: "1.13.4"
-      - run: cd chrome-history/search && go build -trimpath -o  ../search_linux .
+      - run: cd plugins/chrome-history/search && go build -trimpath -o  ../search_linux .
       - name: upload
         uses: actions/upload-artifact@v1
         with:
           name: search_linux
-          path: ./chrome-history/search_linux
+          path: ./plugins/chrome-history/search_linux
   pack:
     name: pack
     runs-on: ubuntu-latest
@@ -75,5 +75,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          dir: ./chrome-history
+          dir: ./plugins/chrome-history
           upload_url: ${{ github.event.release.upload_url }}

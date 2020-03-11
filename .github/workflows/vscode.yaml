@@ -15,7 +15,7 @@ jobs:
           node-version: 12
       - name: build
         run: |
-          cd vscode
+          cd plugins/vscode
           yarn
           tsc
       - name: pack vscode
@@ -25,5 +25,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          dir: ./vscode
+          dir: ./plugins/vscode
           upload_url: ${{ github.event.release.upload_url }}

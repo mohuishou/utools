@@ -15,7 +15,7 @@ jobs:
           node-version: 12
       - name: build
         run: |
-          cd otp
+          cd plugins/otp
           yarn
           tsc
       - name: pack otp
@@ -25,5 +25,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          dir: ./otp
+          dir: ./plugins/otp
           upload_url: ${{ github.event.release.upload_url }}

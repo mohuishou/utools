@@ -15,7 +15,7 @@ jobs:
           node-version: 12
       - name: build
         run: |
-          cd sourcetree
+          cd plugins/sourcetree
           yarn
           tsc
       - name: pack sourcetree
@@ -25,5 +25,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          dir: ./sourcetree
+          dir: ./plugins/sourcetree
           upload_url: ${{ github.event.release.upload_url }}

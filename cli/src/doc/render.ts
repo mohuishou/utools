@@ -21,12 +21,6 @@ import { Path } from "./path";
 
 const anchor = require("markdown-it-anchor");
 const prism = require("markdown-it-prism");
-let md = require("markdown-it")({
-  html: true
-});
-md = md.use(anchor).use(prism, {
-  defaultLanguage: "bash"
-});
 
 export class Render {
   input: string;
@@ -36,6 +30,7 @@ export class Render {
   preloadPath: string;
   assetsPath: string;
   path: Path;
+  meta: any;
 
   constructor(input: string, code: string, output: string) {
     this.input = input;
@@ -45,6 +40,25 @@ export class Render {
     this.assetsPath = join(output, "assets");
     this.indexes = [];
     this.path = new Path(output);
+  }
+
+  get md() {
+    let md = require("markdown-it")({
+      html: true
+    });
+    md = md.use(anchor).use(prism, {
+      defaultLanguage: "bash"
+    });
+    let meta: any = {};
+    md = md.use(require("markdown-it-front-matter"), function(fm: string) {
+      let lines = fm.split(/\n+/);
+      lines.forEach(l => {
+        let data = l.trim().split(":");
+        meta[data[0].trim().toLowerCase()] = data[1].trim();
+      });
+    });
+    this.meta = meta;
+    return md;
   }
 
   async render() {
@@ -86,7 +100,7 @@ export class Render {
     writeFileSync(
       outPath,
       await renderFile(join(__dirname, "template", "doc.html.ejs"), {
-        markdown: md.render(file),
+        markdown: this.md.render(file),
         assets: relative(dirname(outPath), this.assetsPath)
       })
     );
@@ -106,18 +120,23 @@ export class Render {
       relative(this.input, dirname(path)),
       outFilename
     );
+
     writeFileSync(
       outPath,
       await renderFile(this.path.tplDoc, {
-        markdown: md.render(file),
+        markdown: this.md.render(file),
         assets: relative(dirname(outPath), this.assetsPath)
       })
     );
 
     let relativeFile = this.path.relate(outPath);
+    let name = this.meta["title"] ? this.meta["title"] : filename;
+    let desc = this.meta["description"]
+      ? this.meta["description"]
+      : "from page: " + name;
     this.indexes.push({
-      t: filename,
-      d: "from " + filename,
+      t: name.replace(/^"|'\[\]/, "").replace(/"|'\[\]$/, ""),
+      d: desc,
       p: relativeFile
     });
     this.headerIndexes(file, relativeFile);

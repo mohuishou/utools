@@ -1,19 +1,10 @@
 import { Index } from ".";
-import {
-  join,
-  basename,
-  relative,
-  extname,
-  dirname,
-  parse,
-  ParsedPath
-} from "path";
+import { join, basename, relative, extname, dirname } from "path";
 import {
   readdirSync,
   readFileSync,
   writeFileSync,
   mkdirSync,
-  stat,
   statSync
 } from "fs";
 import { renderFile } from "ejs";
@@ -31,6 +22,7 @@ export class Render {
   assetsPath: string;
   path: Path;
   meta: any;
+  anchor: any = {};
 
   constructor(input: string, code: string, output: string) {
     this.input = input;
@@ -46,7 +38,14 @@ export class Render {
     let md = require("markdown-it")({
       html: true
     });
-    md = md.use(anchor).use(prism, {
+    this.anchor = {};
+    md = md.use(anchor, {
+      callback: (option: any, data: any) => {
+        this.anchor[data["title"]] = data["slug"];
+      },
+      permalink: true
+    });
+    md = md.use(prism, {
       defaultLanguage: "bash"
     });
     let meta: any = {};
@@ -54,7 +53,8 @@ export class Render {
       let lines = fm.split(/\n+/);
       lines.forEach(l => {
         let data = l.trim().split(":");
-        meta[data[0].trim().toLowerCase()] = data[1].trim();
+        if (data.length >= 2)
+          meta[data[0].trim().toLowerCase()] = data[1].trim();
       });
     });
     this.meta = meta;
@@ -135,24 +135,19 @@ export class Render {
       ? this.meta["description"]
       : "from page: " + name;
     this.indexes.push({
-      t: name.replace(/^"|'\[\]/, "").replace(/"|'\[\]$/, ""),
+      t: name.replace(/"|'\[\]`/g, ""),
       d: desc,
       p: relativeFile
     });
-    this.headerIndexes(file, relativeFile);
+    this.headerIndexes(relativeFile);
   }
 
-  headerIndexes(file: string, relativePreloadFile: string) {
-    let r = new RegExp(/#+\s+(.*)\n+(.*)/g);
-    let header: RegExpExecArray | null;
-    while ((header = r.exec(file)) !== null) {
-      let anchor = encodeURIComponent(
-        header[1].toLowerCase().replace(/\s+/g, "-")
-      );
+  headerIndexes(relativePreloadFile: string) {
+    for (let k in this.anchor) {
       this.indexes.push({
-        t: header[1],
-        d: header[2],
-        p: relativePreloadFile + `#${anchor}`
+        t: k,
+        d: k,
+        p: relativePreloadFile + `#${this.anchor[k]}`
       });
     }
   }

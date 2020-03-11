@@ -1,0 +1,19 @@
+{
+  "pluginName": "reactjs",
+  "description": "reactjs 中文文档查询",
+  "version": "v0.2.0",
+  "preload": "preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.svg",
+  "features": [
+    {
+      "code": "reactjs",
+      "explain": "reactjs文档搜索",
+      "cmds": ["reactjs"],
+      "icon": "icon.svg",
+      "input": "../../origin-docs/reactjs/content/docs",
+      "origin": "https://github.com/reactjs/reactjs.org"
+    }
+  ]
+}

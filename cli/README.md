@@ -19,7 +19,7 @@ $ npm install -g utools-cli
 $ utools COMMAND
 running command...
 $ utools (-v|--version|version)
-utools-cli/0.1.0 darwin-x64 node-v10.14.2
+utools-cli/0.1.1 darwin-x64 node-v10.14.2
 $ utools --help [COMMAND]
 USAGE
   $ utools COMMAND
@@ -28,28 +28,26 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`utools hello [FILE]`](#utools-hello-file)
+* [`utools doc [OUTPUT]`](#utools-doc-output)
 * [`utools help [COMMAND]`](#utools-help-command)
 
-## `utools hello [FILE]`
+## `utools doc [OUTPUT]`
 
-describe the command here
+文档生成器，将markdown等文档，自动转化为utools文档插件
 
 ```
 USAGE
-  $ utools hello [FILE]
+  $ utools doc [OUTPUT]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help           show CLI help
+  -p, --plugin=plugin  plugin.json path
 
 EXAMPLE
-  $ utools hello
-  hello world from ./src/hello.ts!
+  $ utools doc -p plugin.json public
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/mohuishou/utools/blob/v0.1.0/src/commands/hello.ts)_
+_See code: [src/commands/doc.ts](https://github.com/mohuishou/utools/blob/v0.1.1/src/commands/doc.ts)_
 
 ## `utools help [COMMAND]`
 

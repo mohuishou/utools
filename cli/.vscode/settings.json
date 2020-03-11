@@ -1,0 +1,5 @@
+{
+  "emmet.includeLanguages": {
+    "ejs": "html"
+  }
+}

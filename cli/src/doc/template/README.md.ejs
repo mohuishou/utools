@@ -1,0 +1,15 @@
+# <%- plugin.pluginName %>
+
+> [文档由 mohuishou/utools 自动生成, 点击查看详情](https://github.com/mohuishou/utools)
+> 觉得不错，请 star 收藏
+
+<%- plugin.description %>
+
+## 关键词列表
+
+<% features.forEach(feature => { -%>
+
+- <%- feature.cmds.join("、") %>
+  文档来源: <%- feature.origin %>
+
+<% }) -%>

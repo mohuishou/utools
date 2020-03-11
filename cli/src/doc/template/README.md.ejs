@@ -1,15 +1,20 @@
 # <%- plugin.pluginName %>
 
-> [文档由 mohuishou/utools 自动生成, 点击查看详情](https://github.com/mohuishou/utools)
-> 觉得不错，请 star 收藏
+![author:<%- plugin.author %>](https://img.shields.io/badge/author-<%- plugin.author %>-blue)
+![version:<%- plugin.version %>](https://img.shields.io/badge/version-<%- plugin.version %>-yellow)
+![更新:<%- time %>](https://img.shields.io/badge/更新-<%- time %>-success)
+
+> [文档由 mohuishou/utools Markdown 文档生成器自动生成, 点击查看详情](https://github.com/mohuishou/utools)
+> <br /> 如果对你有所帮助，**❤️ 请 star 收藏哦 ❤️**
 
 <%- plugin.description %>
 
-## 关键词列表
+## 主页
+[<%- plugin.homepage %>](<%- plugin.homepage %>)
+
+## 关键词
 
 <% features.forEach(feature => { -%>
-
 - <%- feature.cmds.join("、") %>
-  文档来源: <%- feature.origin %>
-
+  文档来源: [<%- feature.origin %>](<%- feature.origin %>)
 <% }) -%>

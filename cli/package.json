@@ -1,7 +1,7 @@
 {
   "name": "utools-cli",
   "description": "utools command helper",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "author": "mohuishou @mohuishou",
   "bin": {
     "utools": "./bin/run"
@@ -51,9 +51,10 @@
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "cp": "cp -r src/doc/assets lib/doc/ && cp -r src/doc/template lib/doc/",
+    "prepack": "rm -rf lib && tsc -b && npm run cp  && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md && npm publish"
   },
   "types": "lib/index.d.ts"
 }

@@ -1,5 +1,13 @@
 import { Index } from ".";
-import { join, basename, relative, extname, dirname } from "path";
+import {
+  join,
+  basename,
+  relative,
+  extname,
+  dirname,
+  parse,
+  ParsedPath
+} from "path";
 import {
   readdirSync,
   readFileSync,
@@ -9,6 +17,7 @@ import {
   statSync
 } from "fs";
 import { renderFile } from "ejs";
+import { Path } from "./path";
 
 const anchor = require("markdown-it-anchor");
 const prism = require("markdown-it-prism");
@@ -26,6 +35,7 @@ export class Render {
   indexes: Index[] = [];
   preloadPath: string;
   assetsPath: string;
+  path: Path;
 
   constructor(input: string, code: string, output: string) {
     this.input = input;
@@ -34,10 +44,12 @@ export class Render {
     this.preloadPath = output;
     this.assetsPath = join(output, "assets");
     this.indexes = [];
+    this.path = new Path(output);
   }
 
   async render() {
     mkdirSync(this.output, { recursive: true });
+    this.renderReadme();
     this.renderDir(this.input);
   }
 
@@ -65,6 +77,26 @@ export class Render {
     );
   }
 
+  async renderReadme() {
+    let path = this.path.readme;
+    let file = readFileSync(path).toString();
+    let filename = basename(path, extname(path));
+    let outFilename = "00_" + filename + ".html";
+    let outPath = join(this.output, outFilename);
+    writeFileSync(
+      outPath,
+      await renderFile(join(__dirname, "template", "doc.html.ejs"), {
+        markdown: md.render(file),
+        assets: relative(dirname(outPath), this.assetsPath)
+      })
+    );
+    this.indexes.push({
+      t: filename,
+      d: "from " + filename,
+      p: this.path.relate(outPath)
+    });
+  }
+
   async renderMarkdown(path: string) {
     let file = readFileSync(path).toString();
     let filename = basename(path, extname(path));
@@ -76,20 +108,19 @@ export class Render {
     );
     writeFileSync(
       outPath,
-      await renderFile(join(__dirname, "template", "doc.html.ejs"), {
+      await renderFile(this.path.tplDoc, {
         markdown: md.render(file),
         assets: relative(dirname(outPath), this.assetsPath)
       })
     );
 
-    let relativePreload = relative(this.preloadPath, outPath);
-
+    let relativeFile = this.path.relate(outPath);
     this.indexes.push({
       t: filename,
       d: "from " + filename,
-      p: relativePreload
+      p: relativeFile
     });
-    this.headerIndexes(file, relativePreload);
+    this.headerIndexes(file, relativeFile);
   }
 
   headerIndexes(file: string, relativePreloadFile: string) {

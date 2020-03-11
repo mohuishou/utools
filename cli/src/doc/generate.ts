@@ -28,6 +28,7 @@ export class Generate {
     mkdirSync(this.output, { recursive: true });
     await this.copyAssets();
     await this.preload();
+    await this.readme();
     await this.plugin.features.forEach(async f => {
       f.input = join(cwd(), dirname(this.pluginPath), f.input);
       await this.docs(f);
@@ -38,7 +39,16 @@ export class Generate {
   private validate() {}
 
   // 生成 readme 文档
-  private readme() {}
+  private async readme() {
+    writeFileSync(
+      join(this.output, "README.md"),
+      await renderFile(join(__dirname, "template", "README.md.ejs"), {
+        features: this.plugin.features,
+        plugin: this.plugin,
+        time: encodeURI(new Date().toLocaleString()).replace(/-/g, "--")
+      })
+    );
+  }
 
   // 生成 preload.js
   private async preload() {

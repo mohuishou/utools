@@ -1,0 +1,27 @@
+{
+  "pluginName": "gin",
+  "description": "gin 文档查询，包含中英文文档",
+  "version": "v0.1.0",
+  "preload": "preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "gin",
+      "explain": "gin文档搜索",
+      "cmds": ["gin"],
+      "icon": "icon.png",
+      "input": "../../origin-docs/gin/content/zh-cn/docs",
+      "origin": "https://gin-gonic.com/"
+    },
+    {
+      "code": "gin-en",
+      "explain": "gin docs search",
+      "cmds": ["gin en"],
+      "icon": "icon.png",
+      "input": "../../origin-docs/gin/content/en/docs",
+      "origin": "https://gin-gonic.com/"
+    }
+  ]
+}

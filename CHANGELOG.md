@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/mohuishou/utools/compare/v0.1.1...v1.7.0) (2020-03-29)
+
+
+### Features
+
+* **ci:** 完善文档生成器 ([8522145](https://github.com/mohuishou/utools/commit/852214545faacc304d6a9a43ead77baf8072678a))
+* **cli:** 完善文档生成器 ([3931449](https://github.com/mohuishou/utools/commit/39314492d5a9e72aa813fd0b84db1a92f85e32ff))
+* **cli:** 新增metadata识别 ([55daebc](https://github.com/mohuishou/utools/commit/55daebc2c69409fdeeaf612fd558d4ffcd039c15))
+* **doc:** 完善文档生成 ([b715a56](https://github.com/mohuishou/utools/commit/b715a56a77197c097d93a69169497262839e5f7a))
+* **doc:** 新增reactjs文档 ([0dbc2a3](https://github.com/mohuishou/utools/commit/0dbc2a37de6b36e92c76651e06831419339e1645))
+* **docs:** 新增 gin 文档 ([bba11ed](https://github.com/mohuishou/utools/commit/bba11edbff80a741b369c31557841c86cb0a68ae))
+* **docs:** 新增 gorm 文档 ([3a5fd15](https://github.com/mohuishou/utools/commit/3a5fd15997af058b492cef646bc3d9ec11533671))
+* **docs:** 新增dayjs文档 ([ab05e6f](https://github.com/mohuishou/utools/commit/ab05e6f4d92b84fca0c6a8ee5dfe8956d7ca0398))
+* **vscode:** 修复windows文件打开的问题 ([09d7f8f](https://github.com/mohuishou/utools/commit/09d7f8f594b48e84100b73e47b708b27423da2cf))
+
 ### [1.6.5](https://github.com/mohuishou/utools/compare/v1.6.4...v1.6.5) (2020-03-08)
 
 

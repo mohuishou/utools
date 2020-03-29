@@ -3,6 +3,7 @@ import { join, basename } from "path";
 import { readFileSync } from "fs";
 import { GetPath } from "./cmd";
 import { GetStorage } from "./storage";
+import { platform } from "os";
 
 export const STORAGE = "vscode_storage";
 
@@ -21,6 +22,12 @@ export class VSCode implements Plugin {
     }
     files = [...new Set(files)];
 
+    // 正则替换，去除文件头
+    let r = /^.*?\:\/\//;
+    if (platform() === "win32") {
+      r = /^.*?\:\/+/;
+    }
+
     return files
       .map((file: any) => {
         if (typeof file === "object" && "configURIPath" in file) {
@@ -29,7 +36,7 @@ export class VSCode implements Plugin {
         return decodeURIComponent(file);
       })
       .filter(file => !file.includes("vscode-remote"))
-      .map(file => file.replace(/^.*?\:\/\//, ""));
+      .map(file => file.replace(r, ""));
   }
 
   get storage(): string {

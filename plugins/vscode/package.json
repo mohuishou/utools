@@ -1,6 +1,6 @@
 {
   "name": "utools-vscode",
-  "version": "1.0.0",
+  "version": "v1.5.2",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {

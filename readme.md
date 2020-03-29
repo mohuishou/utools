@@ -26,7 +26,7 @@
   utools 插件，搜索 vscode 历史项目，点击回车打开
 
 - [chrome-history](./plugins/chrome-history)
-  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20chrome-history?label=ch)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20chrome%20history?label=ch)
 
   chrome 历史记录搜索插件
 

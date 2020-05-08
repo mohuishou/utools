@@ -6,10 +6,6 @@
     "module": "commonjs",
     "target": "ES6",
     "experimentalDecorators": true,
-    "types": [
-      "utools-helper/@types/utools",
-      "utools-helper/@types/electron",
-      "@types/node"
-    ]
+    "types": ["utools-helper/@types/utools", "@types/node"]
   }
 }

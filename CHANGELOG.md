@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/mohuishou/utools/compare/v1.7.0...v1.8.0) (2020-05-08)
+
+
+### Features
+
+* **ch:** chrome 历史记录搜索采用纯 js 实现 ([d0ccfcf](https://github.com/mohuishou/utools/commit/d0ccfcf4432e85a68be23135df7f1677fbf8a9d6))
+* 更新 github actions ([da2de5a](https://github.com/mohuishou/utools/commit/da2de5a73eacb1dc863348e495c50af568f6e972))
+
 ## [1.7.0](https://github.com/mohuishou/utools/compare/v0.1.1...v1.7.0) (2020-03-29)
 
 

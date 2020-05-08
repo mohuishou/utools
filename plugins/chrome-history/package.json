@@ -1,0 +1,14 @@
+{
+  "name": "utools-chrome-history",
+  "version": "v2.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "sql.js": "^1.2.2",
+    "utools-helper": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.0",
+    "@types/sql.js": "^1.0.2"
+  }
+}

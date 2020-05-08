@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-        - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
       - run: cd plugins/chrome-history && npm install

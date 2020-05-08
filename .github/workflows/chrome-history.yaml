@@ -12,7 +12,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - run: cd plugins/chrome-history && npm install
+      - name: build
+          run: |
+            cd plugins/chrome-history
+            yarn
+            tsc
       - name: pack chrome-history
         uses: mohuishou/utools/.github/action@master
         id: chromeHistory

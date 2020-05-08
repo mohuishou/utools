@@ -42,7 +42,6 @@ export class ChromeHistory implements Plugin {
   async search(word?: string): Promise<ListItem[]> {
     let queries = word.trim().split(/\s+/g);
     let items: ListItem[] = [];
-
     // 获取历史记录
     let sql = `select * from urls`;
     queries.forEach((q) => {
@@ -71,5 +70,9 @@ export class ChromeHistory implements Plugin {
       );
       return item;
     });
+  }
+  select(item: ListItem) {
+    // @ts-ignore
+    utools.shellOpenExternal(item.description);
   }
 }

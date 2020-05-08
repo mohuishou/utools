@@ -5,8 +5,10 @@ import {
   TplFeatureArgs,
   CallbackSetList,
   TemplatePlugin,
-  TplFeatureMode
+  TplFeatureMode,
 } from "../@types/utools";
+import { join } from "path";
+import { ErrorIcon } from "./error_icon";
 
 export class ListItem<T = any> implements CallbackListItem {
   title: string;
@@ -89,19 +91,23 @@ class Feature implements TplFeature {
       } catch (error) {
         this.catchError(error, cb);
       }
-    }
+    },
   };
 
   catchError(error: Error, cb: CallbackSetList) {
-    console.error(error);
+    let errStr = JSON.stringify(error);
     if (cb) {
-      cb({
-        title: "错误:" + error.message,
-        description: error.message + error.stack
-      });
+      cb([
+        {
+          title: "错误:" + errStr,
+          description: errStr,
+          icon: ErrorIcon,
+        },
+      ]);
     } else {
-      alert(error.message);
+      alert(errStr);
     }
+    console.error(error);
   }
 
   constructor(plugin: Plugin) {
@@ -114,7 +120,7 @@ class Feature implements TplFeature {
 export function InitPlugins(plugins: Plugin[]) {
   try {
     let features: TemplatePlugin = {};
-    plugins.forEach(plugin => {
+    plugins.forEach((plugin) => {
       features[plugin.code] = new Feature(plugin);
     });
     window.exports = features;

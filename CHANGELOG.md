@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.3](https://github.com/mohuishou/utools/compare/v1.8.2...v1.8.3) (2020-05-08)
+
+
+### Bug Fixes
+
+* ci chrome-history ([b9db716](https://github.com/mohuishou/utools/commit/b9db7167f295f0c0d88c420c073789b79f59b6f5))
+
 ### [1.8.2](https://github.com/mohuishou/utools/compare/v1.8.1...v1.8.2) (2020-05-08)
 
 

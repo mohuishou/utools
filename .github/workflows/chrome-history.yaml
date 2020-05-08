@@ -9,16 +9,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - uses: actions/download-artifact@v1
+        - uses: actions/setup-node@v1
         with:
-          name: search_windows.exe
-      - uses: actions/download-artifact@v1
-        with:
-          name: search_linux
-      - uses: actions/download-artifact@v1
-        with:
-          name: search_darwin
-      - run: ls -alh && mv search_*/* chrome-history/
+          node-version: "12.x"
+      - run: cd plugins/chrome-history && npm install
       - name: pack chrome-history
         uses: mohuishou/utools/.github/action@master
         id: chromeHistory

@@ -13,10 +13,10 @@ jobs:
         with:
           node-version: "12.x"
       - name: build
-          run: |
-            cd plugins/chrome-history
-            yarn
-            tsc
+        run: |
+          cd plugins/chrome-history
+          yarn
+          tsc
       - name: pack chrome-history
         uses: mohuishou/utools/.github/action@master
         id: chromeHistory

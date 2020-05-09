@@ -1,8 +1,8 @@
 {
   "name": "utools-helper",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "main": "dist/plugin.js",
-  "types": "dist/plugin.d.ts",
+  "types": "@types/plugin.d.ts",
   "license": "MIT",
   "author": {
     "email": "1@lailin.xyz",
@@ -10,7 +10,9 @@
     "url": "https://lailin.xyz"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "build:types": "rm @types/plugin.d.ts && tsc --declaration -p ./ -t es2015 --emitDeclarationOnly --outDir ./@types",
+    "prepublish": "npm run build:types && npm run build"
   },
   "devDependencies": {
     "@types/node": "^13.1.0"

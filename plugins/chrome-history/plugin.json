@@ -2,7 +2,7 @@
   "name": "6843f319",
   "pluginName": "Chrome历史记录搜索",
   "description": "快速搜索Chrome历史记录，支持多个关键词筛选",
-  "version": "v2.1.0",
+  "version": "v2.2.0",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
@@ -12,6 +12,20 @@
       "code": "ch",
       "explain": "Chrome历史记录搜索",
       "cmds": ["ch", "Chrome历史记录"],
+      "icon": "chrome.png"
+    },
+    {
+      "code": "ch-setting",
+      "explain": "Chrome Profile 目录设置",
+      "cmds": [
+        {
+          "type": "files",
+          "label": "设置为 Chrome Profile 目录",
+          "fileType": "directory",
+          "minNum": 1,
+          "maxNum": 1
+        }
+      ],
       "icon": "chrome.png"
     }
   ]

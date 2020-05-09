@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import { SqlJs } from "sql.js/module";
 import { join } from "path";
 import { Plugin, ListItem } from "utools-helper";
+import { GetProfilePathID } from "./setting";
 
 export class ChromeHistory implements Plugin {
   code = "ch";
@@ -10,6 +11,8 @@ export class ChromeHistory implements Plugin {
   faviconDB: SqlJs.Database;
 
   profile(): string {
+    let item = utools.db.get(GetProfilePathID());
+    if (item) return item.data;
     return this.getDefaultProfile();
   }
 
@@ -59,7 +62,7 @@ export class ChromeHistory implements Plugin {
     );
 
     // 获取图标
-    return items.map((item) => {
+    items = items.map((item) => {
       let sql = `select * from favicons JOIN icon_mapping on icon_mapping.icon_id = favicons.id and page_url = '${item.description}'`;
       this.faviconDB.each(
         sql,
@@ -70,6 +73,8 @@ export class ChromeHistory implements Plugin {
       );
       return item;
     });
+
+    return items;
   }
   select(item: ListItem) {
     // @ts-ignore

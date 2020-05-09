@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/mohuishou/utools/compare/v1.9.0...v1.10.0) (2020-05-09)
+
+
+### Features
+
+* **ch:** 新增 profile 路径设置 ([f2f3f83](https://github.com/mohuishou/utools/commit/f2f3f83fac286e59dcf44a8274472b47b38bfdc9))
+
 ## [1.9.0](https://github.com/mohuishou/utools/compare/v1.8.5...v1.9.0) (2020-05-09)
 
 

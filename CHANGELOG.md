@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/mohuishou/utools/compare/v1.8.5...v1.9.0) (2020-05-09)
+
+
+### Features
+
+* **ch:** 精简大小，删除不必要的文件 ([c9f7b07](https://github.com/mohuishou/utools/commit/c9f7b0795c41c12fad559cb3a1821f4edc5c5881))
+
 ### [1.8.5](https://github.com/mohuishou/utools/compare/v1.8.4...v1.8.5) (2020-05-08)
 
 

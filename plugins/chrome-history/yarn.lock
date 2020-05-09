@@ -20,11 +20,6 @@
     "@types/emscripten" "*"
     "@types/node" "*"
 
-sql.js@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/sql.js/-/sql.js-1.2.2.tgz#0a4e6f6b9f1bd3af452c459034c1519bf66a575c"
-  integrity sha512-T6Cb1+mRyabhONbAc95nlWydtRQ/p12MPhidi9FXCZg6gJo2GSqiUlDfoDy2h00PdfSvZioHn8MR8A0ks9z8KA==
-
 utools-helper@^0.1.1:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-0.1.6.tgz#e44c8019a7dad0703454c6f03d1b3f3b2930156a"

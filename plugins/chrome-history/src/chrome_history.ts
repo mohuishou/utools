@@ -1,4 +1,4 @@
-import * as initSqlJs from "sql.js";
+const initSqlJs = require("../lib/sql-wasm");
 import { readFileSync } from "fs";
 import { SqlJs } from "sql.js/module";
 import { join } from "path";

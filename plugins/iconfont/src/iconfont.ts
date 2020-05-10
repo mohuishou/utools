@@ -3,6 +3,7 @@ import Axios, { AxiosInstance } from "axios";
 import { stringify } from "querystring";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { nativeImage } from "electron";
 
 interface keywordParams {
   [index: string]: { key: string; val: any };
@@ -127,14 +128,14 @@ export class Iconfont implements Plugin {
   async select(item: ListItem): Promise<ListItem[]> {
     let items: ListItem[] = [
       {
-        title: "下载-SVG",
+        title: "下载 SVG 图片",
         description: item.title,
         data: item.data,
         icon: "icon/download.svg",
         operate: "download",
       },
       {
-        title: "下载-PNG",
+        title: "下载 PNG 图片",
         description: item.title,
         data: item.icon,
         id: item.id,
@@ -142,11 +143,18 @@ export class Iconfont implements Plugin {
         operate: "download_png",
       },
       {
-        title: "复制-SVG",
+        title: "复制 SVG 图片",
         description: item.title,
         data: item.data,
         icon: "icon/copy.svg",
         operate: "copy",
+      },
+      {
+        title: "复制 PNG 图片",
+        description: item.title,
+        data: item.icon,
+        icon: "icon/copy.svg",
+        operate: "copy_png",
       },
       {
         title: "打开浏览器查看搜索结果",
@@ -183,6 +191,12 @@ export class Iconfont implements Plugin {
         eleLink.click();
         // 然后移除
         document.body.removeChild(eleLink);
+        break;
+      case "copy_png":
+        let dataUrl = await this.svg2png(item.id, item.data);
+        let img = nativeImage.createFromDataURL(dataUrl);
+        utools.copyImage(img.toPNG());
+        utools.showNotification(item.title + "复制成功");
         break;
       default:
         utools.showNotification("未知操作");

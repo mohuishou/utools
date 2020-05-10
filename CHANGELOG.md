@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/mohuishou/utools/compare/v1.11.0...v1.12.0) (2020-05-10)
+
+
+### Features
+
+* **icon:** 新增 png 图片辅助 ([25b73ca](https://github.com/mohuishou/utools/commit/25b73cad08c9f00750f0f1f377bb348605fcb657))
+
+
+### Bug Fixes
+
+* **helper:** 修复声明文件类型 ([8da8106](https://github.com/mohuishou/utools/commit/8da8106d01192e97f199b7923cdd66bb4e12b8b4))
+
 ## [1.11.0](https://github.com/mohuishou/utools/compare/v1.10.0...v1.11.0) (2020-05-10)
 
 

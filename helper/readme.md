@@ -57,7 +57,7 @@ export class Storage implements Plugin {
     if (!item) {
       item = {
         _id: getStorageID(),
-        data: action.payload[0].path
+        data: action.payload[0].path,
       };
     }
     item.data = action.payload[0].path;
@@ -77,7 +77,7 @@ export class Storage implements Plugin {
 
 ## Example
 
-请查看: [vscode](https://github.com/mohuishou/utools/tree/master/vscode)
+请查看: [vscode](https://github.com/mohuishou/utools/tree/master/plugins/vscode)
 
 ## Utools API
 

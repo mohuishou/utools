@@ -324,8 +324,8 @@ export interface UTools {
   // ubrowser api
   ubrowser: Ubrowser;
 
-  getIdleUBrowsers(): Array<Object>;
-  setUBrowserProxy(config: Object): boolean;
+  getIdleUBrowsers(): Array<any>;
+  setUBrowserProxy(config: any): boolean;
 }
 
 export type PathName =
@@ -506,7 +506,7 @@ interface onPluginEnterCBParams {
  */
 export interface Ubrowser {
   useragent(userAgent: string): Ubrowser;
-  goto(url: string, headers?: Object): Ubrowser;
+  goto(url: string, headers?: any): Ubrowser;
   goto(mdText: string, title?: string): Ubrowser;
   viewport(width: Number, height: Number): Ubrowser;
   hide(): Ubrowser;
@@ -514,12 +514,12 @@ export interface Ubrowser {
   css(cssCode: string): Ubrowser;
   press(key: string, ...modifier: string[]): Ubrowser;
   paste(text?: string): Ubrowser;
-  screenshot(arg?: string | Object, savePath?: string): Ubrowser;
-  pdf(options?: Object, savePath?: string): Ubrowser;
-  device(arg: string | Object): Ubrowser;
+  screenshot(arg?: string | any, savePath?: string): Ubrowser;
+  pdf(options?: any, savePath?: string): Ubrowser;
+  device(arg: string | any): Ubrowser;
   cookies(name?: string): Ubrowser;
   setCookies(name: string, value: string): Ubrowser;
-  setCookies(cookies: Array<Object>): Ubrowser;
+  setCookies(cookies: Array<any>): Ubrowser;
   removeCookies(name: string): Ubrowser;
   clearCookies(url?: string): Ubrowser;
   devTools(mode?: "right" | "bottom" | "undocked" | "detach"): Ubrowser;

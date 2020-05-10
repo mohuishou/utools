@@ -12,7 +12,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - run: cd plugins/iconfont && npm install
+      - name: build
+        run: |
+          cd plugins/iconfont
+          yarn
+          tsc
       - name: pack
         uses: mohuishou/utools/.github/action@master
         env:

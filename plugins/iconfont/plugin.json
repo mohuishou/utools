@@ -2,17 +2,17 @@
   "name": "8400f279",
   "pluginName": "iconfont搜索",
   "description": "快速搜索iconfont图标",
-  "version": "1.4.0",
-  "preload": "preload.js",
+  "version": "v2.0.0",
+  "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
-  "logo": "iconfont.png",
+  "logo": "icon/iconfont.png",
   "features": [
     {
       "code": "iconfont",
       "explain": "快速搜索iconfont图标",
       "cmds": ["iconfont"],
-      "icon": "iconfont.png"
+      "icon": "icon/iconfont.png"
     }
   ]
 }

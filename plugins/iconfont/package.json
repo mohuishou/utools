@@ -1,0 +1,12 @@
+{
+  "name": "utools-iconfont",
+  "version": "v2.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/mousetrap": "^1.6.3",
+    "axios": "^0.19.2",
+    "mousetrap": "^1.6.5",
+    "utools-helper": "^1.0.0"
+  }
+}

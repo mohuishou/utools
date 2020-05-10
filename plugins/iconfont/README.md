@@ -6,9 +6,18 @@
 ## 使用方法
 
 - 输入关键词搜索
-- enter 下载 png 图片
-- command/ctrl + enter 复制图片到剪切板
-- option/alt + enter 浏览器打开 iconfont
+- 关键词通过空格分隔，第一个为搜索词，其余为筛选项，支持的筛选项:
+  > 具体请查看 iconfont, 示例: `icon 精选 多色 线性`
+  - 精选
+  - 单色
+  - 多色
+  - 线性
+  - 面性
+  - 扁平
+  - 手绘
+  - 简约
+  - 精美
+- 支持 svg, png 格式图片下载, svg 图片复制, 打开 iconfont 搜索等
 
 ## 预览
 

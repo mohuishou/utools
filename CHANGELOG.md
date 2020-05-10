@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/mohuishou/utools/compare/v1.10.0...v1.11.0) (2020-05-10)
+
+
+### Features
+
+* **helper:** 适配 utools v1.0.0 ([e3ac9ea](https://github.com/mohuishou/utools/commit/e3ac9ea507fbdb82a01742d25da8245d32f164dd))
+* **iconfont:** 适配 utools 1.0 ([ed632e3](https://github.com/mohuishou/utools/commit/ed632e36c025c50714217c986c78e0f0da93ff74))
+
 ## [1.10.0](https://github.com/mohuishou/utools/compare/v1.9.0...v1.10.0) (2020-05-09)
 
 

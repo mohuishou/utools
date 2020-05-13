@@ -16,3 +16,10 @@ utools 插件，搜索 vscode 历史项目，点击回车打开
 ### 使用示例
 
 ![vsc.gif](https://i.loli.net/2019/12/03/35QbFJU67LoH1kP.gif)
+
+### 更新
+
+#### v2.0.0
+
+- 适配 utools v1.0
+- 新增打开 wsl 等远程开发文件夹

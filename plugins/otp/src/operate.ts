@@ -7,13 +7,13 @@ let Operate = {
     let msg = "删除成功";
     if (!res.ok) msg = "删除失败: " + res.error;
     console.log(res, item);
-    utools.showNotification(msg, "otp");
+    utools.showNotification(msg);
   },
 
   copy(item: CallbackListItem) {
     clipboard.writeText(item.token);
-    utools.showNotification("复制成功", "otp");
-  }
+    utools.showNotification("复制成功");
+  },
 };
 
 export default Operate;

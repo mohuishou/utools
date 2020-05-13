@@ -11,13 +11,13 @@ let operates = {
     let msg = "删除成功";
     if (!res.ok) msg = "删除失败: " + res.error;
     console.log(res, item);
-    utools.showNotification(msg, "otp");
+    utools.showNotification(msg);
   },
 
   enter: (item: Item<DBItem<OTP>>) => {
     clipboard.writeText(item.data.data.token);
-    utools.showNotification(item.data.data.token + "复制成功", "otp");
-  }
+    utools.showNotification(item.data.data.token + "复制成功");
+  },
 };
 
 export class Search implements Plugin {

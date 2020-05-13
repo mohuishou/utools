@@ -13,7 +13,7 @@
     "mousetrap": "^1.6.3",
     "reflect-metadata": "^0.1.13",
     "speakeasy": "^2.0.0",
-    "utools-helper": "^0.1.3"
+    "utools-helper": "^1.0.3"
   },
   "devDependencies": {
     "@types/mousetrap": "^1.6.3",

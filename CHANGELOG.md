@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/mohuishou/utools/compare/v1.13.0...v1.14.0) (2020-05-13)
+
+
+### Features
+
+* **otp:** 移除不需要的库，减少安全风险 ([8c6993d](https://github.com/mohuishou/utools/commit/8c6993d3ac9857a8d56058241c5ccbd31284c7fb))
+
 ## [1.13.0](https://github.com/mohuishou/utools/compare/v1.12.0...v1.13.0) (2020-05-13)
 
 

@@ -1,6 +1,3 @@
-import "reflect-metadata";
-import "es6-shim";
-import { plainToClass } from "class-transformer";
 import { totp, Encoding, TotpOptions } from "speakeasy";
 import { DBItem } from "utools-helper/@types/utools";
 
@@ -32,7 +29,7 @@ export class OTPItem implements DBItem<OTP> {
   static search(name: string): OTPItem[] {
     return utools.db.allDocs<OTP>(name).map(
       (item: DBItem<OTP>): OTPItem => {
-        item.data = plainToClass(OTP, item.data);
+        item.data = new OTP(item.data.name, item.data.secret);
         return item as OTPItem;
       }
     );

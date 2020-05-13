@@ -7,11 +7,8 @@
     "dev": "tsc -w"
   },
   "dependencies": {
-    "class-transformer": "^0.2.3",
-    "es6-shim": "^0.35.5",
     "jsqr": "^1.2.0",
     "mousetrap": "^1.6.3",
-    "reflect-metadata": "^0.1.13",
     "speakeasy": "^2.0.0",
     "utools-helper": "^1.0.3"
   },

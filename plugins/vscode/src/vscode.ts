@@ -20,13 +20,12 @@ export class VSCode implements Plugin {
       }
     }
 
-    return [...new Set(files)]
-      .map((file: any) => {
-        if (typeof file === "object" && "configURIPath" in file) {
-          file = file.configURIPath;
-        }
-        return decodeURIComponent(file);
-      })
+    return [...new Set(files)].map((file: any) => {
+      if (typeof file === "object" && "configURIPath" in file) {
+        file = file.configURIPath;
+      }
+      return decodeURIComponent(file);
+    });
   }
 
   get storage(): string {
@@ -41,19 +40,17 @@ export class VSCode implements Plugin {
   async search(word?: string): Promise<ListItem[]> {
     let files = this.files;
     // 搜索
-    word.split(/\s+/g).forEach(keyword => {
+    word.split(/\s+/g).forEach((keyword) => {
       files = files.filter((file: string) => {
         return file.toLowerCase().includes(keyword.trim().toLowerCase());
       });
     });
 
-    return files.map(
-      (file: any): ListItem => new ListItem(basename(file), file)
-    );
+    return files.map((file: any): ListItem => new ListItem(basename(file), file));
   }
 
   select(item: ListItem) {
-    let cmd = `${GetPath()} --folder-uri "${item.description}"`;
+    let cmd = `"${GetPath()}" --folder-uri "${item.description}"`;
     if (process.platform !== "win32") {
       cmd = `bash -l -c  '${cmd}'`;
     }
@@ -61,5 +58,6 @@ export class VSCode implements Plugin {
     let res = require("child_process").execSync(cmd);
     if (res.toString() !== "") throw res.toString();
     utools.outPlugin();
+    utools.hideMainWindow();
   }
 }

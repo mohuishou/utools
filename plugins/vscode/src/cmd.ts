@@ -11,7 +11,7 @@ function getID(): string {
   return utools.getLocalId() + "path";
 }
 
-export class Storage implements Plugin {
+export class CMD implements Plugin {
   mode: TplFeatureMode = "none";
   code = "vsc-path";
   enter(action: Action) {
@@ -19,7 +19,7 @@ export class Storage implements Plugin {
     if (!item) {
       item = {
         _id: getID(),
-        data: action.payload[0].path
+        data: action.payload[0].path,
       };
     }
     item.data = action.payload[0].path;
@@ -29,5 +29,6 @@ export class Storage implements Plugin {
     } else {
       utools.showNotification("vscode path 设置失败");
     }
+    utools.redirect("vsc", "");
   }
 }

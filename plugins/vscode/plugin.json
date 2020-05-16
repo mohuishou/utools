@@ -16,7 +16,7 @@
     },
     {
       "code": "vsc-setting",
-      "explain": "vscode storage.json 路径设置",
+      "explain": "vscode 历史搜索配置信息",
       "cmds": ["vsc-setting"],
       "icon": "icon.png"
     },

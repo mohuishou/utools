@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://github.com/mohuishou/utools/compare/v1.14.0...v1.14.1) (2020-05-16)
+
+
+### Bug Fixes
+
+* windows 无法匹配可执行文件的问题 ([75f6fcf](https://github.com/mohuishou/utools/commit/75f6fcf9440f0a73ef1f2aa145ced7d4e91966e3))
+
 ## [1.14.0](https://github.com/mohuishou/utools/compare/v1.13.0...v1.14.0) (2020-05-13)
 
 

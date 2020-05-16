@@ -541,27 +541,27 @@ export interface Ubrowser {
   scroll(y: Number): Ubrowser;
   scroll(x: Number, y: Number): Ubrowser;
   run(ubrowserId: Number): Promise<Ubrowser>;
-  run(options: UbrowserRunOptions): Promise<Ubrowser>;
+  run(options?: UbrowserRunOptions): Promise<Ubrowser>;
 }
 
 export interface UbrowserRunOptions {
-  show: Boolean; //(可选)
-  width: Number; //(可选) 宽度
-  height: Number; //(可选) 高度
-  x: Number; //(可选)
-  y: Number; //(可选)
-  center: Boolean; //(可选)
-  minWidth: Number; //(可选) 窗口的最小宽度, 默认值为
-  minHeight: Number; //(可选) 窗口的最小高度. 默认值为
-  maxWidth: Number; //(可选) 窗口的最大宽度,
-  maxHeight: Number; //(可选) 窗口的最大高度,
-  resizable: Boolean; //(可选) 窗口是否可以改变尺寸,
-  movable: Boolean; //(可选) 窗口是否可以移动. 在 Linux 中无效。 默认值为
-  minimizable: Boolean; //(可选) 窗口是否可以最小化. 在 Linux 中无效。 默认值为
-  maximizable: Boolean; //(可选) 窗口是否可以最大化动. 在 Linux 中无效。 默认值为
-  alwaysOnTop: Boolean; //(可选) 窗口是否永远置顶。
-  fullscreen: Boolean; //(可选) 窗口是否全屏.
-  fullscreenable: Boolean; //(可选) 窗口是否可以进入全屏状态，默认值为
-  enableLargerThanScreen: Boolean; //(可选) 是否允许改变窗口的大小使之大于屏幕的尺寸. 仅适用于 macOS，因为其它操作系统默认允许 大于屏幕的窗口。 默认值为
-  opacity: Number; //(可选) 设置窗口初始的不透明度, 介于 0.0 (完全透明) 和 1.0 (完全不透明) 之间。仅支持 Windows 和
+  show?: Boolean; //(可选)
+  width?: Number; //(可选) 宽度
+  height?: Number; //(可选) 高度
+  x?: Number; //(可选)
+  y?: Number; //(可选)
+  center?: Boolean; //(可选)
+  minWidth?: Number; //(可选) 窗口的最小宽度, 默认值为
+  minHeight?: Number; //(可选) 窗口的最小高度. 默认值为
+  maxWidth?: Number; //(可选) 窗口的最大宽度,
+  maxHeight?: Number; //(可选) 窗口的最大高度,
+  resizable?: Boolean; //(可选) 窗口是否可以改变尺寸,
+  movable?: Boolean; //(可选) 窗口是否可以移动. 在 Linux 中无效。 默认值为
+  minimizable?: Boolean; //(可选) 窗口是否可以最小化. 在 Linux 中无效。 默认值为
+  maximizable?: Boolean; //(可选) 窗口是否可以最大化动. 在 Linux 中无效。 默认值为
+  alwaysOnTop?: Boolean; //(可选) 窗口是否永远置顶。
+  fullscreen?: Boolean; //(可选) 窗口是否全屏.
+  fullscreenable?: Boolean; //(可选) 窗口是否可以进入全屏状态，默认值为
+  enableLargerThanScreen?: Boolean; //(可选) 是否允许改变窗口的大小使之大于屏幕的尺寸. 仅适用于 macOS，因为其它操作系统默认允许 大于屏幕的窗口。 默认值为
+  opacity?: Number; //(可选) 设置窗口初始的不透明度, 介于 0.0 (完全透明) 和 1.0 (完全不透明) 之间。仅支持 Windows 和
 }

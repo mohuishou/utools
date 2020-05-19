@@ -1,6 +1,6 @@
 {
   "name": "utools-helper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/plugin.js",
   "types": "@types/plugin.d.ts",
   "license": "MIT",

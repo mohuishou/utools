@@ -540,8 +540,8 @@ export interface Ubrowser {
   scroll(selector: string): Ubrowser;
   scroll(y: Number): Ubrowser;
   scroll(x: Number, y: Number): Ubrowser;
-  run(ubrowserId: Number): Promise<Ubrowser>;
-  run(options?: UbrowserRunOptions): Promise<Ubrowser>;
+  run(ubrowserId: Number): Promise<any>;
+  run(options?: UbrowserRunOptions): Promise<any>;
 }
 
 export interface UbrowserRunOptions {

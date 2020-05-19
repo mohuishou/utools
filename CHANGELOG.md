@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.3](https://github.com/mohuishou/utools/compare/v1.14.2...v1.14.3) (2020-05-19)
+
+
+### Bug Fixes
+
+* 插件被主动退出导致 vscode 进程被杀掉的问题 ([a269db6](https://github.com/mohuishou/utools/commit/a269db677f1efac03575e5ca7163df97532bcaf6))
+* **helper:** 修复utools.d.ts文件的问题 ([f59fe32](https://github.com/mohuishou/utools/commit/f59fe32edb3a400dc0a7658c274eaa4d20242082))
+
 ### [1.14.2](https://github.com/mohuishou/utools/compare/v1.14.1...v1.14.2) (2020-05-16)
 
 

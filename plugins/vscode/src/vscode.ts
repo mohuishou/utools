@@ -3,6 +3,7 @@ import { join, basename } from "path";
 import { readFileSync } from "fs";
 import { GetPath } from "./cmd";
 import { GetStorage } from "./storage";
+import { execSync } from "child_process";
 
 export const STORAGE = "vscode_storage";
 
@@ -55,8 +56,13 @@ export class VSCode implements Plugin {
       cmd = `bash -l -c  '${cmd}'`;
     }
 
-    let res = require("child_process").execSync(cmd);
-    if (res.toString() !== "") throw res.toString();
+    try {
+      let res = execSync(cmd, { timeout: 3000 });
+      if (res.toString().trim() !== "") throw res.toString();
+    } catch (err) {
+      console.log(err);
+    }
+
     utools.outPlugin();
     utools.hideMainWindow();
   }

@@ -51,7 +51,9 @@ export class VSCode implements Plugin {
   }
 
   select(item: ListItem) {
-    let cmd = `"${GetPath()}" --folder-uri "${item.description}"`;
+    let cmd = GetPath();
+    cmd = cmd === "code" ? cmd : `"${cmd}"`;
+    cmd += ` --folder-uri "${item.description}"`;
     if (process.platform !== "win32") {
       cmd = `bash -l -c  '${cmd}'`;
     }
@@ -60,10 +62,11 @@ export class VSCode implements Plugin {
       let res = execSync(cmd, { timeout: 3000 });
       if (res.toString().trim() !== "") throw res.toString();
     } catch (err) {
+      utools.showNotification(err);
       console.log(err);
     }
 
-    utools.outPlugin();
-    utools.hideMainWindow();
+    //utools.outPlugin();
+    //utools.hideMainWindow();
   }
 }

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.4](https://github.com/mohuishou/utools/compare/v1.14.3...v1.14.4) (2020-05-21)
+
+
+### Bug Fixes
+
+* **helper:** up utools.d.ts ([5e5c227](https://github.com/mohuishou/utools/commit/5e5c227dc1ea6db772bf5010c53442d27f5799c6))
+* **vsc:** 修复 code 命令无法打开项目 [#15](https://github.com/mohuishou/utools/issues/15) [#16](https://github.com/mohuishou/utools/issues/16) ([beec559](https://github.com/mohuishou/utools/commit/beec55938b72d0eb738708b938d1a9daa21680c2))
+
 ### [1.14.3](https://github.com/mohuishou/utools/compare/v1.14.2...v1.14.3) (2020-05-19)
 
 

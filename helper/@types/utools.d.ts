@@ -496,7 +496,7 @@ export interface TemplatePlugin {
 interface onPluginEnterCBParams {
   code: string; // plugin.json 配置的 feature.code
   type: string; // plugin.json 配置的 feature.cmd.code
-  payload: string; // feature.cmd.type 对应匹配的数据
+  payload: String | Object | Array<any>; // feature.cmd.type 对应匹配的数据
   optional?: Array<any>; // 存在多个匹配时的可选匹配类型和数据 [{ type, payload }]
 }
 

@@ -19,13 +19,13 @@ export class SourceTree implements Plugin {
   async search(word: string): Promise<ListItem[]> {
     let bookmarks = this.bookmarks;
     // 搜索
-    word.split(/\s+/g).forEach(keyword => {
+    word.split(/\s+/g).forEach((keyword) => {
       bookmarks = bookmarks.filter((bookmark: string) => {
         return bookmark.toLowerCase().includes(keyword.trim().toLowerCase());
       });
     });
 
-    return bookmarks.map(bookmark => {
+    return bookmarks.map((bookmark) => {
       return new ListItem(basename(bookmark), bookmark);
     });
   }

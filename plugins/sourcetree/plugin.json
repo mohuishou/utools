@@ -2,7 +2,7 @@
   "name": "5301d864",
   "pluginName": "sourcetree",
   "description": "快速搜索sourcetree项目并打开",
-  "version": "v0.1.0",
+  "version": "v0.2.0",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",

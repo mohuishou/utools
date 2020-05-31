@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.5](https://github.com/mohuishou/utools/compare/v1.14.4...v1.14.5) (2020-05-31)
+
+
+### Bug Fixes
+
+* **helper:** payload type ([7bcc479](https://github.com/mohuishou/utools/commit/7bcc4790259483d95bfdf9065a54825f7e07f4ef)), closes [#17](https://github.com/mohuishou/utools/issues/17)
+* **helper:** 修复 allDocs 类型问题 ([8977ae9](https://github.com/mohuishou/utools/commit/8977ae9a6fb71e3946414c4d88b3f037e8ff0afd))
+
 ### [1.14.4](https://github.com/mohuishou/utools/compare/v1.14.3...v1.14.4) (2020-05-21)
 
 

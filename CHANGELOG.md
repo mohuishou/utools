@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.6](https://github.com/mohuishou/utools/compare/v1.14.5...v1.14.6) (2020-06-04)
+
+
+### Bug Fixes
+
+* **vsc:** 修复vscode插件不退出为问题 ([a01ba70](https://github.com/mohuishou/utools/commit/a01ba702026c32f4dc8893538403c5ae4db0f45b))
+
 ### [1.14.5](https://github.com/mohuishou/utools/compare/v1.14.4...v1.14.5) (2020-05-31)
 
 

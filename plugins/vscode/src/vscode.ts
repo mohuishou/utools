@@ -47,7 +47,9 @@ export class VSCode implements Plugin {
       });
     });
 
-    return files.map((file: any): ListItem => new ListItem(basename(file), file));
+    return files.map(
+      (file: any): ListItem => new ListItem(basename(file), file)
+    );
   }
 
   select(item: ListItem) {
@@ -66,7 +68,7 @@ export class VSCode implements Plugin {
       console.log(err);
     }
 
-    //utools.outPlugin();
-    //utools.hideMainWindow();
+    utools.outPlugin();
+    utools.hideMainWindow();
   }
 }

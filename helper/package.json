@@ -1,6 +1,6 @@
 {
   "name": "utools-helper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/plugin.js",
   "types": "@types/plugin.d.ts",
   "license": "MIT",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "build:types": "rm @types/plugin.d.ts && tsc --declaration -p ./ -t ES2018 --emitDeclarationOnly --outDir ./@types",
-    "prepublish": "npm run build:types && npm run build"
+    "prepare": "npm run build:types && npm run build"
   },
   "dependencies": {
     "@types/node": "^13.1.0"

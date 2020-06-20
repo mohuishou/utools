@@ -1,5 +1,5 @@
 import { Plugin, ListItem } from "utools-helper";
-import { join, basename } from "path";
+import { basename } from "path";
 import { readFileSync } from "fs";
 import { GetPath } from "./cmd";
 import { GetStorage } from "./storage";
@@ -47,9 +47,7 @@ export class VSCode implements Plugin {
       });
     });
 
-    return files.map(
-      (file: any): ListItem => new ListItem(basename(file), file)
-    );
+    return files.map((file: any): ListItem => new ListItem(basename(file), file));
   }
 
   select(item: ListItem) {
@@ -60,13 +58,8 @@ export class VSCode implements Plugin {
       cmd = `bash -l -c  '${cmd}'`;
     }
 
-    try {
-      let res = execSync(cmd, { timeout: 3000 });
-      if (res.toString().trim() !== "") throw res.toString();
-    } catch (err) {
-      utools.showNotification(err);
-      console.log(err);
-    }
+    let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();
+    if (res !== "" && !res.toLowerCase().includes("timeout")) throw res.toString();
 
     utools.outPlugin();
     utools.hideMainWindow();

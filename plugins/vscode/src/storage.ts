@@ -20,14 +20,14 @@ export class Storage implements Plugin {
     if (!item) {
       item = {
         _id: getStorageID(),
-        data: action.payload[0].path
+        data: action.payload[0].path,
       };
     }
     item.data = action.payload[0].path;
 
     let res = utools.db.put(item);
     if (res.ok) {
-      utools.showNotification("storage.json 设置成功", "vsc-setting");
+      utools.showNotification("storage.json 设置成功");
     } else {
       utools.showNotification("storage.json 设置失败");
       throw new Error(JSON.stringify(res));

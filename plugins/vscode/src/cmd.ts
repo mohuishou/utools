@@ -25,7 +25,7 @@ export class CMD implements Plugin {
     item.data = action.payload[0].path;
     let res = utools.db.put(item);
     if (res.ok) {
-      utools.showNotification("vscode path 设置成功", "vsc-setting");
+      utools.showNotification("vscode path 设置成功");
     } else {
       utools.showNotification("vscode path 设置失败");
     }

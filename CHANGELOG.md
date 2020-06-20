@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.7](https://github.com/mohuishou/utools/compare/v1.14.6...v1.14.7) (2020-06-20)
+
+
+### Bug Fixes
+
+* [#19](https://github.com/mohuishou/utools/issues/19) 修复 utools.d.ts ([b6bd780](https://github.com/mohuishou/utools/commit/b6bd78004a9bf67b9568410cd7da0a7698cdfdc3))
+* [#20](https://github.com/mohuishou/utools/issues/20) 修复 vscode 提示错误信息的问题 ([bd0e112](https://github.com/mohuishou/utools/commit/bd0e1122cedbc62a7d6ae2d89625dabb4010dcef))
+
 ### [1.14.6](https://github.com/mohuishou/utools/compare/v1.14.5...v1.14.6) (2020-06-04)
 
 

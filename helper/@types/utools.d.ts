@@ -60,11 +60,7 @@ export interface UTools {
    * @param placeholder 自输入框提示
    * @param isFocus 是否聚焦
    */
-  setSubInput(
-    onChange: onSubInputChange,
-    placeholder?: string,
-    isFocus?: Boolean
-  ): Boolean;
+  setSubInput(onChange: onSubInputChange, placeholder?: string, isFocus?: Boolean): Boolean;
 
   /**
    * @description 移出先前设置的子输入框，在插件切换到其他页面时可以重新设置子输入框为其所用。
@@ -108,9 +104,7 @@ export interface UTools {
    * 弹出文件选择框
    * @param options OpenDialogSyncOptions
    */
-  showOpenDialog(
-    options: Electron.OpenDialogSyncOptions
-  ): Array<string> | undefined;
+  showOpenDialog(options: Electron.OpenDialogSyncOptions): Array<string> | undefined;
 
   /**
    * 打开文件保存框
@@ -134,9 +128,7 @@ export interface UTools {
    * 停止插件页面中查找
    * @param action "clearSelection" | "keepSelection" | "activateSelection", 默认 "clearSelection"
    */
-  stopFindInPage(
-    action?: "clearSelection" | "keepSelection" | "activateSelection"
-  ): void;
+  stopFindInPage(action?: "clearSelection" | "keepSelection" | "activateSelection"): void;
 
   /**
    * 原生拖拽文件到其他窗口
@@ -149,10 +141,7 @@ export interface UTools {
    * @param url  相对路径的html文件 例如: test.html?param=xxx
    * @param options 注意: preload 需配置相对位置
    */
-  createBrowserWindow(
-    url: string,
-    options: Electron.BrowserWindowConstructorOptions
-  ): void;
+  createBrowserWindow(url: string, options: Electron.BrowserWindowConstructorOptions): void;
 
   // 动态增减
   /**
@@ -370,7 +359,7 @@ export interface DB {
    * @description 执行该方法将会根据文档ID获取数据
    * @param id doc id
    */
-  get<T = any>(id: string): DBItem<T>;
+  get<T = any>(id: string): DBItem<T> | null;
 
   /**
    * @description 执行该方法将会删除数据库文档，可以传入文档对象或文档id进行操作。

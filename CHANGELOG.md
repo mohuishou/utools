@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.16.1](https://github.com/mohuishou/utools/compare/v1.16.0...v1.16.1) (2020-07-10)
+
+
+### Bug Fixes
+
+* **yuque:** fix id ([093a6cd](https://github.com/mohuishou/utools/commit/093a6cd1f7c290a3f315034604a9e24aba9d97a8))
+
 ## [1.16.0](https://github.com/mohuishou/utools/compare/v1.15.0...v1.16.0) (2020-07-10)
 
 

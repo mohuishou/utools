@@ -1,6 +1,6 @@
 {
   "name": "utools-helper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/plugin.js",
   "types": "@types/plugin.d.ts",
   "license": "MIT",
@@ -13,6 +13,11 @@
     "build": "tsc",
     "build:types": "rm @types/plugin.d.ts && tsc --declaration -p ./ -t ES2018 --emitDeclarationOnly --outDir ./@types",
     "prepare": "npm run build:types && npm run build"
+  },
+  "homepage": "https://github.com/mohuishou/utools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohuishou/utools.git"
   },
   "dependencies": {
     "@types/node": "^13.1.0"

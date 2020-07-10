@@ -5,13 +5,10 @@
 
 ## 开发工具
 
-- [utools helper](./helper)
-
-  包含代码定义文件，以及模板插件辅助开发包
-
-- [utools cli](./cli)
-
-  utools cli 工具，目前包含文档插件生成器
+| 工具                      | 版本                                                         | 下载                                                         | 说明                                     |
+| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------------------- |
+| [utools helper](./helper) | [![Version](https://img.shields.io/npm/v/utools-helper.svg)](https://npmjs.org/package/utools-helper) | [![Downloads/week](https://img.shields.io/npm/dw/utools-helper.svg)](https://npmjs.org/package/utools-helper) | 包含代码定义文件，以及模板插件辅助开发包 |
+| [utools cli](./cli)       | [![Version](https://img.shields.io/npm/v/utools-cli.svg)](https://npmjs.org/package/utools-cli) | [![Downloads/week](https://img.shields.io/npm/dw/utools-cli.svg)](https://npmjs.org/package/utools-cli) | utools cli 工具，目前包含文档插件生成器  |
 
 ## 插件列表
 
@@ -26,21 +23,12 @@
 
 ## 文档插件
 
-- [gorm 文档](./docs/gorm)
-
-  包含中英文文档
-
-- [dayjs 文档](./docs/dayjs)
-
-  包含中英文文档
-
-- [gin 文档](./docs/gin)
-
-  包含中英文文档
-
-- [reactjs 文档](./docs/reactjs)
-
-  包含中英文文档
+| 文档                           | 说明           |
+| ------------------------------ | -------------- |
+| [gorm 文档](./docs/gorm)       | 包含中英文文档 |
+| [dayjs 文档](./docs/dayjs)     | 包含中英文文档 |
+| [gin 文档](./docs/gin)         | 包含中英文文档 |
+| [reactjs 文档](./docs/reactjs) | 包含中英文文档 |
 
 ## 插件安装
 

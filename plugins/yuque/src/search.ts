@@ -1,6 +1,6 @@
 import { Plugin, ListItem, IListItem } from "utools-helper";
 import { Client } from "./yuque";
-import { format } from "prettier";
+import * as remark from "remark";
 
 // 背景色区块支持
 const colorBlocks: { [key: string]: string } = {
@@ -108,10 +108,14 @@ export class Search implements Plugin {
     }
 
     // 格式化并复制到剪切板
-    utools.copyText(format(data, { parser: "markdown" }));
+    data = remark()
+      .data("settings", { commonmark: true, emphasis: "*", strong: "*" })
+      .processSync(data);
+
+    utools.copyText(String(data));
     utools.showNotification("复制成功: " + item.data.title);
-    utools.outPlugin();
-    utools.hideMainWindow();
+    // utools.outPlugin();
+    // utools.hideMainWindow();
   }
 
   async open(item: IListItem) {

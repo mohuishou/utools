@@ -1,9 +1,17 @@
 # 语雀搜索
 
+- [**点击查看 chrome 历史搜索，vscode 历史项目搜索等更多插件**](https://github.com/mohuishou/utools)
+- **你的 star 是我持续更新的动力**
+
 ## 特性
 
 - 快速搜索语雀知识库
-- 支持复制为 markdown，支持语雀区块语法（替换为对应的 HTML 文件）
+- 支持复制为 markdown，支持语雀区块语法（替换为对应的 HTML）
+
+## 安装
+
+- 在 utools 插件商店搜索`语雀搜索`
+- 或者访问 https://github.com/mohuishou/utools/releases
 
 ## 使用
 

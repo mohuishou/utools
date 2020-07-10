@@ -40,6 +40,11 @@
 
   搜索并打开 sourcetree 项目
 
+- [语雀搜索](./plugins/yuque)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%yuque?label=yuque)
+
+语雀搜索
+
 ## 文档插件
 
 - [gorm 文档](./docs/gorm)

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/mohuishou/utools/compare/v1.14.7...v1.15.0) (2020-07-10)
+
+
+### Features
+
+* **yuque:** 新增语雀搜索插件 ([db831ab](https://github.com/mohuishou/utools/commit/db831abff0183b4ed8d5b32496debe0797928ff4))
+
+
+### Bug Fixes
+
+* [#21](https://github.com/mohuishou/utools/issues/21) onPluginEnter ([1bed93b](https://github.com/mohuishou/utools/commit/1bed93beaf489ba50e896b2150dd160b3d3eb59d))
+
 ### [1.14.7](https://github.com/mohuishou/utools/compare/v1.14.6...v1.14.7) (2020-06-20)
 
 

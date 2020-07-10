@@ -26,7 +26,7 @@
   utools 插件，搜索 vscode 历史项目，点击回车打开
 
 - [chrome-history](./plugins/chrome-history)
-  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20chrome%20history?label=ch)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/chrome-history?label=chrome-history)
 
   chrome 历史记录搜索插件
 
@@ -41,7 +41,7 @@
   搜索并打开 sourcetree 项目
 
 - [语雀搜索](./plugins/yuque)
-  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%yuque?label=yuque)
+  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20yuque?label=yuque)
 
 语雀搜索
 

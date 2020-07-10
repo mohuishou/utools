@@ -8,7 +8,16 @@ import {
   TplFeatureMode,
 } from "../@types/utools";
 
-export class ListItem<T = any> implements CallbackListItem {
+export interface IListItem<T = any> extends CallbackListItem {
+  title: string;
+  description: string;
+  data: T;
+  icon?: string;
+  operate?: string;
+  [key: string]: any;
+}
+
+export class ListItem<T = any> implements IListItem {
   title: string;
   description: string;
   data: T;
@@ -37,15 +46,15 @@ export interface Plugin {
   code: string;
   mode?: TplFeatureMode;
   placeholder?: string;
-  enter?<T = any>(action?: Action): Promise<ListItem<T>[]> | void;
+  enter?<T = any>(action?: Action): Promise<IListItem<T>[]> | void;
   search?<T = any>(
     word: string,
     action?: Action
-  ): Promise<ListItem<T>[]> | void;
+  ): Promise<IListItem<T>[]> | void;
   select?<T = any, U = any>(
-    item: ListItem<T>,
+    item: IListItem<T>,
     action?: Action
-  ): Promise<ListItem<U>[]> | void;
+  ): Promise<IListItem<U>[]> | void;
 }
 
 class Feature implements TplFeature {
@@ -79,7 +88,7 @@ class Feature implements TplFeature {
         this.catchError(error, cb);
       }
     },
-    select: async (action, item: ListItem, cb) => {
+    select: async (action, item: IListItem, cb) => {
       try {
         if (!this.plugin.select) {
           return;

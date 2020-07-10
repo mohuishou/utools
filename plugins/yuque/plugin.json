@@ -1,0 +1,23 @@
+{
+  "pluginName": "语雀搜索",
+  "description": "快速搜索语雀知识库，支持复制为markdown",
+  "version": "v1.0.0",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "yuque-search",
+      "explain": "快速搜索语雀知识库，支持复制为markdown",
+      "cmds": ["语雀搜索"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "yuque-token",
+      "explain": "设置个人token",
+      "cmds": ["语雀设置"],
+      "icon": "icon.png"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "utools-yuque",
+  "version": "1.0.0",
+  "description": "快速搜索语雀知识库，支持复制为markdown",
+  "main": "dist/preload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "utools",
+    "yuque"
+  ],
+  "author": "mohuishou",
+  "license": "ISC",
+  "dependencies": {
+    "@types/prettier": "^2.0.2",
+    "@yuque/sdk": "^1.1.1",
+    "axios": "^0.19.2",
+    "prettier": "^2.0.5",
+    "utools-helper": "^1.1.0"
+  }
+}

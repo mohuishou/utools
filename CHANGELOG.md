@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/mohuishou/utools/compare/v1.15.0...v1.16.0) (2020-07-10)
+
+
+### Features
+
+* **yuque:** 修改格式化包，减小体积 ([9e29d3f](https://github.com/mohuishou/utools/commit/9e29d3f3171dcde6121b51f90f6c2834a4499614))
+
 ## [1.15.0](https://github.com/mohuishou/utools/compare/v1.14.7...v1.15.0) (2020-07-10)
 
 

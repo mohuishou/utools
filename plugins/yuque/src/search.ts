@@ -114,8 +114,8 @@ export class Search implements Plugin {
 
     utools.copyText(String(data));
     utools.showNotification("复制成功: " + item.data.title);
-    // utools.outPlugin();
-    // utools.hideMainWindow();
+    utools.outPlugin();
+    utools.hideMainWindow();
   }
 
   async open(item: IListItem) {

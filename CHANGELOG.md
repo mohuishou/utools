@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/mohuishou/utools/compare/v1.16.2...v1.17.0) (2020-07-11)
+
+
+### Features
+
+* **vedio:** 新增视频解析插件 ([5a3b6ae](https://github.com/mohuishou/utools/commit/5a3b6ae392a826d9a67de8ca9ab20fd4569a8c27))
+
 ### [1.16.2](https://github.com/mohuishou/utools/compare/v1.16.1...v1.16.2) (2020-07-11)
 
 

@@ -20,6 +20,7 @@
 | [chrome-history](./plugins/chrome-history)  | ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/chrome-history?label=chrome-history) | chrome 历史记录搜索插件                         |
 | [sourcetree 项目搜索](./plugins/sourcetree) | ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20sourcetree?label=sourcetree) | 搜索并打开 sourcetree 项目                      |
 | [语雀搜索](./plugins/yuque)                 | ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/build%20yuque?label=yuque) | 快速搜索语雀知识库，支持复制为markdown          |
+| [视频解析](./plugins/vedio-parse)           | ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mohuishou/utools/vedio-parse?label=视频解析) | 获取当前浏览器窗口地址，跳转到解析地址          |
 
 ## 文档插件
 

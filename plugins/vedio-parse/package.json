@@ -1,0 +1,18 @@
+{
+  "name": "utools-vedio-parse",
+  "version": "1.0.0",
+  "description": "视频解析",
+  "main": "dist/preload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "utools",
+    "yuque"
+  ],
+  "author": "mohuishou",
+  "license": "ISC",
+  "dependencies": {
+    "utools-helper": "^1.1.0"
+  }
+}

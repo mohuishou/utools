@@ -1,0 +1,28 @@
+{
+  "name": "a12136e9",
+  "pluginName": "视频解析",
+  "description": "快速读取当前浏览器地址并且跳转到视频解析网站",
+  "version": "v1.0.0",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "vedio",
+      "explain": "快速读取当前浏览器地址并且跳转到视频解析网站",
+      "cmds": [
+        "视频解析",
+        "VIP视频",
+        {
+          "type": "window",
+          "label": "视频解析",
+          "match": {
+            "app": ["Google Chrome.app", "edge.app", "chrome.exe", "edge.exe"]
+          }
+        }
+      ],
+      "icon": "icon.png"
+    }
+  ]
+}

@@ -14,6 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "utools-helper": "^1.1.0"
+    "utools-helper": "../../helper"
   }
 }

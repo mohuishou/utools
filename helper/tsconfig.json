@@ -1,10 +1,19 @@
 {
   "compilerOptions": {
+    // "outFile": "dist/plugin.js",
     "outDir": "dist",
+    "declaration": true,
     "sourceMap": false,
     "noImplicitAny": true,
-    "module": "commonjs",
+    "module": "CommonJS",
+    // "module": "AMD",
     "target": "ES2018",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "isolatedModules": false
+    // "baseUrl": ".",
+    // "paths": {
+    //   "utools": ["@types/utools.d.ts"],
+    //   "electron": ["@types/electron.d.ts"]
+    // }
   }
 }

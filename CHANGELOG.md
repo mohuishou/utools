@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/mohuishou/utools/compare/v1.17.0...v1.18.0) (2020-07-20)
+
+
+### Features
+
+* up plugin versiob ([2652b8b](https://github.com/mohuishou/utools/commit/2652b8b375517bbb12be18b59a92cebd29bf54fc))
+* **helper:** 新增模板配置 ([26d157d](https://github.com/mohuishou/utools/commit/26d157dcb5e277bd3033b463364c84a82e9df3f7))
+* **icon:** [#22](https://github.com/mohuishou/utools/issues/22) 使用结束之后默认不退出插件 ([0da1e49](https://github.com/mohuishou/utools/commit/0da1e496f61a7caa139f45196180339b82680672))
+* add ticktick ([3e15204](https://github.com/mohuishou/utools/commit/3e15204154f6ed493726a4579621cd701c4c9ac1))
+
 ## [1.17.0](https://github.com/mohuishou/utools/compare/v1.16.2...v1.17.0) (2020-07-11)
 
 

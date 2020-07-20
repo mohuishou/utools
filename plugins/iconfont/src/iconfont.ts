@@ -203,6 +203,5 @@ export class Iconfont implements Plugin {
         break;
     }
     utools.hideMainWindow();
-    utools.outPlugin();
   }
 }

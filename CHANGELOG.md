@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/mohuishou/utools/compare/v1.18.0...v1.19.0) (2020-07-24)
+
+
+### Features
+
+* [#24](https://github.com/mohuishou/utools/issues/24) 新增返回，修复 windows 下复制 png 图片背景为黑色的问题 ([8dd7e56](https://github.com/mohuishou/utools/commit/8dd7e564ed25cbb797be5ca89b56c406dcbb3b95))
+
 ## [1.18.0](https://github.com/mohuishou/utools/compare/v1.17.0...v1.18.0) (2020-07-20)
 
 

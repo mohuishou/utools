@@ -58,15 +58,11 @@ export class Iconfont implements Plugin {
     let words = keyword.trim().split(/\s+/g);
     console.log(keyword, words);
 
-    const r = await this.request.post(
-      "api/icon/search.json",
-      stringify(this.params(words)),
-      {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-      }
-    );
+    const r = await this.request.post("api/icon/search.json", stringify(this.params(words)), {
+      headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+    });
 
     let icons = r.data.data.icons.map((icon: any) => {
       return {
@@ -75,9 +71,9 @@ export class Iconfont implements Plugin {
         description: "回车查看更多选项",
         icon: "data:image/svg+xml;utf8," + encodeURIComponent(icon.show_svg),
         data: icon.show_svg,
-        searchUrl:
-          "https://www.iconfont.cn/search/index?searchType=icon&q=" + keyword,
+        searchUrl: "https://www.iconfont.cn/search/index?searchType=icon&q=" + keyword,
         operate: "show_operate",
+        keyword: keyword,
       };
     });
     return icons;
@@ -92,6 +88,7 @@ export class Iconfont implements Plugin {
       sortType: "updated_at",
       ctoken: this.ctoken,
     };
+
     if (words.length >= 2) {
       words.forEach((word, index) => {
         if (index == 0) return;
@@ -133,6 +130,7 @@ export class Iconfont implements Plugin {
         data: item.data,
         icon: "icon/download.svg",
         operate: "download",
+        item: item,
       },
       {
         title: "下载 PNG 图片",
@@ -141,6 +139,7 @@ export class Iconfont implements Plugin {
         id: item.id,
         icon: "icon/download.svg",
         operate: "download_png",
+        item: item,
       },
       {
         title: "复制 SVG 图片",
@@ -148,6 +147,7 @@ export class Iconfont implements Plugin {
         data: item.data,
         icon: "icon/copy.svg",
         operate: "copy",
+        item: item,
       },
       {
         title: "复制 PNG 图片",
@@ -155,6 +155,7 @@ export class Iconfont implements Plugin {
         data: item.icon,
         icon: "icon/copy.svg",
         operate: "copy_png",
+        item: item,
       },
       {
         title: "打开浏览器查看搜索结果",
@@ -162,8 +163,17 @@ export class Iconfont implements Plugin {
         data: item.searchUrl,
         icon: "icon/browser.svg",
         operate: "open",
+        item: item,
+      },
+      {
+        title: "返回上一页",
+        description: item.title,
+        data: item.keyword,
+        icon: "icon/back.png",
+        operate: "return",
       },
     ];
+    let tmpPath = utools.getPath("downloads");
     switch (item.operate) {
       case "show_operate":
         return items;
@@ -173,7 +183,9 @@ export class Iconfont implements Plugin {
         utools.showNotification("文件已保存到下载目录");
         break;
       case "copy":
-        utools.copyText(item.data);
+        tmpPath = join(utools.getPath("temp"), item.id + ".svg");
+        writeFileSync(tmpPath, item.data);
+        utools.copyFile(tmpPath);
         utools.showNotification("svg 已复制到剪切板");
         break;
       case "open":
@@ -195,9 +207,15 @@ export class Iconfont implements Plugin {
       case "copy_png":
         let dataUrl = await this.svg2png(item.id, item.data);
         let img = nativeImage.createFromDataURL(dataUrl);
-        utools.copyImage(img.toPNG());
+
+        tmpPath = join(utools.getPath("temp"), item.id + ".png");
+        writeFileSync(tmpPath, img.toPNG());
+        utools.copyFile(tmpPath);
         utools.showNotification(item.title + "复制成功");
         break;
+      case "return":
+        utools.setSubInputValue(item.data);
+        return;
       default:
         utools.showNotification("未知操作");
         break;

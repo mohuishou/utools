@@ -1,8 +1,8 @@
 {
-  "name": "8400f279",
+  "name": "af0d6a79",
   "pluginName": "iconfont搜索",
   "description": "快速搜索iconfont图标",
-  "version": "v2.2.0",
+  "version": "v2.3.0",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",

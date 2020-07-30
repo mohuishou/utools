@@ -34,7 +34,7 @@ export class VSCode implements Plugin {
     return this._storage;
   }
 
-  async enter() {
+  async enter(): Promise<ListItem[]> {
     return await this.search("");
   }
 

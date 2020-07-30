@@ -1,0 +1,17 @@
+{
+  "pluginName": "UtoolsHelperTest",
+  "description": "UtoolsHelperTest",
+  "version": "v1.0.0",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "utools-helper",
+      "explain": "utools-helper test",
+      "cmds": ["utools-helper test"],
+      "icon": "icon.png"
+    }
+  ]
+}

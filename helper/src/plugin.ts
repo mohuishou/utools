@@ -9,6 +9,7 @@ import {
 
 import { IListItem, ListItem } from "./listItem";
 import { ErrorIcon } from "./icon";
+import { writeFileSync } from "fs";
 
 export interface Plugin {
   code: string;
@@ -117,6 +118,6 @@ export function InitPlugins(plugins: Plugin[]) {
     });
     window.exports = features;
   } catch (error) {
-    alert(error.message + error.stack);
+    alert(error.stack ? error.stack : error);
   }
 }

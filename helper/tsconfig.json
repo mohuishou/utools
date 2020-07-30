@@ -15,5 +15,6 @@
     //   "utools": ["@types/utools.d.ts"],
     //   "electron": ["@types/electron.d.ts"]
     // }
-  }
+  },
+  "exclude": ["example/*", "dist"]
 }

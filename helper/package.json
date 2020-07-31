@@ -1,6 +1,6 @@
 {
   "name": "utools-helper",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -10,8 +10,8 @@
     "url": "https://lailin.xyz"
   },
   "scripts": {
-    "dev": "tsc -w",
-    "build": "rm -r dist && tsc",
+    "dev": "cp -r src/layui dist/ && tsc -w",
+    "build": "rm -r dist && tsc && cp -r src/layui dist/",
     "prepare": "npm run build"
   },
   "publishConfig": {

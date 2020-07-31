@@ -1,8 +1,25 @@
 import { InitPlugins } from "./plugin";
 import { Setting } from "./config/setting";
 
-try {
-  InitPlugins([new Setting("utools-helper", [])]);
-} catch (error) {
-  alert(error.stack ? error.stack : error);
-}
+InitPlugins([
+  Setting.Init("utools-helper", [
+    {
+      name: "test",
+      type: "input",
+      label: "测试",
+      placeholder: "请输入测试配置",
+      default: "test",
+    },
+    {
+      name: "test2",
+      type: "input",
+      label: "测试2",
+      default: "这是我设置的默认值",
+    },
+  ]),
+]);
+
+setTimeout(() => {
+  console.log(Setting.Get("test"));
+  console.log(Setting.Get("test2"));
+}, 10000);

@@ -52,6 +52,7 @@ export class Process implements Plugin {
       icon = "system.png";
     }
     localStorage.setItem(name, icon);
+    return icon;
   }
 
   select(item: IListItem) {

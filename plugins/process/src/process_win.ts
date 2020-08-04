@@ -5,8 +5,9 @@ import { getSystemMemoryInfo } from "process";
 
 export class WinProcess implements IProcess {
   async processes(): Promise<psList.ProcessDescriptor[]> {
+    // https://docs.microsoft.com/en-us/previous-versions/aa394323(v=vs.85)
     let res = execSync(
-      "wmic path Win32_PerfFormattedData_PerfProc_Process get IDProcess,Name,PercentProcessorTime,PrivateBytes,VirtualBytes /format:csv"
+      "wmic path Win32_PerfFormattedData_PerfProc_Process get IDProcess,Name,PercentProcessorTime,PrivateBytes,VirtualBytes,CreatingProcessID /format:csv"
     );
     return res
       .toString()
@@ -14,13 +15,13 @@ export class WinProcess implements IProcess {
       .map(
         (line): psList.ProcessDescriptor => {
           let res = line.split(",");
-          if (!res || res.length != 6 || !/\d+/.test(res[4])) return;
+          if (!res || res.length != 7 || !/\d+/.test(res[5])) return;
           return {
-            ppid: 1,
-            pid: parseInt(res[1]),
-            cpu: parseInt(res[3]),
-            memory: parseInt(res[4]) / getSystemMemoryInfo().total,
-            name: res[2],
+            ppid: parseInt(res[1]),
+            pid: parseInt(res[2]),
+            cpu: parseInt(res[4]),
+            memory: parseInt(res[5]) / getSystemMemoryInfo().total,
+            name: res[3],
           };
         }
       )

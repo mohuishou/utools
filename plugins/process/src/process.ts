@@ -1,17 +1,9 @@
-import { Plugin, IListItem, ListItem } from "utools-helper";
+import { Plugin, IListItem } from "utools-helper";
 import psList = require("ps-list");
-import { platform } from "process";
-const fileIcon = require("file-icon");
 
 export interface IProcess {
   processes(): Promise<psList.ProcessDescriptor[]> | psList.ProcessDescriptor[];
   findIcon?(pid: number): Promise<string> | string;
-}
-
-class BaseProcess implements IProcess {
-  async processes(): Promise<psList.ProcessDescriptor[]> {
-    return await psList();
-  }
 }
 
 export class Process implements Plugin {
@@ -28,6 +20,7 @@ export class Process implements Plugin {
 
   async search(word: string): Promise<IListItem[]> {
     let processes = await this.process.processes();
+    console.log(processes);
 
     let words = word.toLowerCase().split(/\s+/g);
     words.forEach((w) => {
@@ -40,7 +33,7 @@ export class Process implements Plugin {
         async (p): Promise<IListItem> => {
           return {
             title: p.name,
-            description: `cpu: ${p.cpu}%, mem: ${p.memory}, cmd: ${p.cmd}`,
+            description: `cpu: ${p.cpu.toFixed(2)}%, mem: ${p.memory.toFixed(2)}%, cmd: ${p.cmd}`,
             icon: await this.getIcon(p.name, p.ppid == 1 ? p.pid : p.ppid),
             data: p,
           };
@@ -63,5 +56,6 @@ export class Process implements Plugin {
 
   select(item: IListItem) {
     process.kill(item.data.pid);
+    utools.showNotification(`${item.data.name} 退出成功`);
   }
 }

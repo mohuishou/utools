@@ -1,0 +1,14 @@
+{
+  "name": "utools-process",
+  "version": "v1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.1.0"
+  },
+  "dependencies": {
+    "file-icon": "^4.0.0",
+    "ps-list": "^7.2.0",
+    "utools-helper": "^1.3.0"
+  }
+}

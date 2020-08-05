@@ -33,9 +33,14 @@ export class Process implements Plugin {
         async (p): Promise<IListItem> => {
           return {
             title: p.name,
-            description: `cpu: ${p.cpu.toFixed(2)}%, mem: ${p.memory.toFixed(2)}%, cmd: ${p.cmd}`,
+            description: `cpu: ${p.cpu.toFixed(2)}%, mem: ${p.memory.toFixed(
+              2
+            )}%, cmd: ${p.cmd}`,
             icon: await this.getIcon(p.name, p.ppid == 1 ? p.pid : p.ppid),
-            data: p,
+            data: {
+              process: p,
+              word: word,
+            },
           };
         }
       )
@@ -55,8 +60,9 @@ export class Process implements Plugin {
     return icon;
   }
 
-  select(item: IListItem) {
-    process.kill(item.data.pid);
+  async select(item: IListItem): Promise<IListItem[]> {
+    process.kill(item.data.process.pid);
     utools.showNotification(`${item.data.name} 退出成功`);
+    return this.search(item.data.word);
   }
 }

@@ -32,9 +32,7 @@ export class SelectConfig extends Config {
                 `<option 
                   value="${o.value}"
                   ${this.value === o.value ? "selected" : ""}
-                >
-                ${o.label ? o.label : o.value}
-                </option>
+                >${o.label ? o.label : o.value}</option>
                 `
             )
             .join("\n")}

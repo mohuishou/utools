@@ -2,6 +2,7 @@ import { Plugin } from "../plugin";
 import { IConfig, IConfigItem } from "./config";
 import { join } from "path";
 import { InputConfig } from "./inputConfig";
+import { SelectConfig } from "./selectConfig";
 
 export class Setting implements Plugin {
   code: string;
@@ -30,6 +31,7 @@ export class Setting implements Plugin {
     this.configs = configs.map((item) => {
       return {
         input: (item: IConfigItem) => new InputConfig(item),
+        select: (item: IConfigItem) => new SelectConfig(item),
       }[item.type](item);
     });
   }

@@ -10,7 +10,13 @@
     {
       "code": "ps",
       "explain": "进程管理，可以查看、搜索、关闭进程",
-      "cmds": ["ps", "processicon"],
+      "cmds": ["ps", "process"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "ps-setting",
+      "explain": "进程管理，可以查看、搜索、关闭进程",
+      "cmds": ["ps setting", "process setting"],
       "icon": "icon.png"
     }
   ]

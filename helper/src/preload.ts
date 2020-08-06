@@ -16,6 +16,20 @@ InitPlugins([
       label: "测试2",
       default: "这是我设置的默认值",
     },
+    {
+      name: "test3",
+      type: "select",
+      options: [
+        {
+          label: "t1",
+          value: "1",
+        },
+        {
+          value: "2",
+        },
+      ],
+      label: "测试2",
+    },
   ]),
 ]);
 

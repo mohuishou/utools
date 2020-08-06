@@ -1,4 +1,4 @@
-import { Plugin, IListItem } from "utools-helper";
+import { Plugin, IListItem, Setting } from "utools-helper";
 import psList = require("ps-list");
 
 export interface IProcess {
@@ -9,6 +9,7 @@ export interface IProcess {
 export class Process implements Plugin {
   code = "ps";
   process: IProcess;
+  placeholder = "输入关键字搜索，支持多个关键词，Enter: kill 进程";
 
   constructor(process: IProcess) {
     this.process = process;
@@ -26,7 +27,17 @@ export class Process implements Plugin {
     words.forEach((w) => {
       processes = processes.filter((p) => p.name.toLowerCase().includes(w));
     });
-    processes = processes.sort((a, b) => -a.cpu + b.cpu).slice(1, 20);
+
+    switch (Setting.Get("order")) {
+      case "mem_desc":
+        processes.sort((a, b) => -a.memory + b.memory);
+        break;
+      default:
+        processes.sort((a, b) => -a.cpu + b.cpu);
+        break;
+    }
+
+    processes = processes.slice(1, 20);
 
     return await Promise.all(
       processes.map(

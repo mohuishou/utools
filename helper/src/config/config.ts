@@ -1,4 +1,5 @@
 import { InputConfig } from "./inputConfig";
+import { Option } from "./selectConfig";
 
 export interface IConfig {
   // 配置项的名字. 存储到DB的key
@@ -27,8 +28,10 @@ export interface IConfigItem {
   default?: string;
   // 是否必须
   required?: boolean;
+  // 可选项
+  options?: Option[];
 
-  type: "input";
+  type: "input" | "select";
 }
 
 export abstract class Config implements IConfig {

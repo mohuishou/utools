@@ -26,6 +26,11 @@ export class Setting implements Plugin {
     return new this(code, configs);
   }
 
+  static reset() {
+    let setting = document.querySelector("#settings");
+    if (setting) setting.remove();
+  }
+
   private constructor(code: string, configs: IConfigItem[]) {
     this.code = code;
     this.configs = configs.map((item) => {
@@ -39,9 +44,13 @@ export class Setting implements Plugin {
   render() {
     let body = document.querySelector("body");
     let layui = join(__dirname, "../layui");
-    body.innerHTML = `
+    let settings = document.createElement("div");
+    settings.innerHTML = `
       <link rel="stylesheet" href="${layui}/layui.css"  media="all">
       <style>
+        #root{
+          display: none !important;
+        }
         form {
           margin-bottom: 20px;
         }
@@ -56,12 +65,13 @@ export class Setting implements Plugin {
         <button id="save" type="submit" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="config">保存</button>
       </form>
     `;
+    settings.setAttribute("id", "settings");
 
     let layjs = document.createElement("script");
     layjs.type = "text/javascript";
     layjs.src = join(layui, "layui.all.js");
     layjs.id = "layui";
-    body.append(layjs);
+    settings.append(layjs);
 
     let script = document.createElement("script");
     script.text = `
@@ -71,7 +81,9 @@ export class Setting implements Plugin {
       });
     }
     `;
-    body.append(script);
+    settings.append(script);
+
+    body.insertBefore(settings, document.querySelector("#root"));
   }
 
   enter() {

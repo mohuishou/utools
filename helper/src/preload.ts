@@ -1,7 +1,17 @@
-import { InitPlugins } from "./plugin";
+import { InitPlugins, Plugin } from "./plugin";
 import { Setting } from "./config/setting";
+import { ListItem } from "./listItem";
+
+class Test implements Plugin {
+  code = "utools-helper-list";
+
+  enter() {
+    return [new ListItem("test")];
+  }
+}
 
 InitPlugins([
+  new Test(),
   Setting.Init("utools-helper", [
     {
       name: "test",

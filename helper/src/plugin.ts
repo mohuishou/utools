@@ -7,9 +7,9 @@ import {
   TplFeatureMode,
 } from "../@types/utools";
 
-import { IListItem, ListItem } from "./listItem";
+import { IListItem } from "./listItem";
 import { ErrorIcon } from "./icon";
-import { writeFileSync } from "fs";
+import { Setting } from "./config";
 
 export interface Plugin {
   code: string;
@@ -50,6 +50,7 @@ class Feature implements TplFeature {
 
     enter: async (action, cb) => {
       try {
+        Setting.reset();
         if (this.plugin.enter) {
           let items = await this.plugin.enter(action);
           if (items) cb(items);

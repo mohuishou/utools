@@ -9,8 +9,14 @@
   "features": [
     {
       "code": "utools-helper",
-      "explain": "utools-helper test",
+      "explain": "utools-helper test setting",
       "cmds": ["utools-helper test"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "utools-helper-list",
+      "explain": "utools-helper test",
+      "cmds": ["utools-helper test list"],
       "icon": "icon.png"
     }
   ]

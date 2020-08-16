@@ -1,4 +1,3 @@
-import { InputConfig } from "./inputConfig";
 import { Option } from "./selectConfig";
 
 export interface IConfig {
@@ -9,12 +8,15 @@ export interface IConfig {
   // 配置项说明
   placeholder?: string;
   // 配置项默认值
-  default?: string;
+  default?: any;
   // 是否必须
   required?: boolean;
+  // 输入提示项，展示在输入框下面
+  tips?: string;
 
   value: any;
   render(): string;
+  html(): string;
 }
 
 export interface IConfigItem {
@@ -25,11 +27,13 @@ export interface IConfigItem {
   // 配置项说明
   placeholder?: string;
   // 配置项默认值
-  default?: string;
+  default?: any;
   // 是否必须
   required?: boolean;
   // 可选项
   options?: Option[];
+  // 输入提示项，展示在输入框下面
+  tips?: string;
 
   type: "input" | "select";
 }
@@ -42,9 +46,11 @@ export abstract class Config implements IConfig {
   // 配置项说明
   placeholder?: string;
   // 配置项默认值
-  default?: string;
+  default?: any;
   // 是否必须
   required?: boolean;
+  // 输入提示项，展示在输入框下面
+  tips?: string;
 
   get value(): any {
     let data = utools.db.get("config");
@@ -61,13 +67,27 @@ export abstract class Config implements IConfig {
 
   abstract render(): string;
 
+  html(): string {
+    let tips = this.tips
+      ? '<div class="layui-form-mid layui-word-aux">' + this.tips + "</div>"
+      : "";
+    return `
+    <div class="layui-form-item">
+      <label class="layui-form-label">${this.label}</label>
+      <div class="layui-input-block">
+        ${this.render()}
+        ${tips ? tips : ""}
+      </div>
+    </div>
+    `;
+  }
+
   constructor(item: IConfigItem) {
     this.name = item.name;
     this.label = item.label ? item.label : this.name;
-    this.placeholder = item.placeholder
-      ? item.placeholder
-      : "请输入" + item.name;
+    this.placeholder = item.placeholder ? item.placeholder : "请输入" + item.name;
     this.default = item.default;
     this.required = item.required;
+    this.tips = item.tips;
   }
 }

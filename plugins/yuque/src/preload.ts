@@ -1,5 +1,5 @@
-import { InitPlugins } from "utools-helper";
+import { InitPlugins, Setting } from "utools-helper";
 import { Search } from "./search";
-import { Setting } from "./setting";
+import { configs } from "./config";
 
-InitPlugins([new Search(), new Setting()]);
+InitPlugins([new Search(), Setting.Init("yuque-setting", configs)]);

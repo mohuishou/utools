@@ -20,10 +20,20 @@ export class Setting implements Plugin {
     return;
   }
 
+  static Set(key: string, val: any) {
+    let config = utools.db.get("config");
+    if (!config) config = { _id: "config", data: {} };
+    config.data[key] = val;
+    let res = utools.db.put(config);
+    if (!res.ok) throw new Error("数据查询失败" + res.error);
+  }
+
   // Init 初始化
   static Init(code: string, configs: IConfigItem[]): Setting {
-    if (this._instance) return this._instance;
-    return new this(code, configs);
+    if (!this._instance) {
+      this._instance = new this(code, configs);
+    }
+    return this._instance;
   }
 
   static reset() {
@@ -59,9 +69,14 @@ export class Setting implements Plugin {
           bottom: 0;
           width: 100%;
         }
+        footer {
+          text-align: center;
+          margin-top: 10px;
+        }
       </style>
       <form id="config" class="layui-form" action="">
-        ${this.configs.map((c) => c.render()).join("\n")}
+        ${this.configs.map((c) => c.html()).join("\n")}
+        <footer> <a href="https://github.com/mohuishou/utools">  power by ⭐ utools-helper  </a> </footer>
         <button id="save" type="submit" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="config">保存</button>
       </form>
     `;
@@ -87,7 +102,7 @@ export class Setting implements Plugin {
   }
 
   enter() {
-    utools.setExpendHeight(300);
+    utools.setExpendHeight(500);
     this.render();
   }
 }
@@ -96,7 +111,7 @@ export class Setting implements Plugin {
 (window as any).updateConfig = (data: any) => {
   let item = utools.db.get("config");
   if (!item) item = { _id: "config", data: data };
-  item.data = data;
+  item.data = Object.assign(item.data, data);
   let res = utools.db.put(item);
   if (!res.ok) throw new Error("数据查询失败" + res.error);
   utools.showNotification("配置保存成功");

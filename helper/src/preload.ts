@@ -19,6 +19,7 @@ InitPlugins([
       label: "测试",
       placeholder: "请输入测试配置",
       default: "test",
+      tips: "test",
     },
     {
       name: "test2",

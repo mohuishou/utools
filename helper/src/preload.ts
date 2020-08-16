@@ -1,12 +1,17 @@
 import { InitPlugins, Plugin } from "./plugin";
 import { Setting } from "./config/setting";
-import { ListItem } from "./listItem";
+import { ListItem, IListItem } from "./listItem";
 
 class Test implements Plugin {
   code = "utools-helper-list";
 
   enter() {
     return [new ListItem("test")];
+  }
+
+  select(item: IListItem) {
+    utools.hideMainWindow();
+    utools.outPlugin();
   }
 }
 
@@ -40,6 +45,12 @@ InitPlugins([
         },
       ],
       label: "测试2",
+    },
+    {
+      name: "test_area",
+      type: "textarea",
+      label: "测试 text",
+      default: "这是我设置的默认值",
     },
   ]),
 ]);

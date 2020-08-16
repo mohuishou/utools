@@ -1,13 +1,4 @@
-import { Plugin, IListItem, ListItem } from "utools-helper";
-
-// sources 视频源列表
-const sources: { [key: string]: string } = {
-  "618G免费解析": "https://jx.618g.com/?url=",
-  "8090g": "https://www.8090g.cn/jiexi/?url=",
-  石头解析: "https://jiexi.071811.cc/jx.php?url=",
-  接口A: "http://jx.598110.com/?url=",
-  接口B: "http://vip.jlsprh.com/?url=",
-};
+import { Plugin, IListItem, ListItem, Setting } from "utools-helper";
 
 export class Vedio implements Plugin {
   code = "vedio";
@@ -18,17 +9,19 @@ export class Vedio implements Plugin {
   }
 
   async search(word: string): Promise<IListItem[]> {
-    let items: IListItem[] = [];
-    for (const key in sources) {
-      items.push(
-        new ListItem(
-          key + ":" + word,
-          sources[key],
-          sources[key] + encodeURIComponent(word)
-        )
-      );
-    }
-    return items;
+    if (!word) word = "请在浏览器页面中打开，或输入视频链接";
+    let sources: string[] = Setting.Get("sources").split(/\n+/g);
+    return sources
+      .map((s) => {
+        let [key, source] = s.trim().split("@");
+        if (!source) {
+          utools.showNotification(`视频解析源 ${key} 格式错误`);
+          return;
+        }
+        let url = source.trim() + encodeURIComponent(word);
+        return new ListItem(key.trim() + ": " + word, url, url);
+      })
+      .filter((item) => item);
   }
 
   select(item: IListItem) {

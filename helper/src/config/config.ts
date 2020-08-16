@@ -35,7 +35,7 @@ export interface IConfigItem {
   // 输入提示项，展示在输入框下面
   tips?: string;
 
-  type: "input" | "select";
+  type: "input" | "select" | "textarea";
 }
 
 export abstract class Config implements IConfig {

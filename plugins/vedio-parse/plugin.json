@@ -23,6 +23,12 @@
         }
       ],
       "icon": "icon.png"
+    },
+    {
+      "code": "vedio-setting",
+      "explain": "视频解析源设置",
+      "cmds": ["视频解析设置"],
+      "icon": "icon.png"
     }
   ]
 }

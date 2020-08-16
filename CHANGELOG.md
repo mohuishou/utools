@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/mohuishou/utools/compare/v1.20.0...v1.21.0) (2020-08-16)
+
+
+### Features
+
+* 重构语雀搜索，helper 修复设置bug ([366db53](https://github.com/mohuishou/utools/commit/366db53c2379800bc68fd8cb9b0061b3c9d3df6b))
+
 ## [1.20.0](https://github.com/mohuishou/utools/compare/v1.19.0...v1.20.0) (2020-08-08)
 
 

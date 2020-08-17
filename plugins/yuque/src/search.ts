@@ -1,6 +1,7 @@
-import { Plugin, ListItem, IListItem } from "utools-helper";
-import { Client } from "./yuque";
+import { Plugin, ListItem, IListItem, Setting } from "utools-helper";
+import { Client, oauth } from "./yuque";
 import * as remark from "remark";
+const config = require("../config.json");
 
 // 背景色区块支持
 const colorBlocks: { [key: string]: string } = {
@@ -14,41 +15,27 @@ const colorBlocks: { [key: string]: string } = {
 export class Search implements Plugin {
   code = "yuque-search";
   client: Client;
-  private _token: string;
+  historyRecords: IListItem[] = [new ListItem("请输入关键词搜索")];
 
   async enter(): Promise<IListItem[]> {
-    if (!this.token)
-      return [
-        {
-          title: "尚未设置token，回车前往设置，使用方法请查看插件介绍",
-          description: "尚未设置token，请设置",
-          data: "",
-          operate: "setToken",
-          icon: "icon.png",
-        },
-      ];
-    this.client = new Client(this.token);
+    if (!Setting.Get("token")) {
+      let auth = new oauth(config.client_id, config.client_secret);
+      let token = await auth.token();
+      Setting.Set("token", token);
+    }
 
+    this.client = new Client(Setting.Get("token"));
     return this.search("");
   }
 
-  get token(): string {
-    if (!this._token) {
-      let res = utools.db.get("token");
-      if (res) this._token = res.data;
-    }
-    return this._token;
-  }
-
   async search(word: string): Promise<IListItem[]> {
-    if (!word.trim()) return [new ListItem("请输入关键词搜索")];
+    if (!word.trim()) return this.historyRecords;
     let data = await this.client.search({ q: word.trim() });
     return data.data.map(
       (item: any): IListItem => {
         return new ListItem(
           item.title.replace(/<em>/gi, "").replace(/<\/em>/gi, ""),
-          `【${item.info}】` +
-            item.summary.replace(/<em>/gi, "").replace(/<\/em>/gi, ""),
+          `【${item.info}】` + item.summary.replace(/<em>/gi, "").replace(/<\/em>/gi, ""),
           item
         );
       }
@@ -56,33 +43,76 @@ export class Search implements Plugin {
   }
 
   async select(item: IListItem): Promise<IListItem[]> {
+    let operates = [
+      {
+        id: "open",
+        title: "查看文档-[浏览器]",
+        operate: "open",
+        description: item.title,
+        data: item.data,
+        url: "https://www.yuque.com" + item.data.url,
+        icon: "icon/browser.png",
+      },
+      {
+        id: "edit",
+        title: "编辑文档-[浏览器]",
+        operate: "open",
+        url: "https://www.yuque.com" + item.data.url + "/edit",
+        description: item.title,
+        data: item.data,
+        icon: "icon/browser.png",
+      },
+      {
+        id: "open-ubrowser",
+        title: "查看文档-[弹窗]",
+        operate: "openUbrowser",
+        description: item.title,
+        data: item.data,
+        url: "https://www.yuque.com" + item.data.url,
+        icon: "icon/window.png",
+      },
+      {
+        id: "edit-ubrowser",
+        title: "编辑文档-[弹窗]",
+        operate: "openUbrowser",
+        description: item.title,
+        data: item.data,
+        url: "https://www.yuque.com" + item.data.url + "/edit",
+        icon: "icon/window.png",
+      },
+      {
+        id: "copy-edit-md",
+        title: "复制最新编辑版本为 markdown",
+        operate: "copyMarkdown",
+        description: item.title,
+        data: item.data,
+        icon: "icon/markdown.png",
+        draft: true,
+      },
+      {
+        title: "复制已发布版本为 markdown",
+        id: "copy-public-md",
+        description: item.title,
+        data: item.data,
+        operate: "copyMarkdown",
+        icon: "icon/markdown.png",
+        draft: false,
+      },
+    ];
+
+    let orders: { [key: string]: number };
+    orders = JSON.parse(localStorage.getItem("operates-order") || "{}");
     if (!item.operate) {
-      return [
-        {
-          title: "查看文档",
-          description: item.title,
-          data: item.data,
-          operate: "open",
-          icon: "icon/browser.png",
-        },
-        {
-          title: "复制最新编辑版本为 markdown",
-          description: item.title,
-          data: item.data,
-          operate: "copyMarkdown",
-          icon: "icon/markdown.png",
-          draft: true,
-        },
-        {
-          title: "复制已发布版本为 markdown",
-          description: item.title,
-          data: item.data,
-          operate: "copyMarkdown",
-          icon: "icon/markdown.png",
-          draft: false,
-        },
-      ];
+      operates.sort((a, b) => (orders[b.id] || 0) - (orders[a.id] || 0));
+      this.historyRecords = this.historyRecords.filter((r) => r.data.url !== item.data.url);
+      this.historyRecords.unshift(item);
+      this.historyRecords = this.historyRecords.slice(0, Setting.Get("history_count"));
+      return operates;
     }
+
+    if (!orders[item.id]) orders[item.id] = 0;
+    orders[item.id]++;
+    localStorage.setItem("operates-order", JSON.stringify(orders));
 
     await this[item.operate as "open" | "copyMarkdown"](item);
   }
@@ -98,9 +128,7 @@ export class Search implements Plugin {
     else data = data.data.body;
 
     // 替换语雀的无意义标签
-    data = data
-      .replace(/<br\s*\/>/gi, "\n")
-      .replace(/<a name=".*"><\/a>/gi, "\n");
+    data = data.replace(/<br\s*\/>/gi, "\n").replace(/<a name=".*"><\/a>/gi, "\n");
 
     // 支持提示区块语法
     for (const key in colorBlocks) {
@@ -119,7 +147,19 @@ export class Search implements Plugin {
   }
 
   async open(item: IListItem) {
-    utools.shellOpenExternal("https://www.yuque.com" + item.data.url);
+    utools.shellOpenExternal(item.url);
+    utools.outPlugin();
+    utools.hideMainWindow();
+  }
+
+  async openUbrowser(item: IListItem) {
+    utools.ubrowser
+      .goto(item.url)
+      .show()
+      .run({
+        width: Setting.Get("window_width"),
+        height: Setting.Get("window_height"),
+      });
     utools.outPlugin();
     utools.hideMainWindow();
   }

@@ -3,7 +3,9 @@ import { IConfig, IConfigItem } from "./config";
 import { join } from "path";
 import { InputConfig } from "./inputConfig";
 import { SelectConfig } from "./selectConfig";
+import { TextareaConfig } from "./textareaConfig";
 
+function stopKeyDown(event: any) {}
 export class Setting implements Plugin {
   code: string;
   configs: IConfig[] = [];
@@ -20,15 +22,26 @@ export class Setting implements Plugin {
     return;
   }
 
+  static Set(key: string, val: any) {
+    let config = utools.db.get("config");
+    if (!config) config = { _id: "config", data: {} };
+    config.data[key] = val;
+    let res = utools.db.put(config);
+    if (!res.ok) throw new Error("数据查询失败" + res.error);
+  }
+
   // Init 初始化
   static Init(code: string, configs: IConfigItem[]): Setting {
-    if (this._instance) return this._instance;
-    return new this(code, configs);
+    if (!this._instance) {
+      this._instance = new this(code, configs);
+    }
+    return this._instance;
   }
 
   static reset() {
     let setting = document.querySelector("#settings");
     if (setting) setting.remove();
+    window.removeEventListener("keydown", (e) => e.stopPropagation(), true);
   }
 
   private constructor(code: string, configs: IConfigItem[]) {
@@ -37,6 +50,7 @@ export class Setting implements Plugin {
       return {
         input: (item: IConfigItem) => new InputConfig(item),
         select: (item: IConfigItem) => new SelectConfig(item),
+        textarea: (item: IConfigItem) => new TextareaConfig(item),
       }[item.type](item);
     });
   }
@@ -59,9 +73,14 @@ export class Setting implements Plugin {
           bottom: 0;
           width: 100%;
         }
+        footer {
+          text-align: center;
+          margin-top: 10px;
+        }
       </style>
       <form id="config" class="layui-form" action="">
-        ${this.configs.map((c) => c.render()).join("\n")}
+        ${this.configs.map((c) => c.html()).join("\n")}
+        <footer> <a href="https://github.com/mohuishou/utools">  power by ⭐ utools-helper  </a> </footer>
         <button id="save" type="submit" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="config">保存</button>
       </form>
     `;
@@ -83,11 +102,12 @@ export class Setting implements Plugin {
     `;
     settings.append(script);
 
-    body.insertBefore(settings, document.querySelector("#root"));
+    window.addEventListener("keydown", (e) => e.stopPropagation(), true);
+    body.append(settings);
   }
 
   enter() {
-    utools.setExpendHeight(300);
+    utools.setExpendHeight(500);
     this.render();
   }
 }
@@ -96,7 +116,7 @@ export class Setting implements Plugin {
 (window as any).updateConfig = (data: any) => {
   let item = utools.db.get("config");
   if (!item) item = { _id: "config", data: data };
-  item.data = data;
+  item.data = Object.assign(item.data, data);
   let res = utools.db.put(item);
   if (!res.ok) throw new Error("数据查询失败" + res.error);
   utools.showNotification("配置保存成功");

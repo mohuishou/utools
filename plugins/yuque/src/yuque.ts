@@ -1,15 +1,10 @@
 import Axios, { AxiosInstance } from "axios";
 import { stringify } from "querystring";
+import { generate } from "randomstring";
+import { createHmac } from "crypto";
 
 interface SearchParams {
-  type?:
-    | "topic"
-    | "repo"
-    | "doc"
-    | "artboard"
-    | "group"
-    | "user"
-    | "attachment";
+  type?: "topic" | "repo" | "doc" | "artboard" | "group" | "user" | "attachment";
   q: string;
   offset?: string;
   related?: string;
@@ -49,5 +44,66 @@ export class Client {
       `/repos/${params.namespace}/docs/${params.slug}?raw=${params.raw}`
     );
     return res.data;
+  }
+
+  async createDoc() {}
+
+  // 更新知识库目录
+  async updateRepo() {}
+}
+
+export class oauth {
+  code: string;
+  clientID = "";
+  clientSecret = "";
+  scope = "repo:read,repo:update,doc:read";
+
+  constructor(clientID: string, clientSecret: string) {
+    this.code = generate({ length: 40, charset: "1234567890qwertyuiopasdfghjklzxcvb" });
+    this.clientID = clientID;
+    this.clientSecret = clientSecret;
+  }
+
+  get query(): any {
+    return {
+      code: this.code,
+      client_id: this.clientID,
+      response_type: "code",
+      scope: this.scope,
+      timestamp: new Date().getTime(),
+    };
+  }
+
+  get sign(): string {
+    const signString = ["client_id", "code", "response_type", "scope", "timestamp"]
+      .map((key) => `${key}=${encodeURIComponent(this.query[key] || "")}`)
+      .join("&");
+
+    return createHmac("sha1", this.clientSecret).update(signString).digest().toString("base64");
+  }
+
+  async auth() {
+    let params = this.query;
+    params.sign = this.sign;
+    await utools.ubrowser
+      .show()
+      .goto("https://www.yuque.com/oauth2/authorize?" + stringify(params))
+      .wait("#ReactApp  div.authorized-container  h1", 1000 * 60 * 2)
+      .wait(() => {
+        let auth = document.querySelector("#ReactApp  div.authorized-container  h1");
+        return auth.textContent.trim() == "授权成功";
+      }, 1000 * 2)
+      .hide()
+      .run();
+  }
+
+  async token(): Promise<string> {
+    await this.auth();
+    let res = await Axios.post("https://www.yuque.com/oauth2/token", {
+      grant_type: "client_code",
+      client_id: this.clientID,
+      code: this.code,
+    });
+    return res.data.access_token;
   }
 }

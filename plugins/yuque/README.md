@@ -15,13 +15,7 @@
 
 ## 使用
 
-### 1. 设置 token
-
-1. 参考文档获取 token [https://www.yuque.com/yuque/developer/api#785a3731](https://www.yuque.com/yuque/developer/api#785a3731)
-2. utools 输入框输入 `语雀设置`
-3. 将你获得的 token 复制在输入框，并且回车
-
-### 2. 搜索
+### 1. 搜索
 
 1. utools 输入框输入 `语雀搜索`
 2. 选择你想要的结果，回车

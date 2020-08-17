@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/mohuishou/utools/compare/v1.20.0...v1.21.0) (2020-08-16)
+
+
+### Features
+
+* 重构语雀搜索，helper 修复设置bug ([366db53](https://github.com/mohuishou/utools/commit/366db53c2379800bc68fd8cb9b0061b3c9d3df6b))
+
+## [1.20.0](https://github.com/mohuishou/utools/compare/v1.19.0...v1.20.0) (2020-08-08)
+
+
+### Features
+
+* up ([d82c46a](https://github.com/mohuishou/utools/commit/d82c46abafe19c5dfae54155972d78dc87b40bfc))
+* up ([f050d5f](https://github.com/mohuishou/utools/commit/f050d5f214ec7262f98c1a81d3723971bd765e82))
+* 减小 helper 体积 ([c96ae5c](https://github.com/mohuishou/utools/commit/c96ae5cc1c998e7ac76edc9472c20943c3104b86))
+* 新增 select config ([ece3b47](https://github.com/mohuishou/utools/commit/ece3b472d1457bc593a8044c1b5fcaba4325f5cc))
+* 新增进程管理插件 ([93ae04c](https://github.com/mohuishou/utools/commit/93ae04c68d3fcd24038f65dae564325e761312ec))
+* 添加图标缓存，优化进程获取性能 ([cde6e0d](https://github.com/mohuishou/utools/commit/cde6e0dbe5b5f77da64f8fbad994b9fe7282d887))
+* 进程退出后重新获取最新数据 ([2f852cc](https://github.com/mohuishou/utools/commit/2f852ccdec8e1deb6e04b57786c39b9d3c2eafec))
+* **helper:** 完善通用配置插件 ([f8ff3d9](https://github.com/mohuishou/utools/commit/f8ff3d9568d7c599ebc8363082b1459b202433a3))
+* **helper:** 新增模板插件通用设置 ([0ee8edc](https://github.com/mohuishou/utools/commit/0ee8edc6e550ad86158a22135e00e18c5e379e93))
+
+
+### Bug Fixes
+
+* 修复settings不退出的问题 ([c91d639](https://github.com/mohuishou/utools/commit/c91d639deb1fc3457e30ddf268875df7cb8b62f7))
+* 修复ui配置问题 ([d518f41](https://github.com/mohuishou/utools/commit/d518f41ed297af97350860c96f53b6d543f0ae84))
+
 ## [1.19.0](https://github.com/mohuishou/utools/compare/v1.18.0...v1.19.0) (2020-07-24)
 
 

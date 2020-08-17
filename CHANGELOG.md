@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.22.0](https://github.com/mohuishou/utools/compare/v1.21.0...v1.22.0) (2020-08-17)
+
+
+### Features
+
+* 新增 textarea 设置，视频解析添加设置 ([d9b9a2f](https://github.com/mohuishou/utools/commit/d9b9a2ff934878d76f746e03e0b207a7e5755dcf))
+
+
+### Bug Fixes
+
+* **yuque:** 修复授权登录 ([eff2e46](https://github.com/mohuishou/utools/commit/eff2e4616a375584e5727a3d6452b568e9a9de44))
+
 ## [1.21.0](https://github.com/mohuishou/utools/compare/v1.20.0...v1.21.0) (2020-08-16)
 
 

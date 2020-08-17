@@ -16,7 +16,7 @@ jobs:
       - name: build
         run: |
           cd plugins/yuque
-          echo "{\"client_id\":\"${{ secrets.client_id }}\",\"client_secret\":\"${{ secrets.client_secret }}\"}" >& config.json
+          echo "${{ secrets.client_secret }}" >& config.json
           yarn
           tsc
       - name: pack yuque

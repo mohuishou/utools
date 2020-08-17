@@ -4,7 +4,14 @@ import { generate } from "randomstring";
 import { createHmac } from "crypto";
 
 interface SearchParams {
-  type?: "topic" | "repo" | "doc" | "artboard" | "group" | "user" | "attachment";
+  type?:
+    | "topic"
+    | "repo"
+    | "doc"
+    | "artboard"
+    | "group"
+    | "user"
+    | "attachment";
   q: string;
   offset?: string;
   related?: string;
@@ -56,10 +63,14 @@ export class oauth {
   code: string;
   clientID = "";
   clientSecret = "";
-  scope = "repo:read,repo:update,doc:read";
+  scope = "repo,doc";
+  ts = new Date().getTime();
 
   constructor(clientID: string, clientSecret: string) {
-    this.code = generate({ length: 40, charset: "1234567890qwertyuiopasdfghjklzxcvb" });
+    this.code = generate({
+      length: 40,
+      charset: "1234567890qwertyuiopasdfghjklzxcvb",
+    });
     this.clientID = clientID;
     this.clientSecret = clientSecret;
   }
@@ -70,27 +81,40 @@ export class oauth {
       client_id: this.clientID,
       response_type: "code",
       scope: this.scope,
-      timestamp: new Date().getTime(),
+      timestamp: this.ts,
     };
   }
 
   get sign(): string {
-    const signString = ["client_id", "code", "response_type", "scope", "timestamp"]
+    const signString = [
+      "client_id",
+      "code",
+      "response_type",
+      "scope",
+      "timestamp",
+    ]
       .map((key) => `${key}=${encodeURIComponent(this.query[key] || "")}`)
       .join("&");
-
-    return createHmac("sha1", this.clientSecret).update(signString).digest().toString("base64");
+    console.log(signString);
+    return createHmac("sha1", this.clientSecret)
+      .update(signString)
+      .digest()
+      .toString("base64");
   }
 
   async auth() {
     let params = this.query;
     params.sign = this.sign;
+    console.log(params);
+
     await utools.ubrowser
       .show()
       .goto("https://www.yuque.com/oauth2/authorize?" + stringify(params))
       .wait("#ReactApp  div.authorized-container  h1", 1000 * 60 * 2)
       .wait(() => {
-        let auth = document.querySelector("#ReactApp  div.authorized-container  h1");
+        let auth = document.querySelector(
+          "#ReactApp  div.authorized-container  h1"
+        );
         return auth.textContent.trim() == "授权成功";
       }, 1000 * 2)
       .hide()

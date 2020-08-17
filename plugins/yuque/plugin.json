@@ -2,7 +2,7 @@
   "name": "afe10946",
   "pluginName": "语雀搜索",
   "description": "快速搜索语雀知识库，支持复制为markdown",
-  "version": "v1.1.0",
+  "version": "v1.1.1",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",

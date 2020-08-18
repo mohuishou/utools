@@ -13,6 +13,6 @@
   "author": "mohuishou",
   "license": "ISC",
   "dependencies": {
-    "utools-helper": "^1.4.5"
+    "utools-helper": "^1.4.6"
   }
 }

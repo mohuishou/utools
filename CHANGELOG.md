@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.22.1](https://github.com/mohuishou/utools/compare/v1.22.0...v1.22.1) (2020-08-18)
+
+
+### Bug Fixes
+
+* 修复按键事件监听问题 ([1b4c92a](https://github.com/mohuishou/utools/commit/1b4c92aac89775a8592a09749fd1fad4869b020d))
+* 无法鼠标选择视频源的问题 ([23e9b91](https://github.com/mohuishou/utools/commit/23e9b91b51c3a685d9c6f50167955ab388d2b2c9))
+
 ## [1.22.0](https://github.com/mohuishou/utools/compare/v1.21.0...v1.22.0) (2020-08-17)
 
 

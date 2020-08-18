@@ -5,7 +5,9 @@ import { InputConfig } from "./inputConfig";
 import { SelectConfig } from "./selectConfig";
 import { TextareaConfig } from "./textareaConfig";
 
-function stopKeyDown(event: any) {}
+function stopKeyDown(event: any) {
+  event.stopPropagation();
+}
 export class Setting implements Plugin {
   code: string;
   configs: IConfig[] = [];
@@ -41,7 +43,7 @@ export class Setting implements Plugin {
   static reset() {
     let setting = document.querySelector("#settings");
     if (setting) setting.remove();
-    window.removeEventListener("keydown", (e) => e.stopPropagation(), true);
+    window.removeEventListener("keydown", stopKeyDown, true);
   }
 
   private constructor(code: string, configs: IConfigItem[]) {
@@ -102,7 +104,7 @@ export class Setting implements Plugin {
     `;
     settings.append(script);
 
-    window.addEventListener("keydown", (e) => e.stopPropagation(), true);
+    window.addEventListener("keydown", stopKeyDown, true);
     body.append(settings);
   }
 

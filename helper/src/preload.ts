@@ -6,7 +6,7 @@ class Test implements Plugin {
   code = "utools-helper-list";
 
   enter() {
-    return [new ListItem("test")];
+    return [new ListItem("test", Setting.Get("test")), new ListItem("test2", Setting.Get("test2"))];
   }
 
   select(item: IListItem) {

@@ -1,4 +1,4 @@
-import { Plugin, ListItem } from "utools-helper";
+import { Plugin, ListItem, Setting } from "utools-helper";
 import Axios, { AxiosInstance } from "axios";
 import { stringify } from "querystring";
 import { writeFileSync } from "fs";
@@ -65,6 +65,15 @@ export class Iconfont implements Plugin {
     });
 
     let icons = r.data.data.icons.map((icon: any) => {
+      console.log("替换前: " + icon.show_svg);
+      if (Setting.Get("fill_color")) {
+        icon.show_svg = icon.show_svg.replace(
+          /fill="#.*?"/gim,
+          `fill="${Setting.Get("fill_color")}"`
+        );
+        console.log("替换后: " + icon.show_svg);
+      }
+
       return {
         id: icon.id,
         title: icon.name.trim().replace(/\s+/g, "_"),
@@ -87,7 +96,11 @@ export class Iconfont implements Plugin {
       q: words[0],
       sortType: "updated_at",
       ctoken: this.ctoken,
+      fills: Setting.Get("color") - 0,
     };
+
+    if (Setting.Get("featured")) data[Setting.Get("featured")] = 1;
+    if (Setting.Get("type")) data[Setting.Get("type")] = 1;
 
     if (words.length >= 2) {
       words.forEach((word, index) => {
@@ -113,8 +126,8 @@ export class Iconfont implements Plugin {
 
   async svg2canvas(id: Number, data: string): Promise<HTMLCanvasElement> {
     let canvas = document.createElement("canvas");
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = Setting.Get("size") || 300;
+    canvas.height = Setting.Get("size") || 300;
     canvas.id = "id-" + id;
     let ctx = canvas.getContext("2d");
     let img = await this.loadImg(data);

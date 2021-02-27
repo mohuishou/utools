@@ -2,7 +2,7 @@
   "name": "af0d6a79",
   "pluginName": "iconfont搜索",
   "description": "快速搜索iconfont图标",
-  "version": "v2.3.0",
+  "version": "v2.4.0",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
@@ -12,6 +12,12 @@
       "code": "iconfont",
       "explain": "快速搜索iconfont图标",
       "cmds": ["iconfont"],
+      "icon": "icon/iconfont.png"
+    },
+    {
+      "code": "iconfont-setting",
+      "explain": "iconfont 插件设置",
+      "cmds": ["iconfont-setting", "iconfont 设置"],
       "icon": "icon/iconfont.png"
     }
   ]

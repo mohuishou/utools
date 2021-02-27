@@ -8,9 +8,9 @@
   integrity sha512-13gmo3M2qVvjQrWNseqM3+cR6S2Ss3grbR2NZltgMq94wOwqJYQdgn8qzwDshzgXqMlSUtyPZjysImmktu22ew==
 
 "@types/node@^13.1.0":
-  version "13.13.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
-  integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
+  version "13.13.45"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.13.45.tgz?cache=0&sync_timestamp=1613757896289&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-13.13.45.tgz#e6676bcca092bae5751d015f074a234d5a82eb63"
+  integrity sha1-5mdrzKCSuuV1HQFfB0ojTVqC62M=
 
 axios@^0.21.1:
   version "0.21.1"
@@ -30,8 +30,8 @@ mousetrap@^1.6.5:
   integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
 
 utools-helper@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-1.0.1.tgz#b25f21c777aea42b649ad02816db82c32a13b2d6"
-  integrity sha512-YyjDVpEbJqDNRetEzEzqNxQHunzSnG91dYxIk2oVeybif/MDbxIZItr8hksI9XN/ICr2JE0SK1v9qsEeWfiQmQ==
+  version "1.4.6"
+  resolved "https://registry.npm.taobao.org/utools-helper/download/utools-helper-1.4.6.tgz#107c4ab8886fcbcfda9740251fa143b3649a1db8"
+  integrity sha1-EHxKuIhvy8/al0AlH6FDs2SaHbg=
   dependencies:
     "@types/node" "^13.1.0"

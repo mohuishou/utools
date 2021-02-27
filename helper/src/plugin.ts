@@ -56,7 +56,6 @@ class Feature implements TplFeature {
           if (items) cb(items);
           return;
         }
-
         if (this.mode != "none") this.args.search(action, "", cb);
       } catch (error) {
         this.catchError(error, cb);

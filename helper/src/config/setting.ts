@@ -100,8 +100,12 @@ export class Setting implements Plugin {
       layui.form.on("submit(config)", function (data) {
         window.updateConfig(data.field)
       });
+    };
+    document.querySelector("a").onclick = (e) => {
+      utools.shellOpenExternal(e.target.getAttribute("href"))
     }
     `;
+
     settings.append(script);
 
     window.addEventListener("keydown", stopKeyDown, true);

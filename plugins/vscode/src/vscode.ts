@@ -16,7 +16,7 @@ export class VSCode implements Plugin {
     let files: Array<any> = [];
 
     for (const key in data.openedPathsList) {
-      if (key.includes("workspaces") || key.includes("files")) {
+      if (key.includes("workspaces") || key.includes("files") || key.includes("entries")) {
         files = files.concat(data.openedPathsList[key]);
       }
     }
@@ -24,6 +24,9 @@ export class VSCode implements Plugin {
     return [...new Set(files)].map((file: any) => {
       if (typeof file === "object" && "configURIPath" in file) {
         file = file.configURIPath;
+      }
+      if (typeof file === "object" && ("folderUri" in file || "fileUri" in file)) {
+        file = file.folderUri || file.fileUri;
       }
       return decodeURIComponent(file);
     });
@@ -55,7 +58,7 @@ export class VSCode implements Plugin {
     cmd = cmd === "code" ? cmd : `"${cmd}"`;
     cmd += ` --folder-uri "${item.description}"`;
     if (process.platform !== "win32") {
-      cmd = `bash -l -c  '${cmd}'`;
+      cmd = `bash -l -c '${cmd}'`;
     }
 
     let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();

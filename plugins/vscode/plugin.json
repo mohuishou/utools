@@ -19,36 +19,6 @@
       "explain": "vscode 历史搜索配置信息",
       "cmds": ["vsc-setting"],
       "icon": "icon.png"
-    },
-    {
-      "code": "vsc-storage",
-      "explain": "vscode storage.json 路径设置",
-      "cmds": [
-        {
-          "type": "files",
-          "label": "设置为 vscode storage.json 文件路径",
-          "fileType": "file",
-          "match": "/.*storage\\.json/",
-          "minNum": 1,
-          "maxNum": 1
-        }
-      ],
-      "icon": "icon.png"
-    },
-    {
-      "code": "vsc-path",
-      "explain": "vscode 可执行文件 路径设置",
-      "cmds": [
-        {
-          "type": "files",
-          "label": "设置为 vscode 可执行文件路径",
-          "match": "/.*code.*/ig",
-          "fileType": "file",
-          "minNum": 1,
-          "maxNum": 1
-        }
-      ],
-      "icon": "icon.png"
     }
   ]
 }

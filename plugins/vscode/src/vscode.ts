@@ -1,8 +1,6 @@
-import { Plugin, ListItem } from "utools-helper";
+import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename } from "path";
 import { readFileSync } from "fs";
-import { GetPath } from "./cmd";
-import { GetStorage } from "./storage";
 import { execSync } from "child_process";
 
 export const STORAGE = "vscode_storage";
@@ -33,7 +31,7 @@ export class VSCode implements Plugin {
   }
 
   get storage(): string {
-    if (!this._storage) this._storage = GetStorage();
+    if (!this._storage) this._storage = Setting.Get("storage");
     return this._storage;
   }
 
@@ -54,13 +52,8 @@ export class VSCode implements Plugin {
   }
 
   select(item: ListItem) {
-    let cmd = GetPath();
-    cmd = cmd === "code" ? cmd : `"${cmd}"`;
-    cmd += ` --folder-uri "${item.description}"`;
-    if (process.platform !== "win32") {
-      cmd = `bash -l -c '${cmd}'`;
-    }
-
+    let cmd =
+      Setting.Get("shell") + ` '"${Setting.Get("code")}" --folder-uri "${item.description}"'`;
     let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();
     if (res !== "" && !res.toLowerCase().includes("timeout")) throw res.toString();
 

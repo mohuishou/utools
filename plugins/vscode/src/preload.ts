@@ -1,11 +1,9 @@
-import { InitPlugins } from "utools-helper";
+import { InitPlugins, Setting } from "utools-helper";
+import { config } from "./config";
 import { VSCode } from "./vscode";
-import { Setting } from "./setting";
-import { Storage } from "./storage";
-import { CMD } from "./cmd";
 
 try {
-  InitPlugins([new VSCode(), new CMD(), new Setting(), new Storage()]);
+  InitPlugins([new VSCode(), Setting.Init("vsc-setting", config)]);
 } catch (error) {
   alert(error.stack ? error.stack : error);
 }

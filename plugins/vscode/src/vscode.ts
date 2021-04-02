@@ -52,10 +52,15 @@ export class VSCode implements Plugin {
   }
 
   select(item: ListItem) {
-    let cmd = `"${Setting.Get("code")}" --folder-uri "${item.description}"`;
+    let code = Setting.Get("code");
+    if (code.trim().includes(" ")) {
+      code = `"${code}"`;
+    }
+
+    let cmd = `${code} --folder-uri "${item.description}"`;
     let shell = Setting.Get("shell");
     if (shell.trim()) {
-      cmd = shell + ` '${cmd}'`;
+      cmd = shell + ` "${cmd}"`;
     }
     let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();
     if (res !== "" && !res.toLowerCase().includes("timeout")) throw res.toString();

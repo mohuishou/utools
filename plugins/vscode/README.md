@@ -9,8 +9,6 @@ utools 插件，搜索 vscode 历史项目，点击回车打开
 
 - 关键词: vsc 输入关键词可以搜索
 - 关键词: vsc-setting 查询设置
-- 拖动 storage.json 文件到输入框可以设置 storage.json 路径
-- 拖动可执行文件到输入框可以设置可执行文件路径
 - 需要提前将 code 命令添加到 PATH, 请先确认在终端执行 `code .` 可以打开 vscode
 
 ### 使用示例

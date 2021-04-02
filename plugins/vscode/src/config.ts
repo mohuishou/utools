@@ -6,8 +6,10 @@ let defaultShell = "bash -l -c";
 switch (platform) {
   case "win32":
     defaultShell = "";
+    break;
   case "darwin":
     defaultShell = "zsh -l -c";
+    break;
 }
 
 export const config: IConfigItem[] = [

@@ -17,7 +17,8 @@ export const config: IConfigItem[] = [
     name: "shell",
     label: "shell",
     type: "input",
-    required: true,
+    required: false,
+    placeholder: "一般情况下无需修改，windows 请保持为空值",
     default: defaultShell,
   },
   {

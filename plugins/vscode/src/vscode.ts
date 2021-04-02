@@ -52,8 +52,8 @@ export class VSCode implements Plugin {
   }
 
   select(item: ListItem) {
-    let cmd =
-      Setting.Get("shell") + ` '"${Setting.Get("code")}" --folder-uri "${item.description}"'`;
+    let cmd = utools.isWindows() ? `code --folder-uri ${item.description}` 
+      : Setting.Get("shell") + ` '"${Setting.Get("code")}" --folder-uri "${item.description}"'`;
     let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();
     if (res !== "" && !res.toLowerCase().includes("timeout")) throw res.toString();
 

@@ -60,11 +60,7 @@ export interface UTools {
    * @param placeholder 自输入框提示
    * @param isFocus 是否聚焦
    */
-  setSubInput(
-    onChange: onSubInputChange,
-    placeholder?: string,
-    isFocus?: Boolean
-  ): Boolean;
+  setSubInput(onChange: onSubInputChange, placeholder?: string, isFocus?: Boolean): Boolean;
 
   /**
    * @description 移出先前设置的子输入框，在插件切换到其他页面时可以重新设置子输入框为其所用。
@@ -108,9 +104,7 @@ export interface UTools {
    * 弹出文件选择框
    * @param options OpenDialogSyncOptions
    */
-  showOpenDialog(
-    options: Electron.OpenDialogSyncOptions
-  ): Array<string> | undefined;
+  showOpenDialog(options: Electron.OpenDialogSyncOptions): Array<string> | undefined;
 
   /**
    * 打开文件保存框
@@ -134,9 +128,7 @@ export interface UTools {
    * 停止插件页面中查找
    * @param action "clearSelection" | "keepSelection" | "activateSelection", 默认 "clearSelection"
    */
-  stopFindInPage(
-    action?: "clearSelection" | "keepSelection" | "activateSelection"
-  ): void;
+  stopFindInPage(action?: "clearSelection" | "keepSelection" | "activateSelection"): void;
 
   /**
    * 原生拖拽文件到其他窗口
@@ -151,8 +143,9 @@ export interface UTools {
    */
   createBrowserWindow(
     url: string,
-    options: Electron.BrowserWindowConstructorOptions
-  ): void;
+    options: Electron.BrowserWindowConstructorOptions,
+    cb: Function
+  ): number;
 
   // 动态增减
   /**
@@ -307,6 +300,11 @@ export interface UTools {
   isWindows(): void;
 
   isLinux(): void;
+
+  /**
+   * @description 是否深色模式
+   */
+  isDarkColors(): boolean;
 
   /**
    * @description 该方法只适用于在macOS下执行，用于判断uTools是否拥有辅助权限，如果没有可以调用API方法requestPrivilege请求

@@ -20,6 +20,7 @@ export const config: IConfigItem[] = [
     required: false,
     placeholder: "一般情况下无需修改，windows 请保持为空值",
     default: defaultShell,
+    only_current_machine: true,
   },
   {
     name: "code",
@@ -28,12 +29,14 @@ export const config: IConfigItem[] = [
     placeholder: "vscode 命令",
     required: true,
     default: "code",
+    only_current_machine: true,
   },
   {
     name: "storage",
     label: "storage",
     type: "input",
     required: true,
+    only_current_machine: true,
     default: join(utools.getPath("appData"), "Code", "storage.json"),
   },
 ];

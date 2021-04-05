@@ -3,6 +3,7 @@ import { Option } from "./selectConfig";
 export interface IConfig {
   // 配置项的名字. 存储到DB的key
   name: string;
+  key: string;
   // 配置项的title，仅用于显示，默认值等于 name
   label?: string;
   // 配置项说明
@@ -41,7 +42,7 @@ export interface IConfigItem {
 }
 
 export abstract class Config implements IConfig {
-  // 配置项的名字. 存储到DB的key
+  // 配置项的名字
   name: string;
   // 配置项的title，仅用于显示，默认值等于 name
   label?: string;
@@ -53,14 +54,23 @@ export abstract class Config implements IConfig {
   required?: boolean;
   // 输入提示项，展示在输入框下面
   tips?: string;
+  // 每个机器上都保持不同配置
+  only_current_machine?: boolean;
+
+  get key(): string {
+    if (this.only_current_machine) {
+      return utools.getLocalId() + "." + this.name;
+    }
+    return this.name;
+  }
 
   get value(): any {
     let data = utools.db.get("config");
-    if (data && this.name in data.data) return data.data[this.name];
+    if (data && this.key in data.data) return data.data[this.key];
 
     // 值不存在，初始化，并且保存
     if (!data) data = { _id: "config", data: {} };
-    data.data[this.name] = this.default;
+    data.data[this.key] = this.default;
     let res = utools.db.put(data);
     if (!res.ok) throw new Error(res.error);
 
@@ -86,9 +96,7 @@ export abstract class Config implements IConfig {
 
   constructor(item: IConfigItem) {
     this.name = item.name;
-    if (item.only_current_machine) {
-      this.name = utools.getLocalId() + "." + item.name;
-    }
+    this.only_current_machine = item.only_current_machine;
     this.label = item.label ? item.label : item.name;
     this.placeholder = item.placeholder ? item.placeholder : "请输入" + item.name;
     this.default = item.default;

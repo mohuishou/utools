@@ -10,7 +10,7 @@ export class InputConfig extends Config {
         <input type="text" autocomplete="off" class="layui-input"
         ${this.required ? 'lay-verify="required" required' : ""}
         placeholder="${this.placeholder}"
-        name="${this.name}"
+        name="${this.key}"
         value="${this.value}"
         />
       `;

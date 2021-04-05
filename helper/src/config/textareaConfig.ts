@@ -10,7 +10,7 @@ export class TextareaConfig extends Config {
         <textarea autocomplete="off" class="layui-textarea"
         ${this.required ? 'lay-verify="required" required' : ""}
         placeholder="${this.placeholder}"
-        name="${this.name}"
+        name="${this.key}"
         />${this.value}</textarea>
       `;
   }

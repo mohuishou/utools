@@ -11,23 +11,19 @@ function stopKeyDown(event: any) {
 export class Setting implements Plugin {
   code: string;
   configs: IConfig[] = [];
+  configMap: Map<string, IConfig> = new Map<string, IConfig>();
 
   private static _instance: Setting;
 
   static Get(key: string): any {
-    let config = utools.db.get("config");
-    if (config && key in config.data) return config.data[key];
-    for (let i = 0; i < this._instance.configs.length; i++) {
-      const conf = this._instance.configs[i];
-      if (conf.name === key) return conf.default;
-    }
-    return;
+    return this._instance.configMap.get(key).value;
   }
 
   static Set(key: string, val: any) {
+    let c = this._instance.configMap.get(key);
     let config = utools.db.get("config");
     if (!config) config = { _id: "config", data: {} };
-    config.data[key] = val;
+    config.data[c.key] = val;
     let res = utools.db.put(config);
     if (!res.ok) throw new Error("数据查询失败" + res.error);
   }
@@ -54,6 +50,9 @@ export class Setting implements Plugin {
         select: (item: IConfigItem) => new SelectConfig(item),
         textarea: (item: IConfigItem) => new TextareaConfig(item),
       }[item.type](item);
+    });
+    this.configs.forEach((c) => {
+      this.configMap.set(c.name, c);
     });
   }
 

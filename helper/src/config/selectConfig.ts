@@ -19,7 +19,7 @@ export class SelectConfig extends Config {
         <select 
           ${this.required ? 'lay-verify="required" required' : ""}
           placeholder="${this.placeholder}"
-          name="${this.name}"
+          name="${this.key}"
           value="${this.value}"
         >
           ${this.options

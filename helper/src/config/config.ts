@@ -34,6 +34,8 @@ export interface IConfigItem {
   options?: Option[];
   // 输入提示项，展示在输入框下面
   tips?: string;
+  // 每个机器上都保持不同配置
+  only_current_machine?: boolean;
 
   type: "input" | "select" | "textarea";
 }
@@ -84,7 +86,10 @@ export abstract class Config implements IConfig {
 
   constructor(item: IConfigItem) {
     this.name = item.name;
-    this.label = item.label ? item.label : this.name;
+    if (item.only_current_machine) {
+      this.name = utools.getLocalId() + "." + item.name;
+    }
+    this.label = item.label ? item.label : item.name;
     this.placeholder = item.placeholder ? item.placeholder : "请输入" + item.name;
     this.default = item.default;
     this.required = item.required;

@@ -20,13 +20,14 @@ export class VSCode implements Plugin {
     }
 
     return [...new Set(files)].map((file: any) => {
-      if (typeof file === "object" && "configURIPath" in file) {
-        file = file.configURIPath;
-      }
-      if (typeof file === "object" && ("folderUri" in file || "fileUri" in file)) {
-        file = file.folderUri || file.fileUri;
-      }
-      return decodeURIComponent(file);
+      if (typeof file === "string") return decodeURIComponent(file);
+      if (typeof file !== "object") return;
+
+      let keys = ["configURIPath", "folderUri", "fileUri"];
+      let k = keys.find((k) => k in file);
+      if (k) return decodeURIComponent(file[k]);
+
+      if ("workspace" in file) return decodeURIComponent(file.workspace.configPath);
     });
   }
 

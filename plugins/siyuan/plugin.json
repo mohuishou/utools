@@ -1,0 +1,23 @@
+{
+  "pluginName": "思源笔记搜索",
+  "description": "快速搜索思源笔记搜索并且在思源笔记中打开",
+  "version": "v1.0.0",
+  "preload": "dist/preload.js",
+  "author": "莫回首",
+  "homepage": "https://github.com/mohuishou/utools",
+  "logo": "icon.png",
+  "features": [
+    {
+      "code": "siyuan",
+      "explain": "思源笔记搜索",
+      "cmds": ["siyuan", "sy", "思源笔记搜索"],
+      "icon": "icon.png"
+    },
+    {
+      "code": "siyuan-setting",
+      "explain": "思源笔记搜索配置信息",
+      "cmds": ["siyuan-setting"],
+      "icon": "icon.png"
+    }
+  ]
+}

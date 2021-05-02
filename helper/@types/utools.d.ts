@@ -1,5 +1,7 @@
 /// <reference path="electron.d.ts" />
 
+import {Display} from "electron";
+
 /**
  * @description 文档链接: https://u.tools/docs/developer/api.html
  */
@@ -140,6 +142,7 @@ export interface UTools {
    * 创建浏览器窗口
    * @param url  相对路径的html文件 例如: test.html?param=xxx
    * @param options 注意: preload 需配置相对位置
+   * @param cb url 加载完成时回调
    */
   createBrowserWindow(
     url: string,
@@ -165,19 +168,28 @@ export interface UTools {
    */
   removeFeature(code: string): Boolean;
 
+  // 用户
+
+  /**
+   * @description 获取当前用户头像、昵称
+   *
+   * @returns {null|UserInfo} 获取当前用户，未登录帐号返回 null
+   */
+  getUser(): null | UserInfo
+
   // 工具
 
   /**
    * 屏幕取色
    * @param cb 取色结束回调
    */
-  screenColorPick(cb: (options: screenColorPickCBOptions) => {}): void;
+  screenColorPick(cb: (options: screenColorPickCBOptions) => void): void;
 
   /**
    * 屏幕截图
    * @param cb 截图结束回调
    */
-  screenCapture(cb: (img: string) => {}): void;
+  screenCapture(cb: (img: string) => void): void;
 
   // 模拟
 
@@ -196,19 +208,48 @@ export interface UTools {
   /**
    * 模拟鼠标左键单击
    */
-  simulateMouseClick(x: Number, y: Number): void;
+  simulateMouseClick(x?: Number, y?: Number): void;
 
   /**
    * 模拟鼠标右键单击
    */
-  simulateMouseRightClick(x: Number, y: Number): void;
+  simulateMouseRightClick(x?: Number, y?: Number): void;
 
   /**
    * 模拟鼠标双击
    */
-  simulateMouseDoubleClick(x: Number, y: Number): void;
+  simulateMouseDoubleClick(x?: Number, y?: Number): void;
 
-  // 屏幕 TODO: 待完善
+  // 屏幕
+
+  /**
+   * @description 获取鼠标绝对位置
+   * */
+  getCursorScreenPoint(): CursorScreenPoint;
+
+  /**
+   * @description 获取主显示器
+   * */
+  getPrimaryDisplay(): Display
+
+  /**
+   * @description 获取所有显示器
+   * */
+  getAllDisplays(): Array<Display>
+
+  /**
+   * @description 获取位置所在的显示器
+   * @param point 位置
+   * @return 显示器
+   * */
+  getDisplayNearestPoint(point: CursorScreenPoint): Display
+
+  /**
+   * @description 获取矩形所在的显示器
+   * @param rect 矩形区域
+   * @return {Display} 显示器
+   * */
+  getDisplayMatching(rect: Rect): Display
 
   // 复制
 
@@ -234,8 +275,9 @@ export interface UTools {
   /**
    * @description 执行该方法将会弹出一个系统通知。
    * @param body 显示的内容
+   * @param clickFeatureCode plugin.json 配置的 feature.code，点击通知进入插件功能(该 feature.cmds 至少包含一个搜索字符串关键字)
    */
-  showNotification(body: string): Boolean;
+  showNotification(body: string, clickFeatureCode: string): Boolean;
 
   /**
    * 系统默认方式打开给定的文件
@@ -266,6 +308,11 @@ export interface UTools {
   getLocalId(): string;
 
   /**
+   * @description 获取软件版本
+   * */
+  getAppVersion(): string
+
+  /**
    * @description 你可以通过名称请求以下的路径
    * home 用户的 home 文件夹（主目录）
    * appData 当前用户的应用数据文件夹，默认对应：
@@ -286,6 +333,12 @@ export interface UTools {
   getPath(name: PathName): string;
 
   /**
+   * @description 获取文件图标
+   * @param filePath 文件路径、文件扩展名、"folder"
+   * */
+  getFileIcon(filePath: string): string
+
+  /**
    * @description 获取当前浏览器URL (呼出uTools前的活动窗口):Ubrowser;
    */
   getCurrentBrowserUrl(): string;
@@ -295,11 +348,20 @@ export interface UTools {
    */
   getCurrentFolderPath(): string;
 
-  isMacOs(): void;
+  /**
+   * @description 是否 MacOS 操作系统
+   * */
+  isMacOs(): boolean;
 
-  isWindows(): void;
+  /**
+   * @description 是否 Windows 操作系统
+   * */
+  isWindows(): boolean;
 
-  isLinux(): void;
+  /**
+   * @description 是否 Linux 操作系统
+   * */
+  isLinux(): boolean;
 
   /**
    * @description 是否深色模式
@@ -323,6 +385,7 @@ export interface UTools {
   ubrowser: Ubrowser;
 
   getIdleUBrowsers(): Array<any>;
+
   setUBrowserProxy(config: any): boolean;
 }
 
@@ -387,6 +450,31 @@ export interface DB {
    * @param id id 或 id 数组
    */
   allDocs<T = any>(id?: string | Array<string>): DBItem<T>[];
+
+  /**
+   * @description 存储附件到文档
+   * @param docId 文档 ID
+   * @param attachmentId  附件 ID
+   * @param rev 文档版本
+   * @param attachment 附件，最大 20M
+   * @param type 附件类型，比如：image/png, text/plain
+   * */
+  putAttachment(docId: string, attachmentId: string, rev: string | null, attachment: Buffer | Uint8Array, type: string): AttachmentRes
+
+  /**
+   * @description 获取附件
+   * @param docId 文档 ID
+   * @param attachmentId 附件 ID
+   * */
+  getAttachment(docId: string, attachmentId: string): Uint8Array
+
+  /**
+   * @description 删除附件
+   * @param docId 文档 ID
+   * @param attachmentId 附件 ID
+   * @param rev 文档版本号
+   * */
+  removeAttachment(docId: string, attachmentId: string, rev: string): AttachmentRes
 }
 
 export interface screenColorPickCBOptions {
@@ -401,11 +489,17 @@ export interface DBItem<T> {
 }
 
 export interface DBRes<T> {
-  _id: string;
+  id: string;
   ok: boolean;
   data: T;
   _rev?: string;
   error?: any;
+}
+
+export interface AttachmentRes {
+  id: string,
+  ok: boolean,
+  rev: string
 }
 
 export interface Action<T = any> {
@@ -494,8 +588,38 @@ export interface TemplatePlugin {
 interface onPluginEnterCBParams {
   code: string; // plugin.json 配置的 feature.code
   type: string; // plugin.json 配置的 feature.cmd.code
-  payload: String | Object | Array<any>; // feature.cmd.type 对应匹配的数据
+  payload: string | Object | Array<any>; // feature.cmd.type 对应匹配的数据
   optional?: Array<any>; // 存在多个匹配时的可选匹配类型和数据 [{ type, payload }]
+}
+
+/**
+ * @description 用户信息
+ */
+export interface UserInfo {
+  /**
+   * 头像
+   */
+  avatar: string
+  /**
+   * 昵称
+   */
+  nickname: string
+  /**
+   * 用户类型
+   */
+  type: 'member' | 'user'
+}
+
+export interface CursorScreenPoint {
+  x: number,
+  y: number
+}
+
+export interface Rect {
+  x: number,
+  y: number,
+  width: number,
+  height: number
 }
 
 // ubrowser 相关
@@ -504,41 +628,77 @@ interface onPluginEnterCBParams {
  */
 export interface Ubrowser {
   useragent(userAgent: string): Ubrowser;
+
   goto(url: string, headers?: any): Ubrowser;
+
   goto(mdText: string, title?: string): Ubrowser;
+
   viewport(width: Number, height: Number): Ubrowser;
+
   hide(): Ubrowser;
+
   show(): Ubrowser;
+
   css(cssCode: string): Ubrowser;
+
   press(key: string, ...modifier: string[]): Ubrowser;
+
   paste(text?: string): Ubrowser;
+
   screenshot(arg?: string | any, savePath?: string): Ubrowser;
+
   pdf(options?: any, savePath?: string): Ubrowser;
+
   device(arg: string | any): Ubrowser;
+
   cookies(name?: string): Ubrowser;
+
   setCookies(name: string, value: string): Ubrowser;
+
   setCookies(cookies: Array<any>): Ubrowser;
+
   removeCookies(name: string): Ubrowser;
+
   clearCookies(url?: string): Ubrowser;
+
   devTools(mode?: "right" | "bottom" | "undocked" | "detach"): Ubrowser;
+
   evaluate(func: Function, ...params: Array<any>): Ubrowser;
+
   wait(ms: Number): Ubrowser;
+
   wait(selector: string, timeout?: Number): Ubrowser;
+
   wait(func: Function, timeout: Number, ...params: Array<any>): Ubrowser;
+
   when(selector: string): Ubrowser;
+
   when(func: Function, ...params: Array<any>): Ubrowser;
+
   end(): Ubrowser;
+
   click(selector: string): Ubrowser;
+
   mousedown(selector: string): Ubrowser;
+
   mouseup(selector: string): Ubrowser;
+
   file(selector: string, payload: string | Array<string> | Buffer): Ubrowser;
+
   value(selector: string, val: string): Ubrowser;
+
   check(selector: string, checked: Boolean): Ubrowser;
+
   focus(selector: string): Ubrowser;
+
   scroll(selector: string): Ubrowser;
+
   scroll(y: Number): Ubrowser;
+
   scroll(x: Number, y: Number): Ubrowser;
+
   run(ubrowserId: Number): Promise<any>;
+
   run(options?: UbrowserRunOptions): Promise<any>;
 }
 

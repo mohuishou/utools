@@ -28,6 +28,9 @@
     "url": "https://github.com/mohuishou/utools.git"
   },
   "dependencies": {
-    "@types/node": "^13.1.0"
+    "@types/node": "^15.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
   }
 }

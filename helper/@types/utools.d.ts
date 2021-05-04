@@ -1,6 +1,6 @@
 /// <reference path="electron.d.ts" />
 
-import {Display} from "electron";
+import { Display } from "electron";
 
 /**
  * @description 文档链接: https://u.tools/docs/developer/api.html
@@ -175,7 +175,7 @@ export interface UTools {
    *
    * @returns {null|UserInfo} 获取当前用户，未登录帐号返回 null
    */
-  getUser(): null | UserInfo
+  getUser(): null | UserInfo;
 
   // 工具
 
@@ -230,26 +230,26 @@ export interface UTools {
   /**
    * @description 获取主显示器
    * */
-  getPrimaryDisplay(): Display
+  getPrimaryDisplay(): Display;
 
   /**
    * @description 获取所有显示器
    * */
-  getAllDisplays(): Array<Display>
+  getAllDisplays(): Array<Display>;
 
   /**
    * @description 获取位置所在的显示器
    * @param point 位置
    * @return 显示器
    * */
-  getDisplayNearestPoint(point: CursorScreenPoint): Display
+  getDisplayNearestPoint(point: CursorScreenPoint): Display;
 
   /**
    * @description 获取矩形所在的显示器
    * @param rect 矩形区域
    * @return {Display} 显示器
    * */
-  getDisplayMatching(rect: Rect): Display
+  getDisplayMatching(rect: Rect): Display;
 
   // 复制
 
@@ -277,7 +277,7 @@ export interface UTools {
    * @param body 显示的内容
    * @param clickFeatureCode plugin.json 配置的 feature.code，点击通知进入插件功能(该 feature.cmds 至少包含一个搜索字符串关键字)
    */
-  showNotification(body: string, clickFeatureCode: string): Boolean;
+  showNotification(body: string, clickFeatureCode?: string): Boolean;
 
   /**
    * 系统默认方式打开给定的文件
@@ -310,7 +310,7 @@ export interface UTools {
   /**
    * @description 获取软件版本
    * */
-  getAppVersion(): string
+  getAppVersion(): string;
 
   /**
    * @description 你可以通过名称请求以下的路径
@@ -336,7 +336,7 @@ export interface UTools {
    * @description 获取文件图标
    * @param filePath 文件路径、文件扩展名、"folder"
    * */
-  getFileIcon(filePath: string): string
+  getFileIcon(filePath: string): string;
 
   /**
    * @description 获取当前浏览器URL (呼出uTools前的活动窗口):Ubrowser;
@@ -459,14 +459,20 @@ export interface DB {
    * @param attachment 附件，最大 20M
    * @param type 附件类型，比如：image/png, text/plain
    * */
-  putAttachment(docId: string, attachmentId: string, rev: string | null, attachment: Buffer | Uint8Array, type: string): AttachmentRes
+  putAttachment(
+    docId: string,
+    attachmentId: string,
+    rev: string | null,
+    attachment: Buffer | Uint8Array,
+    type: string
+  ): AttachmentRes;
 
   /**
    * @description 获取附件
    * @param docId 文档 ID
    * @param attachmentId 附件 ID
    * */
-  getAttachment(docId: string, attachmentId: string): Uint8Array
+  getAttachment(docId: string, attachmentId: string): Uint8Array;
 
   /**
    * @description 删除附件
@@ -474,7 +480,7 @@ export interface DB {
    * @param attachmentId 附件 ID
    * @param rev 文档版本号
    * */
-  removeAttachment(docId: string, attachmentId: string, rev: string): AttachmentRes
+  removeAttachment(docId: string, attachmentId: string, rev: string): AttachmentRes;
 }
 
 export interface screenColorPickCBOptions {
@@ -497,9 +503,9 @@ export interface DBRes<T> {
 }
 
 export interface AttachmentRes {
-  id: string,
-  ok: boolean,
-  rev: string
+  id: string;
+  ok: boolean;
+  rev: string;
 }
 
 export interface Action<T = any> {
@@ -599,27 +605,27 @@ export interface UserInfo {
   /**
    * 头像
    */
-  avatar: string
+  avatar: string;
   /**
    * 昵称
    */
-  nickname: string
+  nickname: string;
   /**
    * 用户类型
    */
-  type: 'member' | 'user'
+  type: "member" | "user";
 }
 
 export interface CursorScreenPoint {
-  x: number,
-  y: number
+  x: number;
+  y: number;
 }
 
 export interface Rect {
-  x: number,
-  y: number,
-  width: number,
-  height: number
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 // ubrowser 相关

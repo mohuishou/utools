@@ -1,11 +1,10 @@
 {
   "name": "utools-helper",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/",
-    "@types/",
     "readme.md"
   ],
   "license": "MIT",
@@ -27,10 +26,9 @@
     "type": "git",
     "url": "https://github.com/mohuishou/utools.git"
   },
-  "dependencies": {
-    "@types/node": "^15.0.1"
-  },
   "devDependencies": {
-    "typescript": "^4.2.4"
+    "@types/node": "^15.0.1",
+    "typescript": "^4.2.4",
+    "utools-api-types": "^2.0.3"
   }
 }

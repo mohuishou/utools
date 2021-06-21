@@ -5,7 +5,7 @@ import {
   CallbackSetList,
   TemplatePlugin,
   TplFeatureMode,
-} from "../@types/utools";
+} from "./template_plugin";
 
 import { IListItem } from "./listItem";
 import { ErrorIcon } from "./icon";

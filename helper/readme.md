@@ -10,22 +10,11 @@ npm i utools-helper
 
 ## Usage
 
-设置代码提示
+### 设置代码提示
 
-```js
-// tsconfig.json
-{
-  "types": [
-    // utools api
-    "utools-helper/@types/utools",
-    // electron api
-    "utools-helper/@types/electron",
-    "@types/node"
-  ]
-}
-```
+`v2.0.0` 后已移除，请使用官方仓库 https://github.com/uTools-Labs/utools-api-types
 
-快速添加一个模板插件
+### 快速添加一个模板插件
 
 ```typescript
 // preload.ts

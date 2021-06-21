@@ -65,14 +65,15 @@ export abstract class Config implements IConfig {
   }
 
   get value(): any {
-    let data = utools.db.get("config");
+    let itemOld = utools.db.get("config");
+    let data = itemOld as { _id: string; _rev: string; data: any };
     if (data && this.key in data.data) return data.data[this.key];
 
     // 值不存在，初始化，并且保存
-    if (!data) data = { _id: "config", data: {} };
+    if (!data) data = { _id: "config", _rev: "", data: {} };
     data.data[this.key] = this.default;
     let res = utools.db.put(data);
-    if (!res.ok) throw new Error(res.error);
+    if (!res.ok) throw new Error(res.message);
 
     return this.default ? this.default : "";
   }

@@ -9,12 +9,13 @@
     // "module": "AMD",
     "target": "ES2018",
     "experimentalDecorators": true,
-    "isolatedModules": false
+    "isolatedModules": false,
     // "baseUrl": ".",
     // "paths": {
     //   "utools": ["@types/utools.d.ts"],
     //   "electron": ["@types/electron.d.ts"]
     // }
+    "types": ["utools-api-types", "@types/node"]
   },
   "exclude": ["example/*", "dist"]
 }

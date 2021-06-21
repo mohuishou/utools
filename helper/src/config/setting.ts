@@ -21,8 +21,9 @@ export class Setting implements Plugin {
 
   static Set(key: string, val: any) {
     let c = this._instance.configMap.get(key);
-    let config = utools.db.get("config");
-    if (!config) config = { _id: "config", data: {} };
+    let itemOld = utools.db.get("config");
+    let config = itemOld as { _id: string; _rev: string; data: any };
+    if (!config) config = { _id: "config", _rev: "", data: {} };
     config.data[c.key] = val;
     let res = utools.db.put(config);
     if (!res.ok) throw new Error("数据查询失败" + res.error);
@@ -119,8 +120,9 @@ export class Setting implements Plugin {
 
 // 更新配置
 (window as any).updateConfig = (data: any) => {
-  let item = utools.db.get("config");
-  if (!item) item = { _id: "config", data: data };
+  let itemOld = utools.db.get("config");
+  let item = itemOld as { _id: string; _rev: string; data: any };
+  if (!item) item = { _id: "config", _rev: "", data: data };
   item.data = Object.assign(item.data, data);
   let res = utools.db.put(item);
   if (!res.ok) throw new Error("数据查询失败" + res.error);

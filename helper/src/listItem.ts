@@ -1,4 +1,4 @@
-import { CallbackListItem } from "../@types/utools";
+import { CallbackListItem } from "./template_plugin";
 export interface IListItem<T = any> extends CallbackListItem {
   title: string;
   description: string;
@@ -16,12 +16,7 @@ export class ListItem<T = any> implements IListItem {
   operate?: string;
   [index: string]: any;
 
-  constructor(
-    title: string,
-    desc?: string,
-    data?: any,
-    icon: string = "icon.png"
-  ) {
+  constructor(title: string, desc?: string, data?: any, icon: string = "icon.png") {
     this.title = title;
     this.description = desc ? desc : title;
     this.data = data ? data : this.description;

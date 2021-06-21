@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.1.0",
+    "@types/node": "^15.12.4",
     "utools-api-types": "^2.0.3"
   },
   "dependencies": {
-    "utools-helper": "^1.5.1"
+    "utools-helper": "^2.0.0"
   }
 }

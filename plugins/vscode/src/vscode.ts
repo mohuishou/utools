@@ -2,12 +2,26 @@ import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename } from "path";
 import { readFileSync } from "fs";
 import { execSync } from "child_process";
+import { FORMERR } from "dns";
 
 export const STORAGE = "vscode_storage";
 
 export class VSCode implements Plugin {
   code = "vsc";
   _storage: string;
+  isSave = false;
+  isDelete = false;
+
+  constructor() {
+    document.onkeydown = (ev) => {
+      if (ev.ctrlKey || ev.metaKey) {
+        this.isSave = true;
+      }
+      if (ev.shiftKey) {
+        this.isDelete = true;
+      }
+    };
+  }
 
   get files() {
     let data = JSON.parse(readFileSync(this.storage).toString());
@@ -41,6 +55,8 @@ export class VSCode implements Plugin {
   }
 
   async search(word?: string): Promise<ListItem[]> {
+    this.isSave = false;
+    this.isDelete = false;
     let files = this.files;
     // 搜索
     word.split(/\s+/g).forEach((keyword) => {
@@ -48,11 +64,48 @@ export class VSCode implements Plugin {
         return file.toLowerCase().includes(keyword.trim().toLowerCase());
       });
     });
+    let items = files.map((file: any): ListItem => new ListItem(basename(file), file));
+    let collects = this.getCollect();
+    return collects.concat(
+      items.filter((item) => {
+        for (let i = 0; i < collects.length; i++) {
+          const c = collects[i];
+          if (item.description == c.description) return false;
+        }
+        return true;
+      })
+    );
+  }
 
-    return files.map((file: any): ListItem => new ListItem(basename(file), file));
+  getCollect(): ListItem[] {
+    return utools.dbStorage.getItem("collect") || [];
+  }
+
+  saveCollect(item: ListItem) {
+    let items = this.getCollect();
+    item.icon = "icon-collect.png";
+    items.unshift(item);
+    utools.dbStorage.setItem("collect", items);
+    utools.showNotification(`${item.title} 已置顶`);
+  }
+
+  removeCollect(item: ListItem) {
+    let items = this.getCollect();
+    items = items.filter((data) => data.description != item.description);
+    utools.dbStorage.setItem("collect", items);
+    utools.showNotification(`${item.title} 置顶已移除`);
   }
 
   select(item: ListItem) {
+    if (this.isSave) {
+      this.saveCollect(item);
+      this.isSave = false;
+      this.isDelete = false;
+    }
+    if (this.isDelete) {
+      this.removeCollect(item);
+      return this.search("");
+    }
     let code = Setting.Get("code");
     if (code.trim().includes(" ")) {
       code = `"${code}"`;

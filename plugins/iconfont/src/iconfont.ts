@@ -3,7 +3,6 @@ import Axios, { AxiosInstance } from "axios";
 import { stringify } from "querystring";
 import { writeFileSync } from "fs";
 import { join } from "path";
-import { nativeImage } from "electron";
 interface keywordParams {
   [index: string]: { key: string; val: any };
 }
@@ -159,6 +158,14 @@ export class Iconfont implements Plugin {
         item: item,
       },
       {
+        title: "复制 SVG Base64",
+        description: item.title,
+        data: item.icon,
+        icon: "icon/copy.svg",
+        operate: "copy_svg_base64",
+        item: item,
+      },
+      {
         title: "复制 PNG 图片",
         description: item.title,
         data: item.icon,
@@ -194,7 +201,7 @@ export class Iconfont implements Plugin {
       case "copy":
         tmpPath = join(utools.getPath("temp"), item.id + ".svg");
         writeFileSync(tmpPath, item.data);
-        utools.copyFile(tmpPath);
+        utools.copyImage(tmpPath);
         utools.showNotification("svg 已复制到剪切板");
         break;
       case "open":
@@ -215,11 +222,11 @@ export class Iconfont implements Plugin {
         break;
       case "copy_png":
         let dataUrl = await this.svg2png(item.id, item.data);
-        let img = nativeImage.createFromDataURL(dataUrl);
-
-        tmpPath = join(utools.getPath("temp"), item.id + ".png");
-        writeFileSync(tmpPath, img.toPNG());
-        utools.copyFile(tmpPath);
+        utools.copyImage(dataUrl);
+        utools.showNotification(item.title + "复制成功");
+        break;
+      case "copy_svg_base64":
+        utools.copyText(item.data);
         utools.showNotification(item.title + "复制成功");
         break;
       case "return":

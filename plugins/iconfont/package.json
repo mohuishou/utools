@@ -7,6 +7,11 @@
     "@types/mousetrap": "^1.6.3",
     "axios": "^0.21.1",
     "mousetrap": "^1.6.5",
-    "utools-helper": "^1.0.0"
+    "utools-helper": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "@types/throttle-debounce": "^2.1.0",
+    "utools-api-types": "^2.0.3"
   }
 }

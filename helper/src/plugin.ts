@@ -10,11 +10,17 @@ import {
 import { IListItem } from "./listItem";
 import { ErrorIcon } from "./icon";
 import { Setting } from "./config";
+import { debounce } from "throttle-debounce";
 
 export interface Plugin {
   code: string;
   mode?: TplFeatureMode;
   placeholder?: string;
+
+  /**
+   * 节流延迟，默认 500ms，单位 ms
+   */
+  delay?: number;
 
   /**
    * 是否在 select 结束之后退出插件
@@ -44,6 +50,8 @@ export interface Plugin {
 class Feature implements TplFeature {
   plugin: Plugin;
   mode: TplFeatureMode = "list";
+  delay: number = 500;
+  search: any;
 
   args: TplFeatureArgs = {
     placeholder: "请输入关键词查询",
@@ -65,8 +73,7 @@ class Feature implements TplFeature {
     search: async (action, word, cb) => {
       try {
         if (!this.plugin.search) return;
-        let items = await this.plugin.search(word, action);
-        if (items) return cb(items);
+        await this.search(word, action, cb);
         if (this.plugin.outPlugin) utools.outPlugin();
         if (this.plugin.hideMainWindow) utools.hideMainWindow();
       } catch (error) {
@@ -107,6 +114,15 @@ class Feature implements TplFeature {
     this.plugin = plugin;
     if (plugin.mode) this.mode = plugin.mode;
     if (plugin.placeholder) this.args.placeholder = plugin.placeholder;
+    if (plugin.delay) this.delay = plugin.delay;
+    this.search = debounce(
+      this.delay,
+      false,
+      async (word: string, action: Action, cb: CallbackSetList) => {
+        let items = await this.plugin.search(word, action);
+        if (items) return cb(items);
+      }
+    );
   }
 }
 

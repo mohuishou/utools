@@ -4,7 +4,6 @@ import { stringify } from "querystring";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import { nativeImage } from "electron";
-
 interface keywordParams {
   [index: string]: { key: string; val: any };
 }
@@ -56,7 +55,6 @@ export class Iconfont implements Plugin {
 
   async search(keyword: string): Promise<ListItem[]> {
     let words = keyword.trim().split(/\s+/g);
-    console.log(keyword, words);
 
     const r = await this.request.post("api/icon/search.json", stringify(this.params(words)), {
       headers: {
@@ -65,13 +63,11 @@ export class Iconfont implements Plugin {
     });
 
     let icons = r.data.data.icons.map((icon: any) => {
-      console.log("替换前: " + icon.show_svg);
       if (Setting.Get("fill_color")) {
         icon.show_svg = icon.show_svg.replace(
           /fill="#.*?"/gim,
           `fill="${Setting.Get("fill_color")}"`
         );
-        console.log("替换后: " + icon.show_svg);
       }
 
       return {

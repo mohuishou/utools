@@ -5,7 +5,7 @@ export const config: IConfigItem[] = [
     name: "featured",
     label: "是否精选",
     type: "select",
-    required: true,
+    required: false,
     default: "",
     options: [
       { label: "所有图标", value: "" },
@@ -16,7 +16,7 @@ export const config: IConfigItem[] = [
     name: "color",
     label: "颜色筛选",
     type: "select",
-    required: true,
+    required: false,
     default: "1",
     options: [
       { label: "单色", value: "0" },
@@ -28,7 +28,7 @@ export const config: IConfigItem[] = [
     label: "图标类型",
     type: "select",
     default: "",
-    required: true,
+    required: false,
     options: [
       { label: "全部", value: "" },
       { label: "线性", value: "line" },

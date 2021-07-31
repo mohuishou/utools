@@ -2,23 +2,18 @@ import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename } from "path";
 import { readFileSync } from "fs";
 import { execSync } from "child_process";
-import { FORMERR } from "dns";
 
 export const STORAGE = "vscode_storage";
 
 export class VSCode implements Plugin {
   code = "vsc";
   _storage: string;
-  isSave = false;
-  isDelete = false;
+  isCtrl = false;
 
   constructor() {
     document.onkeydown = (ev) => {
       if (ev.ctrlKey || ev.metaKey) {
-        this.isSave = true;
-      }
-      if (ev.shiftKey) {
-        this.isDelete = true;
+        this.isCtrl = true;
       }
     };
   }
@@ -55,8 +50,7 @@ export class VSCode implements Plugin {
   }
 
   async search(word?: string): Promise<ListItem[]> {
-    this.isSave = false;
-    this.isDelete = false;
+    this.isCtrl = false;
     let files = this.files;
     // 搜索
     word.split(/\s+/g).forEach((keyword) => {
@@ -86,6 +80,7 @@ export class VSCode implements Plugin {
     item.icon = "icon-collect.png";
     items.unshift(item);
     utools.dbStorage.setItem("collect", items);
+    
     utools.showNotification(`${item.title} 已置顶`);
   }
 
@@ -96,15 +91,14 @@ export class VSCode implements Plugin {
     utools.showNotification(`${item.title} 置顶已移除`);
   }
 
-  select(item: ListItem) {
-    if (this.isSave) {
-      this.saveCollect(item);
-      this.isSave = false;
-      this.isDelete = false;
-    }
-    if (this.isDelete) {
-      this.removeCollect(item);
-      return this.search("");
+  async select(item: ListItem) {
+    if (this.isCtrl) {
+      let items = this.getCollect();
+      let isSave = items.find(data => data.description == item.description)
+      if (isSave) this.removeCollect(item);
+      else this.saveCollect(item);
+      this.isCtrl = false;
+      return await this.search('');
     }
     let code = Setting.Get("code");
     if (code.trim().includes(" ")) {

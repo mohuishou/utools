@@ -2,12 +2,17 @@
 # yarn lockfile v1
 
 
-"@types/node@^13.1.0":
-  version "13.1.0"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.1.0.tgz#225cbaac5fdb2b9ac651b02c070d8aa3c37cc812"
-  integrity sha1-Ily6rF/bK5rGUbAsBw2Ko8N8yBI=
+"@types/node@^15.12.4":
+  "integrity" "sha1-4c+BfXCh4RjoGSLE/2aDzp1CLiY="
+  "resolved" "https://registry.nlark.com/@types/node/download/@types/node-15.12.4.tgz"
+  "version" "15.12.4"
 
-utools-helper@^0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/utools-helper/-/utools-helper-0.1.3.tgz#557b7e5ecbd7a934dba8fec6372f8888ed3f11c3"
-  integrity sha512-C3mK2XYUq2ftJG4e1Bxlmvoh+VRNMKkhPiqFh3Q3RF2AfIhS34aD3x++tnFjMwA9wMwJT9XXfRoyUQ98u938Rg==
+"utools-api-types@^2.0.3":
+  "integrity" "sha1-SxJ+Mn7r1G/4U8Nyt8KAe69c4WE="
+  "resolved" "https://registry.nlark.com/utools-api-types/download/utools-api-types-2.0.3.tgz"
+  "version" "2.0.3"
+
+"utools-helper@^2.0.0":
+  "integrity" "sha1-bRSwLIMaySWhxqepTxkGrxHlV1o="
+  "resolved" "https://registry.nlark.com/utools-helper/download/utools-helper-2.0.0.tgz?cache=0&sync_timestamp=1624256839035&other_urls=https%3A%2F%2Fregistry.nlark.com%2Futools-helper%2Fdownload%2Futools-helper-2.0.0.tgz"
+  "version" "2.0.0"

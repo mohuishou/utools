@@ -3,35 +3,50 @@
 
 
 "@types/mousetrap@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.3.tgz#3159a01a2b21c9155a3d8f85588885d725dc987d"
-  integrity sha512-13gmo3M2qVvjQrWNseqM3+cR6S2Ss3grbR2NZltgMq94wOwqJYQdgn8qzwDshzgXqMlSUtyPZjysImmktu22ew==
+  "integrity" "sha1-MVmgGishyRVaPY+FWIiF1yXcmH0="
+  "resolved" "https://registry.npm.taobao.org/@types/mousetrap/download/@types/mousetrap-1.6.3.tgz"
+  "version" "1.6.3"
 
-"@types/node@^13.1.0":
-  version "13.13.45"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.13.45.tgz?cache=0&sync_timestamp=1613757896289&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-13.13.45.tgz#e6676bcca092bae5751d015f074a234d5a82eb63"
-  integrity sha1-5mdrzKCSuuV1HQFfB0ojTVqC62M=
+"@types/node@^15.12.4":
+  "integrity" "sha1-4c+BfXCh4RjoGSLE/2aDzp1CLiY="
+  "resolved" "https://registry.nlark.com/@types/node/download/@types/node-15.12.4.tgz"
+  "version" "15.12.4"
 
-axios@^0.21.1:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
-  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+"@types/throttle-debounce@^2.1.0":
+  "integrity" "sha1-HD32JL/Eti+ZLTASuExW1B6rN3Y="
+  "resolved" "https://registry.nlark.com/@types/throttle-debounce/download/@types/throttle-debounce-2.1.0.tgz?cache=0&sync_timestamp=1621244398513&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fthrottle-debounce%2Fdownload%2F%40types%2Fthrottle-debounce-2.1.0.tgz"
+  "version" "2.1.0"
+
+"axios@^0.21.1":
+  "integrity" "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz"
+  "version" "0.21.1"
   dependencies:
-    follow-redirects "^1.10.0"
+    "follow-redirects" "^1.10.0"
 
-follow-redirects@^1.10.0:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
-  integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
+"follow-redirects@^1.10.0":
+  "integrity" "sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.1.tgz"
+  "version" "1.13.1"
 
-mousetrap@^1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
-  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
+"mousetrap@^1.6.5":
+  "integrity" "sha1-inZtjCcrCDk9X1YHTgtewYNIW/k="
+  "resolved" "https://registry.npm.taobao.org/mousetrap/download/mousetrap-1.6.5.tgz"
+  "version" "1.6.5"
 
-utools-helper@^1.0.0:
-  version "1.4.6"
-  resolved "https://registry.npm.taobao.org/utools-helper/download/utools-helper-1.4.6.tgz#107c4ab8886fcbcfda9740251fa143b3649a1db8"
-  integrity sha1-EHxKuIhvy8/al0AlH6FDs2SaHbg=
+"throttle-debounce@^3.0.1":
+  "integrity" "sha1-MvlNhN+olPeGyaHykOemRbahmrs="
+  "resolved" "https://registry.npm.taobao.org/throttle-debounce/download/throttle-debounce-3.0.1.tgz?cache=0&sync_timestamp=1604313832516&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fthrottle-debounce%2Fdownload%2Fthrottle-debounce-3.0.1.tgz"
+  "version" "3.0.1"
+
+"utools-api-types@^2.0.3":
+  "integrity" "sha1-SxJ+Mn7r1G/4U8Nyt8KAe69c4WE="
+  "resolved" "https://registry.nlark.com/utools-api-types/download/utools-api-types-2.0.3.tgz"
+  "version" "2.0.3"
+
+"utools-helper@^2.1.0":
+  "integrity" "sha1-8yNZw7IG8ZkaxsbOVWHH70SMO2Q="
+  "resolved" "https://registry.nlark.com/utools-helper/download/utools-helper-2.1.0.tgz?cache=0&sync_timestamp=1624269041330&other_urls=https%3A%2F%2Fregistry.nlark.com%2Futools-helper%2Fdownload%2Futools-helper-2.1.0.tgz"
+  "version" "2.1.0"
   dependencies:
-    "@types/node" "^13.1.0"
+    "throttle-debounce" "^3.0.1"

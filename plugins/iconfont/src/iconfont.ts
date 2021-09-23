@@ -201,8 +201,9 @@ export class Iconfont implements Plugin {
       case "copy":
         tmpPath = join(utools.getPath("temp"), item.id + ".svg");
         writeFileSync(tmpPath, item.data);
-        utools.copyImage(tmpPath);
-        utools.showNotification("svg 已复制到剪切板");
+        let res = utools.copyFile(tmpPath)
+        if (res) utools.showNotification("svg 已复制到剪切板");
+        else utools.showNotification("svg 复制失败");
         break;
       case "open":
         utools.shellOpenExternal(item.data);

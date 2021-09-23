@@ -3,8 +3,10 @@
     "outDir": "dist",
     "sourceMap": false,
     "noImplicitAny": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "target": "ES2018",
-    "experimentalDecorators": true
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "types": ["utools-api-types", "@types/node"]
   }
 }

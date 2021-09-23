@@ -1,8 +1,8 @@
 import { Plugin, ListItem, IListItem, Setting } from "utools-helper";
 import { Client, oauth } from "./yuque";
-import * as remark from "remark";
-const config = require("../config.json");
+import * as remark from 'remark'
 
+const config = require("../config.json");
 // 背景色区块支持
 const colorBlocks: { [key: string]: string } = {
   "^:::tips$": `<div style="background: #FFFBE6;padding:10px;border: 1px solid #C3C3C3;border-radius:5px;margin-bottom:5px;">`,

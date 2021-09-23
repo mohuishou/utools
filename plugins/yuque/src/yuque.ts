@@ -118,7 +118,7 @@ export class oauth {
         return auth.textContent.trim() == "授权成功";
       }, 1000 * 2)
       .hide()
-      .run();
+      .run({show: true});
   }
 
   async token(): Promise<string> {

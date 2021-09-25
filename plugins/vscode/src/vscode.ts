@@ -1,7 +1,8 @@
 import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename } from "path";
-import { readFileSync } from "fs";
+import { fstat, readdir, readdirSync, readFileSync } from "fs";
 import { execSync } from "child_process";
+import path = require("path");
 
 export const STORAGE = "vscode_storage";
 
@@ -52,23 +53,41 @@ export class VSCode implements Plugin {
   async search(word?: string): Promise<ListItem[]> {
     this.isCtrl = false;
     let files = this.files;
+
     // 搜索
     word.split(/\s+/g).forEach((keyword) => {
       files = files.filter((file: string) => {
         return file.toLowerCase().includes(keyword.trim().toLowerCase());
       });
     });
-    let items = files.map((file: any): ListItem => new ListItem(basename(file), file));
-    let collects = this.getCollect();
-    return collects.concat(
-      items.filter((item) => {
+
+
+    let items = files.map((file: any): ListItem => {
+      let item = new ListItem(basename(file), file)
+      let ext = path.extname(file)
+      item.icon = this.getIcon(ext)
+      return item
+    });
+
+
+
+    if (!word.trim()) {
+      let collects = this.getCollect();
+
+      collects.map(item => item.icon = "icon/icon-collect.png")
+
+      // 去除已收藏的项目，避免重复显示
+      items = items.filter((item) => {
         for (let i = 0; i < collects.length; i++) {
-          const c = collects[i];
-          if (item.description == c.description) return false;
+          if (item.description == collects[i].description) return false;
         }
         return true;
       })
-    );
+
+      items = collects.concat(items)
+    }
+
+    return items
   }
 
   getCollect(): ListItem[] {
@@ -77,10 +96,10 @@ export class VSCode implements Plugin {
 
   saveCollect(item: ListItem) {
     let items = this.getCollect();
-    item.icon = "icon-collect.png";
+    item.icon = "icon/icon-collect.png";
     items.unshift(item);
     utools.dbStorage.setItem("collect", items);
-    
+
     utools.showNotification(`${item.title} 已置顶`);
   }
 
@@ -115,5 +134,13 @@ export class VSCode implements Plugin {
 
     utools.outPlugin();
     utools.hideMainWindow();
+  }
+
+  getIcon(ext: string) :string {
+    let icons = readdirSync(path.join(__dirname, "..","icon"))
+    let icon = icons.find(icon => "."+icon === ext.toLowerCase()+".svg")
+    if (!icon && !ext) icon = "folder.svg"
+    if(!icon && ext) icon = "file.svg"
+    return path.join("icon", icon)
   }
 }

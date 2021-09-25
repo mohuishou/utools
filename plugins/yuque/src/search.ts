@@ -22,6 +22,7 @@ export class Search implements Plugin {
       let auth = new oauth(config.client_id, config.client_secret);
       let token = await auth.token();
       Setting.Set("token", token);
+      utools.showNotification("token 设置成功: "+token)
     }
 
     this.client = new Client(Setting.Get("token"));

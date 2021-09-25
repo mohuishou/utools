@@ -109,6 +109,7 @@ export class oauth {
 
     await utools.ubrowser
       .show()
+      .devTools()
       .goto("https://www.yuque.com/oauth2/authorize?" + stringify(params))
       .wait("#ReactApp  div.authorized-container  h1", 1000 * 60 * 2)
       .wait(() => {

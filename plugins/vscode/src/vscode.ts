@@ -65,7 +65,7 @@ export class VSCode implements Plugin {
     let items = files.map((file: any): ListItem => {
       let item = new ListItem(basename(file), file)
       let ext = path.extname(file)
-      item.icon = this.getIcon(ext)
+      item.icon = file.includes("remote") ? 'icon/remote.svg' : this.getIcon(ext)
       return item
     });
 

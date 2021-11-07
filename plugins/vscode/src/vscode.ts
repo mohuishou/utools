@@ -64,8 +64,8 @@ export class VSCode implements Plugin {
 
     let items = files.map((file: any): ListItem => {
       let item = new ListItem(basename(file), file)
-      let ext = path.extname(file)
-      item.icon = file.includes("remote") ? 'icon/remote.svg' : this.getIcon(ext)
+      let ext = file.includes("remote") ? '.remote' : path.extname(file)
+      item.icon = this.getIcon(ext)
       return item
     });
 
@@ -137,8 +137,11 @@ export class VSCode implements Plugin {
   }
 
   getIcon(ext: string) :string {
+    console.log(ext)
     let icons = readdirSync(path.join(__dirname, "..","icon"))
-    let icon = icons.find(icon => "."+icon === ext.toLowerCase()+".svg")
+    let icon = icons.find(icon => {
+      return "."+icon.split(".")[0] === ext.toLowerCase()
+    })
     if (!icon && !ext) icon = "folder.svg"
     if(!icon && ext) icon = "file.svg"
     return path.join("icon", icon)

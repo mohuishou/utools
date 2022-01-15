@@ -12,7 +12,7 @@
     "@types/node": "^13.1.0",
     "@types/shelljs": "^0.8.6",
     "dockerode": "^3.1.0",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "utools-helper": "^0.1.1"
   }
 }

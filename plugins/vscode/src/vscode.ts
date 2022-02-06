@@ -23,9 +23,20 @@ export class VSCode implements Plugin {
     let data = JSON.parse(readFileSync(this.storage).toString());
     let files: Array<any> = [];
 
-    for (const key in data.openedPathsList) {
-      if (key.includes("workspaces") || key.includes("files") || key.includes("entries")) {
-        files = files.concat(data.openedPathsList[key]);
+    if (data.windowsState){
+      // vscode 1.64开始，历史记录不再存放在openedPathsList
+      for (const key in data.windowsState.openedWindows) {
+        var folder = data.windowsState.openedWindows[key].folder;
+        if (folder) {
+          files = files.concat(data.windowsState.openedWindows[key].folder);
+        }
+      }
+    }
+    else {
+      for (const key in data.openedPathsList) {
+        if (key.includes("workspaces") || key.includes("files") || key.includes("entries")) {
+          files = files.concat(data.openedPathsList[key]);
+        }
       }
     }
 
@@ -136,14 +147,14 @@ export class VSCode implements Plugin {
     utools.hideMainWindow();
   }
 
-  getIcon(ext: string) :string {
+  getIcon(ext: string): string {
     console.log(ext)
-    let icons = readdirSync(path.join(__dirname, "..","icon"))
+    let icons = readdirSync(path.join(__dirname, "..", "icon"))
     let icon = icons.find(icon => {
-      return "."+icon.split(".")[0] === ext.toLowerCase()
+      return "." + icon.split(".")[0] === ext.toLowerCase()
     })
     if (!icon && !ext) icon = "folder.svg"
-    if(!icon && ext) icon = "file.svg"
+    if (!icon && ext) icon = "file.svg"
     return path.join("icon", icon)
   }
 }

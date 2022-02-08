@@ -1,6 +1,6 @@
 import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename, join, extname } from "path";
-import { readdirSync, readFileSync } from "fs";
+import { readdirSync, readFileSync, utimes } from "fs";
 import { execSync } from "child_process";
 import { GetFiles } from "./storage.1.64";
 
@@ -130,16 +130,21 @@ export class VSCode implements Plugin {
       this.isCtrl = false;
       return await this.search("");
     }
-    let code = Setting.Get("code");
-    if (code.trim().includes(" ")) {
-      code = `"${code}"`;
-    }
 
-    let cmd = `${code} --folder-uri "${item.description}"`;
+    let code = Setting.Get("code");
+    if (code.trim().includes(" ")) code = `"${code}"`;
+
+    let cmds: String[] = [code];
+    if (item.description.includes(".code-workspace")) cmds.push("--file-uri");
+    else cmds.push("--folder-uri");
+
+    cmds.push(`'${item.description}'`);
+
+    let cmd = cmds.join(" ");
     let shell = Setting.Get("shell");
-    if (shell.trim()) {
-      cmd = shell + ` "${cmd}"`;
-    }
+    if (shell.trim()) cmd = `${shell} "${cmd}"`;
+    console.log(cmd);
+
     let res = execSync(cmd, {
       timeout: 3000,
       windowsHide: true,
@@ -155,7 +160,6 @@ export class VSCode implements Plugin {
   }
 
   getIcon(ext: string): string {
-    console.log(ext);
     let icons = readdirSync(join(__dirname, "..", "icon"));
     let icon = icons.find((icon) => {
       return "." + icon.split(".")[0] === ext.toLowerCase();

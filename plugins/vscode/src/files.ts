@@ -10,14 +10,8 @@ export interface Entry {
   folderUri?: string;
   workspace?: Workspace;
   label?: string;
-  remoteAuthority?: RemoteAuthority;
+  remoteAuthority?: string;
   fileUri?: string;
-}
-
-export enum RemoteAuthority {
-  SSHRemote9135160159 = "ssh-remote+9.135.160.159",
-  SSHRemoteDevVM = "ssh-remote+dev-vm",
-  SSHRemoteDevVMDocker = "ssh-remote+dev-vm-docker",
 }
 
 export interface Workspace {

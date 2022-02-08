@@ -1,9 +1,8 @@
 import { Plugin, ListItem, Setting } from "utools-helper";
-import { basename } from "path";
+import { basename, join, extname } from "path";
 import { readdirSync, readFileSync } from "fs";
 import { execSync } from "child_process";
 import { GetFiles } from "./storage.1.64";
-import path = require("path");
 
 export const STORAGE = "vscode_storage";
 
@@ -77,7 +76,7 @@ export class VSCode implements Plugin {
     let items = files.map(
       (file: any): ListItem => {
         let item = new ListItem(basename(file), file);
-        let ext = file.includes("remote") ? ".remote" : path.extname(file);
+        let ext = file.includes("remote") ? ".remote" : extname(file);
         item.icon = this.getIcon(ext);
         return item;
       }
@@ -141,22 +140,28 @@ export class VSCode implements Plugin {
     if (shell.trim()) {
       cmd = shell + ` "${cmd}"`;
     }
-    let res = execSync(cmd, { timeout: 3000 }).toString().trim().toLowerCase();
+    let res = execSync(cmd, {
+      timeout: 3000,
+      windowsHide: true,
+      encoding: "utf-8",
+    })
+      .toString()
+      .trim()
+      .toLowerCase();
     if (res !== "" && !res.toLowerCase().includes("timeout"))
       throw res.toString();
 
-    utools.outPlugin();
     utools.hideMainWindow();
   }
 
   getIcon(ext: string): string {
     console.log(ext);
-    let icons = readdirSync(path.join(__dirname, "..", "icon"));
+    let icons = readdirSync(join(__dirname, "..", "icon"));
     let icon = icons.find((icon) => {
       return "." + icon.split(".")[0] === ext.toLowerCase();
     });
     if (!icon && !ext) icon = "folder.svg";
     if (!icon && ext) icon = "file.svg";
-    return path.join("icon", icon);
+    return join("icon", icon);
   }
 }

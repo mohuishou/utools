@@ -1,10 +1,8 @@
 import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename, join, extname } from "path";
-import { readdirSync, readFileSync, utimes } from "fs";
+import { readdirSync, readFileSync } from "fs";
 import { execSync } from "child_process";
-import { GetFiles } from "./storage.1.64";
-
-export const STORAGE = "vscode_storage";
+import { GetFiles } from "./files";
 
 export class VSCode implements Plugin {
   code = "vsc";
@@ -19,42 +17,12 @@ export class VSCode implements Plugin {
     };
   }
 
-  /**
-   * 在 1.64 版本之前获取文件列表
-   */
-  before164Files(data: any) {
-    let files: Array<any> = [];
-    for (const key in data.openedPathsList) {
-      if (
-        key.includes("workspaces") ||
-        key.includes("files") ||
-        key.includes("entries")
-      ) {
-        files = files.concat(data.openedPathsList[key]);
-      }
-    }
-
-    return [...new Set(files)].map((file: any) => {
-      if (typeof file === "string") return decodeURIComponent(file);
-      if (typeof file !== "object") return;
-
-      let keys = ["configURIPath", "folderUri", "fileUri"];
-      let k = keys.find((k) => k in file);
-      if (k) return decodeURIComponent(file[k]);
-
-      if ("workspace" in file)
-        return decodeURIComponent(file.workspace.configPath);
-    });
-  }
-
-  get files() {
-    let data = JSON.parse(readFileSync(this.storage).toString());
-    if (!("openedPathsList" in data)) return GetFiles(this.storage);
-    return this.before164Files(data);
+  async files() {
+    return await GetFiles(this.storage);
   }
 
   get storage(): string {
-    if (!this._storage) this._storage = Setting.Get("storage");
+    if (!this._storage) this._storage = Setting.Get("db");
     return this._storage;
   }
 
@@ -64,7 +32,7 @@ export class VSCode implements Plugin {
 
   async search(word?: string): Promise<ListItem[]> {
     this.isCtrl = false;
-    let files = this.files;
+    let files = await this.files();
 
     // 搜索
     word.split(/\s+/g).forEach((keyword) => {

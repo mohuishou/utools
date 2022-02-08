@@ -32,11 +32,17 @@ export const config: IConfigItem[] = [
     only_current_machine: true,
   },
   {
-    name: "storage",
-    label: "storage",
+    name: "db",
+    label: "db",
     type: "input",
     required: true,
     only_current_machine: true,
-    default: join(utools.getPath("appData"), "Code", "storage.json"),
+    default: join(
+      utools.getPath("appData"),
+      "Code",
+      "User",
+      "globalStorage",
+      "state.vscdb"
+    ),
   },
 ];

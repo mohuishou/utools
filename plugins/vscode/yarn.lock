@@ -20,11 +20,6 @@
     "@types/emscripten" "*"
     "@types/node" "*"
 
-"sql.js@^1.6.2":
-  "integrity" "sha512-9iucI5fXQa+Gspeqf/BNB20PxJIn5LhXDt4mjXoFPqXdR+NqtFs15SdKpSIJ6s529aGL9zFR9p2eSCIEiMsNGA=="
-  "resolved" "https://registry.npmmirror.com/sql.js/-/sql.js-1.6.2.tgz"
-  "version" "1.6.2"
-
 "utools-api-types@^2.0.3":
   "integrity" "sha1-SxJ+Mn7r1G/4U8Nyt8KAe69c4WE="
   "resolved" "https://registry.nlark.com/utools-api-types/download/utools-api-types-2.0.3.tgz"

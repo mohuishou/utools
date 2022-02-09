@@ -17,8 +17,41 @@ export class VSCode implements Plugin {
     };
   }
 
+  /**
+   * 在 1.64 版本之前获取文件列表
+   */
+  before164Files() {
+    let data = JSON.parse(readFileSync(Setting.Get("storage")).toString())
+    let files: Array<any> = [];
+    for (const key in data.openedPathsList) {
+      if (
+        key.includes("workspaces") ||
+        key.includes("files") ||
+        key.includes("entries")
+      ) {
+        files = files.concat(data.openedPathsList[key]);
+      }
+    }
+
+    return [...new Set(files)].map((file: any) => {
+      if (typeof file === "string") return decodeURIComponent(file);
+      if (typeof file !== "object") return;
+
+      let keys = ["configURIPath", "folderUri", "fileUri"];
+      let k = keys.find((k) => k in file);
+      if (k) return decodeURIComponent(file[k]);
+
+      if ("workspace" in file)
+        return decodeURIComponent(file.workspace.configPath);
+    });
+  }
+
   async files() {
-    return await GetFiles(this.storage);
+    try {
+      return await GetFiles(this.storage);
+    } catch (error) {
+      return this.before164Files()
+    }
   }
 
   get storage(): string {

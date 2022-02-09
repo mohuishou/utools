@@ -45,4 +45,12 @@ export const config: IConfigItem[] = [
       "state.vscdb"
     ),
   },
+  {
+    name: "storage",
+    label: "storage",
+    type: "input",
+    required: true,
+    only_current_machine: true,
+    default: join(utools.getPath("appData"), "Code", "storage.json"),
+  },
 ];

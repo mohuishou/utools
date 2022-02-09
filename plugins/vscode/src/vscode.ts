@@ -106,7 +106,7 @@ export class VSCode implements Plugin {
     if (item.description.includes(".code-workspace")) cmds.push("--file-uri");
     else cmds.push("--folder-uri");
 
-    cmds.push(`'${item.description}'`);
+    cmds.push(`"${item.description}"`);
 
     let cmd = cmds.join(" ");
     let shell = Setting.Get("shell");

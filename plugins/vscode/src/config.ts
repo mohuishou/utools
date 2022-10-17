@@ -53,4 +53,13 @@ export const config: IConfigItem[] = [
     only_current_machine: true,
     default: join(utools.getPath("appData"), "Code", "storage.json"),
   },
+  {
+    name: "timeout",
+    label: "timeout",
+    type: "input",
+    placeholder: "shell 命令执行超时时间",
+    required: false,
+    default: "3000",
+    only_current_machine: true,
+  },
 ];

@@ -146,8 +146,11 @@ export class VSCode implements Plugin {
     if (shell.trim()) cmd = `${shell} "${cmd}"`;
     console.log(cmd);
 
+    let timeout = parseInt(Setting.Get("timeout"));
+    if (!timeout || timeout < 3000) timeout =  3000
+
     let res = execSync(cmd, {
-      timeout: 3000,
+      timeout: timeout,
       windowsHide: true,
       encoding: "utf-8",
     })

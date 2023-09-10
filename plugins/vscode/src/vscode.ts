@@ -1,7 +1,7 @@
 import { Plugin, ListItem, Setting } from "utools-helper";
 import { basename, join, extname } from "path";
 import { readdirSync, readFileSync } from "fs";
-import { execSync } from "child_process";
+import { ExecOptions, exec } from "child_process";
 import { GetFiles } from "./files";
 
 export class VSCode implements Plugin {
@@ -21,7 +21,7 @@ export class VSCode implements Plugin {
    * 在 1.64 版本之前获取文件列表
    */
   before164Files() {
-    let data = JSON.parse(readFileSync(Setting.Get("storage")).toString())
+    let data = JSON.parse(readFileSync(Setting.Get("storage")).toString());
     let files: Array<any> = [];
     for (const key in data.openedPathsList) {
       if (
@@ -50,7 +50,7 @@ export class VSCode implements Plugin {
     try {
       return await GetFiles(this.storage);
     } catch (error) {
-      return this.before164Files()
+      return this.before164Files();
     }
   }
 
@@ -74,14 +74,12 @@ export class VSCode implements Plugin {
       });
     });
 
-    let items = files.map(
-      (file: any): ListItem => {
-        let item = new ListItem(basename(file), file);
-        let ext = file.includes("remote") ? ".remote" : extname(file);
-        item.icon = this.getIcon(ext);
-        return item;
-      }
-    );
+    let items = files.map((file: any): ListItem => {
+      let item = new ListItem(basename(file), file);
+      let ext = file.includes("remote") ? ".remote" : extname(file);
+      item.icon = this.getIcon(ext);
+      return item;
+    });
 
     if (!word.trim()) {
       let collects = this.getCollect();
@@ -122,6 +120,19 @@ export class VSCode implements Plugin {
     utools.showNotification(`${item.title} 置顶已移除`);
   }
 
+  private execCmd(
+    command: string,
+    options: { encoding: BufferEncoding } & ExecOptions
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      exec(command, options, (_, stdout, stderr) => {
+        if (stderr) return reject(stderr);
+
+        resolve(stdout);
+      });
+    });
+  }
+
   async select(item: ListItem) {
     if (this.isCtrl) {
       let items = this.getCollect();
@@ -147,20 +158,19 @@ export class VSCode implements Plugin {
     console.log(cmd);
 
     let timeout = parseInt(Setting.Get("timeout"));
-    if (!timeout || timeout < 3000) timeout =  3000
+    if (!timeout || timeout < 3000) timeout = 3000;
 
-    let res = execSync(cmd, {
+    this.execCmd(cmd, {
       timeout: timeout,
       windowsHide: true,
-      encoding: "utf-8",
+      encoding: "utf-8"
     })
-      .toString()
-      .trim()
-      .toLowerCase();
-    if (res !== "" && !res.toLowerCase().includes("timeout"))
-      throw res.toString();
-
-    utools.hideMainWindow();
+      .catch((reason) => {
+        throw reason.toString();
+      })
+      .finally(() => {
+        utools.hideMainWindow();
+      });
   }
 
   getIcon(ext: string): string {

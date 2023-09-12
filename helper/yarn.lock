@@ -2,12 +2,27 @@
 # yarn lockfile v1
 
 
-"@types/node@^15.0.1":
-  version "15.0.1"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-15.0.1.tgz?cache=0&sync_timestamp=1619534647758&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-15.0.1.tgz#ef34dea0881028d11398be5bf4e856743e3dc35a"
-  integrity sha1-7zTeoIgQKNETmL5b9OhWdD49w1o=
+"@types/node@^15.12.4":
+  version "15.14.9"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-15.14.9.tgz#bc43c990c3c9be7281868bbc7b8fdd6e2b57adfa"
+  integrity sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A==
+
+"@types/throttle-debounce@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmmirror.com/@types/throttle-debounce/-/throttle-debounce-2.1.0.tgz#1c3df624bfc4b62f992d3012b84c56d41eab3776"
+  integrity sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==
+
+throttle-debounce@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/throttle-debounce/-/throttle-debounce-3.0.1.tgz#32f94d84dfa894f786c9a1f290e7a645b6a19abb"
+  integrity sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==
 
 typescript@^4.2.4:
   version "4.2.4"
   resolved "https://registry.nlark.com/typescript/download/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha1-hhC1l0feAo/aiYqK7w4QPxVtCWE=
+
+utools-api-types@^2.0.3:
+  version "2.6.4"
+  resolved "https://registry.npmmirror.com/utools-api-types/-/utools-api-types-2.6.4.tgz#56c08e94e4af85f179a2eb95f9cb42f029e6c33f"
+  integrity sha512-pJuGvjSScwePuc6F/PVtL6DSCm+XzF78CBKxFUU82FON4vB8MGDXPCp6Y/25T/ndKyiyFj1zCR8ObyxtdikzPg==

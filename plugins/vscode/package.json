@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^15.12.4",
+    "@types/node": "^20.6.0",
     "@types/sql.js": "^1.4.3",
     "utools-api-types": "^2.0.3"
   },

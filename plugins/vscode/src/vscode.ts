@@ -165,11 +165,11 @@ export class VSCode implements Plugin {
       windowsHide: true,
       encoding: "utf-8"
     })
+      .then(() => {
+        utools.hideMainWindow();
+      })
       .catch((reason) => {
         throw reason.toString();
-      })
-      .finally(() => {
-        utools.hideMainWindow();
       });
   }
 

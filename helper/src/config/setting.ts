@@ -49,7 +49,7 @@ export class Setting implements Plugin {
       return {
         input: (item: IConfigItem) => new InputConfig(item),
         select: (item: IConfigItem) => new SelectConfig(item),
-        textarea: (item: IConfigItem) => new TextareaConfig(item),
+        textarea: (item: IConfigItem) => new TextareaConfig(item)
       }[item.type](item);
     });
     this.configs.forEach((c) => {
@@ -79,8 +79,16 @@ export class Setting implements Plugin {
           text-align: center;
           margin-top: 10px;
         }
+        .dark-theme, .dark-theme a {
+          color: white;
+        }
+        .dark-theme a:hover {
+          color: #777;
+        }
       </style>
-      <form id="config" class="layui-form" action="">
+      <form id="config" class='layui-form ${
+        utools.isDarkColors() ? "dark-theme" : ""
+      }' action="">
         ${this.configs.map((c) => c.html()).join("\n")}
         <footer> <a href="https://github.com/mohuishou/utools">  power by ⭐ utools-helper  </a> </footer>
         <button id="save" type="submit" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="config">保存</button>

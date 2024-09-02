@@ -1,0 +1,58 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      throttle-debounce:
+        specifier: ^3.0.1
+        version: 3.0.1
+    devDependencies:
+      '@types/node':
+        specifier: ^15.12.4
+        version: 15.14.9
+      '@types/throttle-debounce':
+        specifier: ^2.1.0
+        version: 2.1.0
+      typescript:
+        specifier: ^4.2.4
+        version: 4.9.5
+      utools-api-types:
+        specifier: ^2.0.3
+        version: 2.6.4
+
+packages:
+
+  '@types/node@15.14.9':
+    resolution: {integrity: sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A==}
+
+  '@types/throttle-debounce@2.1.0':
+    resolution: {integrity: sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==}
+
+  throttle-debounce@3.0.1:
+    resolution: {integrity: sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==}
+    engines: {node: '>=10'}
+
+  typescript@4.9.5:
+    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+
+  utools-api-types@2.6.4:
+    resolution: {integrity: sha512-pJuGvjSScwePuc6F/PVtL6DSCm+XzF78CBKxFUU82FON4vB8MGDXPCp6Y/25T/ndKyiyFj1zCR8ObyxtdikzPg==}
+
+snapshots:
+
+  '@types/node@15.14.9': {}
+
+  '@types/throttle-debounce@2.1.0': {}
+
+  throttle-debounce@3.0.1: {}
+
+  typescript@4.9.5: {}
+
+  utools-api-types@2.6.4: {}

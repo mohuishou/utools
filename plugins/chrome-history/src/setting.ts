@@ -1,8 +1,8 @@
 import { Plugin } from "utools-helper";
-import { TplFeatureMode, Action } from "utools-helper/@types/utools";
+import { TplFeatureMode, Action } from "utools-helper/dist/template_plugin";
 
 export function GetProfilePathID(): string {
-  return utools.getLocalId() + ".profile";
+  return utools.getNativeId() + ".profile";
 }
 
 export class Setting implements Plugin {
@@ -10,7 +10,7 @@ export class Setting implements Plugin {
   mode: TplFeatureMode = "none";
 
   enter(action: Action) {
-    let item = utools.db.get<string>(GetProfilePathID());
+    let item = utools.db.get(GetProfilePathID());
     if (!item) item = { _id: GetProfilePathID(), data: "" };
     item.data = action.payload[0].path;
     let res = utools.db.put(item);

@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "utools-helper": "^0.1.1"
+    "utools-helper": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node": "^13.1.0",
-    "@types/sql.js": "^1.0.2"
+    "@types/node": "20.16.0",
+    "@types/sql.js": "^1.4.9",
+    "utools-api-types": "^5.2.0"
   }
 }

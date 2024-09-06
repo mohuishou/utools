@@ -1,18 +1,28 @@
 {
   "name": "6843f319",
-  "pluginName": "Chrome历史记录搜索",
-  "description": "快速搜索Chrome历史记录，支持多个关键词筛选",
+  "pluginName": "浏览器历史记录搜索",
+  "description": "快速搜索Chrome系列浏览器历史记录，例如 Chrome/Edge 支持多个关键词筛选",
   "version": "v2.2.0",
   "preload": "dist/preload.js",
   "author": "莫回首",
   "homepage": "https://github.com/mohuishou/utools",
-  "logo": "chrome.png",
+  "logo": "icon/browser.png",
   "features": [
     {
       "code": "ch",
-      "explain": "Chrome历史记录搜索",
-      "cmds": ["ch", "Chrome历史记录"],
-      "icon": "chrome.png"
+      "explain": "Chrome/Edge 历史记录搜索",
+      "cmds": [
+        "ch",
+        "edge",
+        "Chrome历史记录",
+        "Edge历史记录",
+        {
+          "type": "over",
+          "label": "搜索浏览器历史记录"
+        }
+      ],
+      "icon": "icon/browser.png",
+      "mainPush": true
     },
     {
       "code": "ch-setting",
@@ -26,7 +36,7 @@
           "maxNum": 1
         }
       ],
-      "icon": "chrome.png"
+      "icon": "icon/browser.png"
     }
   ]
 }

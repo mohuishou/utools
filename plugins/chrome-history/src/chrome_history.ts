@@ -1,14 +1,19 @@
 const initSqlJs = require("../lib/sql-wasm");
 import { readFileSync } from "fs";
-import { SqlJs } from "sql.js/module";
+import { Database } from "sql.js";
 import { join } from "path";
 import { Plugin, ListItem } from "utools-helper";
 import { GetProfilePathID } from "./setting";
 
 export class ChromeHistory implements Plugin {
   code = "ch";
-  hitoryDB: SqlJs.Database;
-  faviconDB: SqlJs.Database;
+  hitoryDB: Database;
+  faviconDB: Database;
+  history: ListItem[];
+
+  constructor() {
+    this.history = [];
+  }
 
   profile(): string {
     let item = utools.db.get(GetProfilePathID());
@@ -34,16 +39,20 @@ export class ChromeHistory implements Plugin {
     // 初始化数据库
     let sql = await initSqlJs();
     let historyFile = readFileSync(join(this.profile(), "History"));
-    this.hitoryDB = new sql.Database(historyFile);
+    this.hitoryDB = new sql.Database(historyFile) as Database;
 
     let faviconFile = readFileSync(join(this.profile(), "Favicons"));
-    this.faviconDB = new sql.Database(faviconFile);
+    this.faviconDB = new sql.Database(faviconFile) as Database;
 
     return await this.search("");
   }
 
-  async search(word?: string): Promise<ListItem[]> {
-    let queries = word.trim().split(/\s+/g);
+  searchSync(word?: string): ListItem[] {
+    let queries = word
+      .trim()
+      .split(/\s+/g)
+      .filter((q) => q != "");
+
     let items: ListItem[] = [];
     // 获取历史记录
     let sql = `select * from urls`;
@@ -74,9 +83,22 @@ export class ChromeHistory implements Plugin {
       return item;
     });
 
+    // 如果没有查询数据，优先展示历史搜索过的内容
+    if (queries.length == 0) {
+      let newItems: ListItem<any>[] = [...this.history];
+      newItems.push(...items);
+      items = newItems;
+    }
+
     return items;
   }
+
+  async search(word?: string): Promise<ListItem[]> {
+    return this.searchSync(word);
+  }
+
   select(item: ListItem) {
+    this.history.push(item);
     // @ts-ignore
     utools.shellOpenExternal(item.description);
   }

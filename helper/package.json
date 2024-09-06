@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "cp -r src/layui dist/ && tsc -w",
-    "build": "rm -r dist && tsc && cp -r src/layui dist/",
+    "build": "rm -rf dist && tsc && cp -r src/layui dist/",
     "prepare": "npm run build"
   },
   "publishConfig": {

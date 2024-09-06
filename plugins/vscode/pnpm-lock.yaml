@@ -1,0 +1,70 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      utools-helper:
+        specifier: ^2.1.0
+        version: 2.1.0
+    devDependencies:
+      '@types/node':
+        specifier: 20.16.0
+        version: 20.16.0
+      '@types/sql.js':
+        specifier: ^1.4.9
+        version: 1.4.9
+      utools-api-types:
+        specifier: ^2.6.4
+        version: 2.6.4
+
+packages:
+
+  '@types/emscripten@1.39.13':
+    resolution: {integrity: sha512-cFq+fO/isvhvmuP/+Sl4K4jtU6E23DoivtbO4r50e3odaxAiVdbfSYRDdJ4gCdxx+3aRjhphS5ZMwIH4hFy/Cw==}
+
+  '@types/node@20.16.0':
+    resolution: {integrity: sha512-vDxceJcoZhIVh67S568bm1UGZO0DX0hpplJZxzeXMKwIPLn190ec5RRxQ69BKhX44SUGIxxgMdDY557lGLKprQ==}
+
+  '@types/sql.js@1.4.9':
+    resolution: {integrity: sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==}
+
+  throttle-debounce@3.0.1:
+    resolution: {integrity: sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==}
+    engines: {node: '>=10'}
+
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
+  utools-api-types@2.6.4:
+    resolution: {integrity: sha512-pJuGvjSScwePuc6F/PVtL6DSCm+XzF78CBKxFUU82FON4vB8MGDXPCp6Y/25T/ndKyiyFj1zCR8ObyxtdikzPg==}
+
+  utools-helper@2.1.0:
+    resolution: {integrity: sha512-SMCtlBvjHlKzVkbHNknQcMdlmzHd9IGnwhCxLri1pYS+GBvp69rT087Wdgvcui6QG97kNn/Ng77AaKLPWckt9w==}
+
+snapshots:
+
+  '@types/emscripten@1.39.13': {}
+
+  '@types/node@20.16.0':
+    dependencies:
+      undici-types: 6.19.8
+
+  '@types/sql.js@1.4.9':
+    dependencies:
+      '@types/emscripten': 1.39.13
+      '@types/node': 20.16.0
+
+  throttle-debounce@3.0.1: {}
+
+  undici-types@6.19.8: {}
+
+  utools-api-types@2.6.4: {}
+
+  utools-helper@2.1.0:
+    dependencies:
+      throttle-debounce: 3.0.1

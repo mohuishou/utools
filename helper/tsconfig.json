@@ -5,6 +5,7 @@
     "declaration": true,
     "sourceMap": false,
     "noImplicitAny": true,
+    "noEmitOnError": false,
     "module": "CommonJS",
     // "module": "AMD",
     "target": "ES2018",
@@ -15,7 +16,13 @@
     //   "utools": ["@types/utools.d.ts"],
     //   "electron": ["@types/electron.d.ts"]
     // }
-    "types": ["utools-api-types", "@types/node"]
+    "types": [
+      "utools-api-types",
+      "@types/node"
+    ]
   },
-  "exclude": ["example/*", "dist"]
+  "exclude": [
+    "example/*",
+    "dist"
+  ]
 }

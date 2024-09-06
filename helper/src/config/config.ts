@@ -59,14 +59,14 @@ export abstract class Config implements IConfig {
 
   get key(): string {
     if (this.only_current_machine) {
-      return utools.getLocalId() + "." + this.name;
+      return utools.getNativeId() + "." + this.name;
     }
     return this.name;
   }
 
   get value(): any {
     let itemOld = utools.db.get("config");
-    let data = itemOld as { _id: string; _rev: string; data: any };
+    let data = itemOld as { _id: string; _rev?: string; data: any };
     if (data && this.key in data.data) return data.data[this.key];
 
     // 值不存在，初始化，并且保存
@@ -99,7 +99,9 @@ export abstract class Config implements IConfig {
     this.name = item.name;
     this.only_current_machine = item.only_current_machine;
     this.label = item.label ? item.label : item.name;
-    this.placeholder = item.placeholder ? item.placeholder : "请输入" + item.name;
+    this.placeholder = item.placeholder
+      ? item.placeholder
+      : "请输入" + item.name;
     this.default = item.default;
     this.required = item.required;
     this.tips = item.tips;

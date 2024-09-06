@@ -9,6 +9,6 @@
     "utools-api-types": "^2.6.4"
   },
   "dependencies": {
-    "utools-helper": "^2.1.0"
+    "utools-helper": "^2.2.0"
   }
 }

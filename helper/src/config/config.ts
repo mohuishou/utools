@@ -70,7 +70,7 @@ export abstract class Config implements IConfig {
     if (data && this.key in data.data) return data.data[this.key];
 
     // 值不存在，初始化，并且保存
-    if (!data) data = { _id: "config", _rev: "", data: {} };
+    if (!data) data = { _id: "config", data: {} };
     data.data[this.key] = this.default;
     let res = utools.db.put(data);
     if (!res.ok) throw new Error(res.message);

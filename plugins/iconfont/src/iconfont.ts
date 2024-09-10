@@ -55,11 +55,15 @@ export class Iconfont implements Plugin {
   async search(keyword: string): Promise<ListItem[]> {
     let words = keyword.trim().split(/\s+/g);
 
-    const r = await this.request.post("api/icon/search.json", stringify(this.params(words)), {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-      },
-    });
+    const r = await this.request.post(
+      "api/icon/search.json",
+      stringify(this.params(words)),
+      {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+      }
+    );
 
     let icons = r.data.data.icons.map((icon: any) => {
       if (Setting.Get("fill_color")) {
@@ -75,7 +79,8 @@ export class Iconfont implements Plugin {
         description: "回车查看更多选项",
         icon: "data:image/svg+xml;utf8," + encodeURIComponent(icon.show_svg),
         data: icon.show_svg,
-        searchUrl: "https://www.iconfont.cn/search/index?searchType=icon&q=" + keyword,
+        searchUrl:
+          "https://www.iconfont.cn/search/index?searchType=icon&q=" + keyword,
         operate: "show_operate",
         keyword: keyword,
       };
@@ -201,7 +206,7 @@ export class Iconfont implements Plugin {
       case "copy":
         tmpPath = join(utools.getPath("temp"), item.id + ".svg");
         writeFileSync(tmpPath, item.data);
-        let res = utools.copyFile(tmpPath)
+        let res = utools.copyFile(tmpPath);
         if (res) utools.showNotification("svg 已复制到剪切板");
         else utools.showNotification("svg 复制失败");
         break;

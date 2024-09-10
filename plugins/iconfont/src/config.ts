@@ -50,7 +50,8 @@ export const config: IConfigItem[] = [
     name: "fill_color",
     label: "图标颜色",
     type: "input",
-    placeholder: "设置后会强制修改图标颜色，多色图标会被修改为单色，一般情况下请勿设置",
+    placeholder:
+      "设置后会强制修改图标颜色，多色图标会被修改为单色，一般情况下请勿设置",
     required: false,
     default: "",
   },

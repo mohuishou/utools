@@ -74,12 +74,14 @@ export class VSCode implements Plugin {
       });
     });
 
-    let items = files.map((file: any): ListItem => {
-      let item = new ListItem(basename(file), file);
-      let ext = file.includes("remote") ? ".remote" : extname(file);
-      item.icon = this.getIcon(ext);
-      return item;
-    });
+    let items = files.map(
+      (file: any): ListItem => {
+        let item = new ListItem(basename(decodeURIComponent(file)), file);
+        let ext = file.includes("remote") ? ".remote" : extname(file);
+        item.icon = this.getIcon(ext);
+        return item;
+      }
+    );
 
     if (!word.trim()) {
       let collects = this.getCollect();
@@ -163,7 +165,7 @@ export class VSCode implements Plugin {
     this.execCmd(cmd, {
       timeout: timeout,
       windowsHide: true,
-      encoding: "utf-8"
+      encoding: "utf-8",
     })
       .then(() => {
         utools.hideMainWindow();

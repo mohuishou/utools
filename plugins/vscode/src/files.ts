@@ -32,8 +32,8 @@ export async function GetFiles(path: string) {
   let data = JSON.parse(res) as Recent;
 
   return data.entries.map((file) => {
-    if (typeof file === "string") return decodeURIComponent(file);
+    if (typeof file === "string") return file;
     let path = file.fileUri || file.folderUri || file.workspace.configPath;
-    return decodeURIComponent(path);
+    return path;
   });
 }

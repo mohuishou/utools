@@ -70,13 +70,17 @@ export class VSCode implements Plugin {
     // 搜索
     word.split(/\s+/g).forEach((keyword) => {
       files = files.filter((file: string) => {
-        return file.toLowerCase().includes(keyword.trim().toLowerCase());
+        return decodeURIComponent(file)
+          .toLowerCase()
+          .includes(keyword.trim().toLowerCase());
       });
     });
 
     let items = files.map(
       (file: any): ListItem => {
-        let item = new ListItem(basename(decodeURIComponent(file)), file);
+        let address = file;
+        file = decodeURIComponent(file);
+        let item = new ListItem<string>(basename(file), file, address);
         let ext = file.includes("remote") ? ".remote" : extname(file);
         item.icon = this.getIcon(ext);
         return item;
@@ -135,10 +139,10 @@ export class VSCode implements Plugin {
     });
   }
 
-  async select(item: ListItem) {
+  async select(item: ListItem<string>) {
     if (this.isCtrl) {
       let items = this.getCollect();
-      let isSave = items.find((data) => data.description == item.description);
+      let isSave = items.find((i) => i.description == item.description);
       if (isSave) this.removeCollect(item);
       else this.saveCollect(item);
       this.isCtrl = false;
@@ -149,10 +153,10 @@ export class VSCode implements Plugin {
     if (code.trim().includes(" ")) code = `"${code}"`;
 
     let cmds: String[] = [code];
-    if (item.description.includes(".code-workspace")) cmds.push("--file-uri");
+    if (item.data.includes(".code-workspace")) cmds.push("--file-uri");
     else cmds.push("--folder-uri");
 
-    cmds.push(`"${item.description}"`);
+    cmds.push(`"${item.data}"`);
 
     let cmd = cmds.join(" ");
     let shell = Setting.Get("shell");

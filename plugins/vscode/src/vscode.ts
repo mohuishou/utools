@@ -8,6 +8,7 @@ export class VSCode implements Plugin {
   code = "vsc";
   _storage: string;
   isCtrl = false;
+  delay = 100;
 
   constructor() {
     document.onkeydown = (ev) => {

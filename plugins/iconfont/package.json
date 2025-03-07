@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/mousetrap": "^1.6.3",
-    "axios": "^0.21.2",
+    "axios": "^1.8.2",
     "mousetrap": "^1.6.5",
     "utools-helper": "^2.2.0"
   },

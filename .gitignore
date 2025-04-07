@@ -169,8 +169,6 @@ typings/
 # nuxt.js build output
 .nuxt
 
-# react / gatsby 
-public/
 
 # vuepress build output
 .vuepress/dist
@@ -200,3 +198,4 @@ public/
 dist
 
 origin-docs/
+.DS_Store

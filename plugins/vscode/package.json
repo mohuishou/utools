@@ -6,7 +6,7 @@
   "devDependencies": {
     "@types/node": "20.16.0",
     "@types/sql.js": "^1.4.9",
-    "utools-api-types": "^2.6.4"
+    "utools-api-types": "^7.0.0"
   },
   "dependencies": {
     "utools-helper": "^2.2.0"

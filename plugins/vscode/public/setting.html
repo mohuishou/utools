@@ -1,0 +1,155 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        /* 从12px减小到8px */
+        padding: 6px 0;
+        /* 从8px减小到6px */
+    }
+
+    label {
+        flex: 0 0 120px;
+        padding-top: 10px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #fff;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #4CAF50;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .input-container {
+        flex: 1;
+    }
+
+    .input-tips {
+        font-size: 12px;
+        color: #999;
+        margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* 新增底部固定按钮样式 */
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px;
+        background: white;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* 修改保存按钮样式 */
+    #settingsForm button[type="submit"] {
+        background-color: #506d84;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+<form id="settingsForm">
+    <div class="input-tips">⚠️ 如果没有点击保存直接退出，请手动将插件结束运行</div>
+    <div class="form-group">
+        <label for="code">code</label>
+        <div class="input-container">
+            <input type="text" id="code" name="code" required>
+            <div class="input-tips">ide 唯一标识，也是插件输入标识，例如 vsc/cursor </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="icon">图标</label>
+        <div class="input-container">
+            <input type="text" id="icon" name="icon" placeholder="输入图标URL或选择图标文件">
+            <div class="input-tips">请输入 base64 后的图标，仅支持 png 图片, 或者默认值 icon/icon.png, 更新后重启 ide 图标显示生效</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="terminal">终端环境</label>
+        <div class="input-container">
+            <input type="text" id="terminal" name="terminal" placeholder="输入终端环境">
+            <div class="input-tips">请输入您要使用的终端环境类型, bash/zsh 等，Windows 用户请勿输入</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="command">执行命令</label>
+        <div class="input-container">
+            <input type="text" id="command" name="command" required>
+            <div class="input-tips">ide 的执行命令，例如 code，请先在终端执行 code . 进行测试</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="database">数据库配置</label>
+        <div class="input-container">
+            <input type="text" id="database" name="database" placeholder="输入数据库连接字符串或配置">
+            <div class="input-tips">输入 IDE 数据库文件地址</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="timeout">超时时间(ms)</label>
+        <div class="input-container">
+            <input type="number" id="timeout" name="timeout" min="1000">
+            <div class="input-tips">设置命令执行的超时时间，单位为 ms</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button type="submit">保存设置</button>
+    </div>
+</form>

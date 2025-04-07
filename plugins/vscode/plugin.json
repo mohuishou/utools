@@ -9,15 +9,20 @@
   "logo": "icon/icon.png",
   "features": [
     {
-      "code": "vsc",
-      "explain": "vscode历史项目搜索",
-      "cmds": ["vsc"],
+      "code": "vsc-ide",
+      "explain": "类 vscode ide 列表",
+      "cmds": [
+        "vsc-ide"
+      ],
       "icon": "icon/icon.png"
     },
     {
-      "code": "vsc-setting",
-      "explain": "vscode 历史搜索配置信息",
-      "cmds": ["vsc-setting"],
+      "code": "vsc-add-ide",
+      "explain": "新增 vscode ide",
+      "cmds": [
+        "vsc-add-ide",
+        "新增 IDE"
+      ],
       "icon": "icon/icon.png"
     }
   ]

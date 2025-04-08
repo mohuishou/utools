@@ -50,7 +50,7 @@ export function NewIDEDefault() {
 
 export function NewIDEVsc() {
     let config = NewConfig("vsc")
-    config.terminal = "code"
+    config.command = "code"
     config.database = join(
         utools.getPath("appData"),
         "Code",
@@ -59,14 +59,12 @@ export function NewIDEVsc() {
         "state.vscdb"
     )
 
-    NewIDE(config)
     SaveConfig(config)
 }
 
 export function NewIDECursor() {
     let config = NewConfig("cursor")
     config.icon = "icon/cursor.png"
-    NewIDE(config)
     SaveConfig(config)
 }
 

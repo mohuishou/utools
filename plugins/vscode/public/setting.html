@@ -98,9 +98,12 @@
         border-radius: 4px;
         cursor: pointer;
     }
+
+    .list {
+        display: none !important;
+    }
 </style>
-<form id="settingsForm">
-    <div class="input-tips">⚠️ 如果没有点击保存直接退出，请手动将插件结束运行</div>
+<form id="settingsForm" style="z-index: 99999 !important;">
     <div class="form-group">
         <label for="code">code</label>
         <div class="input-container">

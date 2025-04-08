@@ -1,46 +1,19 @@
-## vscode 历史搜索
+# vscode next
 
-utools 插件，搜索 vscode 历史项目，点击回车打开
+utools 插件，支持搜索所有基于 vscode 开发的 ide 的历史项目
 
-- [**点击查看 chrome 历史搜索，vscode 历史项目搜索等更多插件**](https://github.com/mohuishou/utools)
-- **你的 star 是我持续更新的动力**
+## 使用说明
 
-### 使用说明
+简介:
+- 简单好用的 vscode 历史项目搜索插件，支持所有基于 vscode 开发的 ide，包括但不限于 cursor 等
+- 支持 wsl、文件、文件夹、工作区
 
-- 关键词: vsc 输入关键词可以搜索
-- 关键词: vsc-setting 查询设置
-- 需要提前将 code 命令添加到 PATH, 请先确认在终端执行 `code .` 可以打开 vscode
+新增 IDE:
+- 输入 vsc-add-ide 回车后输入 ide 名称，这个名称最好是 terminal 命令，例如 cursor
+- 输入上一步输入的 ide 名称-setting，例如 cursor-setting 修改 icon 配置，db 文件配置等
 
-### 使用示例
+管理 IDE:
+- 输入 vsc-ide 查看已有 ide 列表，回车可以删除对应 ide
 
-![vsc.gif](https://i.loli.net/2019/12/03/35QbFJU67LoH1kP.gif)
+开源地址: https://github.com/mohuishou/utools
 
-### 更新
-
-#### v3.1.0
-
-- 支持 vscode 1.55.0
-- 全新配置页面
-- 支持多设备多操作系统使用
-
-
-#### v2.0.4
-
-fix(vsc): 修复 code 命令无法打开项目 #15 #16
-
-#### v2.0.3
-
-- fix: 插件被主动退出导致 vscode 进程被杀掉的问题
-
-#### v2.0.2
-
-- fix: 无法设置可执行文件的问题
-
-#### v2.0.1
-
-- fix: windows 无法匹配可执行文件的问题
-
-#### v2.0.0
-
-- 适配 utools v1.0
-- 新增打开 wsl 等远程开发文件夹

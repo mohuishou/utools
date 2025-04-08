@@ -42,13 +42,17 @@ export function NewConfig(code: string): Config {
 }
 
 export function GetConfig(code: string): Config {
-  return utools.dbStorage.getItem(code) as Config;
+  let key = utools.getNativeId() + "." + code
+  return utools.dbStorage.getItem(key) as Config || {};
 }
 
-export function SaveConfig(config: Config) {
-  NewIDE(config)
-  console.log("save feature success")
-  utools.dbStorage.setItem(config.code, config)
+export function SaveConfig(config: Config, ide: boolean = true) {
+  if (ide) {
+    NewIDE(config)
+    console.log("save feature success")
+  }
+  let key = utools.getNativeId() + "." + config.code
+  utools.dbStorage.setItem(key, config)
 }
 
 export class Setting implements Plugin {
@@ -73,22 +77,11 @@ export class Setting implements Plugin {
 
   private render() {
     const html = readFileSync(join(__dirname, "../public/setting.html"), "utf8");
-    const rootElement = document.getElementById('root');
-
-    if (!rootElement) {
-      throw new Error('Root element not found');
-    }
-
-    // 清空root元素
-    while (rootElement.firstChild) {
-      rootElement.removeChild(rootElement.firstChild);
-    }
-
-    // 使用DOM API添加内容到root元素
+    // 使用DOM API添加内容到 body 标签内
     const template = document.createElement('template');
     template.innerHTML = html;
     const fragment = document.importNode(template.content, true);
-    rootElement.appendChild(fragment);
+    document.body.appendChild(fragment);
   }
 
   private initForm(config: Config) {

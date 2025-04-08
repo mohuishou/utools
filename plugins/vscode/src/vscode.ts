@@ -1,26 +1,21 @@
 import { Plugin, ListItem } from "utools-helper";
 import { basename, join, extname } from "path";
-import { readdirSync, readFileSync } from "fs";
-import { ExecOptions, exec, execSync } from "child_process";
+import { readdirSync } from "fs";
+import { ExecOptions, exec } from "child_process";
 import { GetFiles } from "./files";
 import { Config, GetConfig, SaveConfig } from "./setting";
+import { Action } from "utools-helper/dist/template_plugin";
+
 
 export class VSCode implements Plugin {
   code = "vsc";
   _storage: string;
-  isCtrl = false;
   delay = 100;
   config: Config;
 
   constructor(code: string) {
     this.code = code;
     this.config = GetConfig(this.code);
-
-    document.onkeydown = (ev) => {
-      if (ev.ctrlKey || ev.metaKey) {
-        this.isCtrl = true;
-      }
-    };
   }
 
   async files() {
@@ -37,7 +32,6 @@ export class VSCode implements Plugin {
   }
 
   async search(word?: string): Promise<ListItem[]> {
-    this.isCtrl = false;
     let files = await this.files();
 
     // 搜索
@@ -60,44 +54,7 @@ export class VSCode implements Plugin {
       }
     );
 
-    if (!word.trim()) {
-      let collects = this.getCollect();
-
-      collects.map((item) => (item.icon = "icon/icon-collect.png"));
-
-      // 去除已收藏的项目，避免重复显示
-      items = items.filter((item) => {
-        for (let i = 0; i < collects.length; i++) {
-          if (item.description == collects[i].description) return false;
-        }
-        return true;
-      });
-
-      items = collects.concat(items);
-    }
-
     return items;
-  }
-
-  getCollect(): ListItem[] {
-    return this.config.collections || [];
-  }
-
-  saveCollect(item: ListItem) {
-    let items = this.getCollect();
-    item.icon = "icon/icon-collect.png";
-    items.unshift(item);
-    this.config.collections = items;
-    SaveConfig(this.config)
-    utools.showNotification(`${item.title} 已置顶`);
-  }
-
-  removeCollect(item: ListItem) {
-    let items = this.getCollect();
-    items = items.filter((data) => data.description != item.description);
-    this.config.collections = items;
-    SaveConfig(this.config)
-    utools.showNotification(`${item.title} 置顶已移除`);
   }
 
   private execCmd(
@@ -113,16 +70,7 @@ export class VSCode implements Plugin {
     });
   }
 
-  async select(item: ListItem<string>) {
-    if (this.isCtrl) {
-      let items = this.getCollect();
-      let isSave = items.find((i) => i.description == item.description);
-      if (isSave) this.removeCollect(item);
-      else this.saveCollect(item);
-      this.isCtrl = false;
-      return await this.search("");
-    }
-
+  select(item: ListItem<string>) {
     let code = this.config.command;
     if (code.trim().includes(" ")) code = `"${code}"`;
 

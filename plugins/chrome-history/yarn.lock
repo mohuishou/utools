@@ -3,24 +3,43 @@
 
 
 "@types/emscripten@*":
-  version "1.39.3"
-  resolved "https://registry.npmjs.org/@types/emscripten/-/emscripten-1.39.3.tgz"
-  integrity sha512-F+LPHVwVWp6bkhRq7sMdW0JsQMXd5ZuPbjwU/X6HaAtvIjRmYL2z4BCIopnBRcrzZLorVFf8gxY/GR7szLuPEw==
+  version "1.39.13"
+  resolved "https://registry.npmjs.org/@types/emscripten/-/emscripten-1.39.13.tgz"
+  integrity sha512-cFq+fO/isvhvmuP/+Sl4K4jtU6E23DoivtbO4r50e3odaxAiVdbfSYRDdJ4gCdxx+3aRjhphS5ZMwIH4hFy/Cw==
 
-"@types/node@*", "@types/node@^13.1.0":
-  version "13.13.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-13.13.5.tgz"
-  integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
+"@types/node@*", "@types/node@20.16.0":
+  version "20.16.0"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.16.0.tgz"
+  integrity sha512-vDxceJcoZhIVh67S568bm1UGZO0DX0hpplJZxzeXMKwIPLn190ec5RRxQ69BKhX44SUGIxxgMdDY557lGLKprQ==
+  dependencies:
+    undici-types "~6.19.2"
 
-"@types/sql.js@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@types/sql.js/-/sql.js-1.0.2.tgz"
-  integrity sha512-Dne6JoWSLELmQ/Cd/YVHTe/OyiU1yWVsKl+benqcbvsxUmnqoWA9OurfLlMuDe/rcv3vAOMLcA1Mdq9Pq8Lnpw==
+"@types/sql.js@^1.4.9":
+  version "1.4.9"
+  resolved "https://registry.npmjs.org/@types/sql.js/-/sql.js-1.4.9.tgz"
+  integrity sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==
   dependencies:
     "@types/emscripten" "*"
     "@types/node" "*"
 
-utools-helper@^0.1.1:
-  version "0.1.6"
-  resolved "https://registry.npmjs.org/utools-helper/-/utools-helper-0.1.6.tgz"
-  integrity sha512-Kj1L7OSqXBjINr7QXmh/yz0Dz+Bqk2kpX39msUjWb7azrmWSAnMzF7nw8en2+fM07/RzAHag5bfy2sp8s2FEhQ==
+throttle-debounce@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/throttle-debounce/-/throttle-debounce-3.0.1.tgz"
+  integrity sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==
+
+undici-types@~6.19.2:
+  version "6.19.8"
+  resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.19.8.tgz"
+  integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
+
+utools-api-types@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/utools-api-types/-/utools-api-types-5.2.0.tgz"
+  integrity sha512-3QfAioW6k1QxBtlpEwvcadpaPz/r6WBF/5s38smy58r372my217K8OmN9mD6aHHfZqeVkBawfr0HIDQ9rz9IEQ==
+
+utools-helper@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/utools-helper/-/utools-helper-2.2.0.tgz"
+  integrity sha512-EnyxkRg35ajuK4GglxuL+bFUAwGv7gRZdnsC2zg5m4stFlxc7S+i5boLkA3IIiOKvBKvFi94BA+bLrnJ1x6saA==
+  dependencies:
+    throttle-debounce "^3.0.1"

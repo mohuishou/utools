@@ -17,14 +17,20 @@ interface callbackRetrun {
   title?: string;
 }
 
-function callback(action: callbackAction): callbackRetrun[] {
+async function callback(action: callbackAction): Promise<callbackRetrun[]> {
   if (ch.code != action.code || action.type != "over") return [];
-  return ch.searchSync(action.payload).map(
-    (item): callbackRetrun => {
-      // 这个模式下展示的是 text
-      return { title: item.description, icon: item.icon, text: item.title };
-    }
-  );
+  try {
+    let items = (await ch.search(action.payload))
+    let results = items.map(
+      (item): callbackRetrun => {
+        // 这个模式下展示的是 text
+        return { title: item.description, icon: item.icon, text: item.title };
+      }
+    );
+    return results
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 interface selectCallbackAction {
@@ -46,4 +52,4 @@ function selectCallback(action: selectCallbackAction) {
   return false;
 }
 
-utools.onMainPush(callback, selectCallback);
+utools.onMainPush(callback as any, selectCallback);

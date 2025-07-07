@@ -33,25 +33,35 @@ export class ChromeHistory implements Plugin {
     }
   }
 
-  async enter(): Promise<ListItem[]> {
-    console.log(this.profile());
+  async init() {
+    if (this.hitoryDB != null || this.faviconDB != null) {
+      return
+    }
+
+    let profile = this.profile()
+    console.log(`init db from ${profile}`)
 
     // 初始化数据库
     let sql = await initSqlJs();
-    let historyFile = readFileSync(join(this.profile(), "History"));
+    let historyFile = readFileSync(join(profile, "History"));
     this.hitoryDB = new sql.Database(historyFile) as Database;
 
-    let faviconFile = readFileSync(join(this.profile(), "Favicons"));
+    let faviconFile = readFileSync(join(profile, "Favicons"));
     this.faviconDB = new sql.Database(faviconFile) as Database;
+  }
 
+  async enter(): Promise<ListItem[]> {
     return await this.search("");
   }
 
-  searchSync(word?: string): ListItem[] {
+  async search(word?: string): Promise<ListItem[]> {
+    await this.init()
+
     let queries = word
       .trim()
       .split(/\s+/g)
       .filter((q) => q != "");
+
 
     let items: ListItem[] = [];
     // 获取历史记录
@@ -61,13 +71,17 @@ export class ChromeHistory implements Plugin {
       sql += sql.includes("where") ? " and " : " where ";
       sql += ` (title like '%${q}%' or url like '%${q}%')`;
     });
-    sql += ` order by last_visit_time desc limit 50 `;
-    console.log("history search sql:", sql);
+    sql += ` order by last_visit_time desc limit 50`;
 
     this.hitoryDB.each(
       sql,
-      (row) => items.push(new ListItem(row.title as string, row.url as string)),
-      () => {}
+      (row) => items.push(new ListItem(
+        row.title as string,
+        row.url as string,
+        null,
+        "icon/browser.png"
+      )),
+      () => { }
     );
 
     // 获取图标
@@ -76,9 +90,10 @@ export class ChromeHistory implements Plugin {
       this.faviconDB.each(
         sql,
         (row) => {
-          item.icon = row.url as string;
+          let icon = row.url as string
+          if (icon.length > 0) item.icon = icon
         },
-        () => {}
+        () => { }
       );
       return item;
     });
@@ -91,10 +106,6 @@ export class ChromeHistory implements Plugin {
     }
 
     return items;
-  }
-
-  async search(word?: string): Promise<ListItem[]> {
-    return this.searchSync(word);
   }
 
   select(item: ListItem) {

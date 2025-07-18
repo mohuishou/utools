@@ -21,10 +21,18 @@ async function callback(action: callbackAction): Promise<callbackRetrun[]> {
   if (ch.code != action.code || action.type != "over") return [];
   try {
     let items = (await ch.search(action.payload))
+    // 根据 url 去重
+    const map = new Map();
+    items = items.filter(item => {
+      let url = new URL(item.description)
+      url.search = ""
+      return !map.has(url.toString()) && map.set(url.toString(), true)
+    })
     let results = items.map(
       (item): callbackRetrun => {
         // 这个模式下展示的是 text
-        return { title: item.description, icon: item.icon, text: item.title };
+        let text = `${item.title} - ${item.description}`
+        return { title: item.description, icon: item.icon, text: text };
       }
     );
     return results

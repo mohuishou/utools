@@ -20,7 +20,7 @@ interface callbackRetrun {
 async function callback(action: callbackAction): Promise<callbackRetrun[]> {
   if (ch.code != action.code || action.type != "over") return [];
   try {
-    let items = (await ch.search(action.payload))
+    let items = (await ch.enter(action))
     // 根据 url 去重
     const map = new Map();
     items = items.filter(item => {

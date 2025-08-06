@@ -4,12 +4,14 @@ import { Database } from "sql.js";
 import { join } from "path";
 import { Plugin, ListItem } from "utools-helper";
 import { GetProfilePathID } from "./setting";
+import { Action } from "utools-helper/dist/template_plugin";
 
 export class ChromeHistory implements Plugin {
   code = "ch";
   hitoryDB: Database;
   faviconDB: Database;
   history: ListItem[];
+  lastInit: number;
 
   constructor() {
     this.history = [];
@@ -34,10 +36,11 @@ export class ChromeHistory implements Plugin {
   }
 
   async init() {
-    if (this.hitoryDB != null || this.faviconDB != null) {
+    if (this.hitoryDB != null && ((Date.now() - this.lastInit) / 1000 < 30)) {
+      console.log("db inited, skip")
       return
     }
-
+    this.lastInit = Date.now()
     let profile = this.profile()
     console.log(`init db from ${profile}`)
 
@@ -50,18 +53,16 @@ export class ChromeHistory implements Plugin {
     this.faviconDB = new sql.Database(faviconFile) as Database;
   }
 
-  async enter(): Promise<ListItem[]> {
-    return await this.search("");
+  async enter(action: Action): Promise<ListItem[]> {
+    await this.init()
+    return await this.search(action.payload);
   }
 
   async search(word?: string): Promise<ListItem[]> {
-    await this.init()
-
     let queries = word
       .trim()
       .split(/\s+/g)
       .filter((q) => q != "");
-
 
     let items: ListItem[] = [];
     // 获取历史记录
@@ -71,7 +72,7 @@ export class ChromeHistory implements Plugin {
       sql += sql.includes("where") ? " and " : " where ";
       sql += ` (title like '%${q}%' or url like '%${q}%')`;
     });
-    sql += ` order by last_visit_time desc limit 50`;
+    sql += ` order by last_visit_time desc limit 20`;
 
     this.hitoryDB.each(
       sql,
@@ -86,12 +87,13 @@ export class ChromeHistory implements Plugin {
 
     // 获取图标
     items = items.map((item) => {
+      if (!item.description.includes("http")) return item
+
       // 获取 url 中的域名部分，避免由于 url 中的特殊字符导致 sql 出现异常
       let url = new URL(item.description)
       url.search = ""
       url.pathname = ""
       let sql = `select * from favicons JOIN icon_mapping on icon_mapping.icon_id = favicons.id and page_url like '${url.toString()}%'`;
-
       this.faviconDB.each(
         sql,
         (row) => {

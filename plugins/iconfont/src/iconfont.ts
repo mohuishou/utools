@@ -28,26 +28,10 @@ export class Iconfont implements Plugin {
     let request = Axios.create({
       baseURL: "https://www.iconfont.cn",
       timeout: 10000,
-      xsrfCookieName: "ctoken",
-      xsrfHeaderName: "x-csrf-token",
       withCredentials: true,
       adapter: require("axios/lib/adapters/http.js"),
     });
-    let res = await request.get("/");
-    let cookies = res.headers["set-cookie"] as Array<string>;
-    let csrf: string;
-    let cookie2 = "";
-    cookies.forEach((cookie) => {
-      cookie2 += cookie.split(";")[0] + ";";
-      if (cookie.includes("ctoken")) {
-        csrf = cookie.match(/ctoken=(.*?);/)[1];
-        this.ctoken = csrf;
-      }
-    });
-    request.defaults.headers = {
-      cookie: cookie2,
-      "x-csrf-token": csrf,
-    };
+
     this.request = request;
     return this.search("icon");
   }

@@ -1,7 +1,7 @@
 import { Plugin, ListItem } from "utools-helper";
 import { basename, join, extname } from "path";
 import { readdirSync } from "fs";
-import { ExecOptions, exec } from "child_process";
+import { ExecOptions, exec, execSync } from "child_process";
 import { GetFiles } from "./files";
 import { Config, GetConfig, SaveConfig } from "./setting";
 import { Action } from "utools-helper/dist/template_plugin";
@@ -62,10 +62,13 @@ export class VSCode implements Plugin {
     options: { encoding: BufferEncoding } & ExecOptions
   ): Promise<string> {
     return new Promise((resolve, reject) => {
-      exec(command, options, (_, stdout, stderr) => {
-        if (stderr) return reject(stderr);
-
-        resolve(stdout);
+      exec(command, options, (err, stdout, stderr) => {
+        console.log("err:", err)
+        console.log("stdout:", stdout)
+        console.log("stderr:", stderr)
+        if (err) return reject(err.message + stdout);
+        if (stderr) return reject(stderr + stdout);
+        return resolve(stdout);
       });
     });
   }
@@ -82,16 +85,41 @@ export class VSCode implements Plugin {
 
     let cmd = cmds.join(" ");
     let shell = this.config.terminal;
-    if (shell.trim()) cmd = `${shell} "${cmd}"`;
+    if (shell.trim()) cmd = `${shell} "env; ${cmd}"`;
     console.log(cmd);
 
     let timeout = parseInt(this.config.timeout);
     if (!timeout || timeout < 3000) timeout = 3000;
 
+    this.execCmd(cmd, {
+      timeout: timeout,
+      windowsHide: true,
+      encoding: "utf-8",
+      env: this.getShellEnv(),
+    }).then((res) => { utools.hideMainWindow(); })
+      .catch((reason) => {
+        alert(reason)
+      });
+  }
 
-    this.execCmd(cmd, { timeout: timeout, windowsHide: true, encoding: "utf-8", })
-      .then(() => { utools.hideMainWindow(); })
-      .catch((reason) => { throw reason.toString(); });
+  // 获取当前 shell 的环境变量（适用于 macOS/Linux）
+  getShellEnv() {
+    if (utools.isWindows()) {
+      return process.env
+    }
+
+    let shell = this.config.terminal.split(" ")[0].trim()
+    shell = shell || process.env.SHELL;
+    // 获取所有环境变量
+    const envStr = execSync(`${shell} -i -c "env"`).toString();
+
+    const env = process.env;
+    envStr.split('\n').forEach(line => {
+      const [key, value] = line.split('=', 2);
+      if (key && value) env[key] = value;
+    });
+
+    return env; // 合并 Node 和 Shell 的环境变量
   }
 
   getIcon(ext: string): string {

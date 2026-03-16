@@ -1,6 +1,15 @@
 import { readFileSync, writeFileSync } from "fs";
 import { Database } from "sql.js";
-const initSqlJs = require("../third_party/sqljs/sql-wasm");
+import { join } from "path";
+
+// 指定路径 (相对于 dist 目录)
+const sqlWasmDir = join(__dirname, "third_party/sqljs");
+
+// 直接读取 sql-wasm.js 文件并执行
+const sqlWasmJsPath = join(sqlWasmDir, "sql-wasm.js");
+const sqlWasmCode = readFileSync(sqlWasmJsPath, "utf8");
+// eslint-disable-next-line no-new-func
+const initSqlJs = new Function("require", "module", "exports", sqlWasmCode + "\nreturn module.exports;")(require, { exports: {} }, {}).default || require;
 
 export interface Recent {
   entries: Entry[];
@@ -20,7 +29,8 @@ export interface Workspace {
 }
 
 export async function GetFiles(path: string) {
-  let db = new (await initSqlJs()).Database(readFileSync(path)) as Database;
+  let SQL = await initSqlJs({ locateFile: (file: string) => join(sqlWasmDir, file) });
+  let db = new SQL.Database(readFileSync(path)) as Database;
   let sql =
     "select value from ItemTable where key = 'history.recentlyOpenedPathsList'";
   let results = db.exec(sql);
@@ -47,7 +57,8 @@ export async function GetFiles(path: string) {
 export async function DeleteFiles(dbPath: string, targetPath: string): Promise<boolean> {
   try {
     // 读取数据库
-    let db = new (await initSqlJs()).Database(readFileSync(dbPath)) as Database;
+    let SQL = await initSqlJs({ locateFile: (file: string) => join(sqlWasmDir, file) });
+    let db = new SQL.Database(readFileSync(dbPath)) as Database;
     
     // 获取当前的历史记录
     let sql = "select value from ItemTable where key = 'history.recentlyOpenedPathsList'";
@@ -106,7 +117,8 @@ export async function DeleteFiles(dbPath: string, targetPath: string): Promise<b
 export async function DeleteMultipleFiles(dbPath: string, targetPaths: string[]): Promise<number> {
   try {
     // 读取数据库
-    let db = new (await initSqlJs()).Database(readFileSync(dbPath)) as Database;
+    let SQL = await initSqlJs({ locateFile: (file: string) => join(sqlWasmDir, file) });
+    let db = new SQL.Database(readFileSync(dbPath)) as Database;
     
     // 获取当前的历史记录
     let sql = "select value from ItemTable where key = 'history.recentlyOpenedPathsList'";

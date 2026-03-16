@@ -76,7 +76,7 @@ export class Setting implements Plugin {
   }
 
   private render() {
-    const html = readFileSync(join(__dirname, "../public/setting.html"), "utf8");
+    const html = readFileSync(join(__dirname, "public/setting.html"), "utf8");
     // 使用DOM API添加内容到 body 标签内
     const template = document.createElement('template');
     template.innerHTML = html;

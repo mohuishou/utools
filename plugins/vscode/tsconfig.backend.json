@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "ES2018",
+    "experimentalDecorators": true,
+    "types": ["utools-api-types", "@types/node"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

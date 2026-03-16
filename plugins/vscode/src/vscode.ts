@@ -4,7 +4,6 @@ import { readdirSync } from "fs";
 import { ExecOptions, exec, execSync } from "child_process";
 import { GetFiles, DeleteFiles } from "./files";
 import { Config, GetConfig, SaveConfig } from "./setting";
-import { Action } from "utools-helper/dist/template_plugin";
 
 
 export class VSCode implements Plugin {
@@ -12,6 +11,7 @@ export class VSCode implements Plugin {
   _storage: string;
   delay = 100;
   config: Config;
+  placeholder = "输出关键词查询, -rm 激活删除模式";
   private isRemoveMode = false;
 
   constructor(code: string) {
@@ -63,10 +63,10 @@ export class VSCode implements Plugin {
         file = decodeURIComponent(file);
         let itemTitle = basename(file);
         if (this.isRemoveMode) {
-          itemTitle = `删除: ${itemTitle}`;
+          itemTitle = `rm: ${itemTitle}`;
         }
         else {
-          itemTitle = `打开: ${itemTitle}`;
+          itemTitle = `open: ${itemTitle}`;
         }
         let item = new ListItem<string>(itemTitle, file, address);
         let ext = file.includes("remote") ? ".remote" : extname(file);

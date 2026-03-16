@@ -206,7 +206,7 @@ export class VSCode implements Plugin {
   }
 
   getIcon(ext: string): string {
-    let icons = readdirSync(join(__dirname, "..", "icon"));
+    let icons = readdirSync(join(__dirname, "icon"));
     let icon = icons.find((icon) => {
       return "." + icon.split(".")[0] === ext.toLowerCase();
     });

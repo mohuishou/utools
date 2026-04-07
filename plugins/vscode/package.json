@@ -17,7 +17,7 @@
     "esbuild": "^0.20.0",
     "typescript": "^5.0.0",
     "utools-api-types": "^7.0.0",
-    "vite": "^5.0.0"
+    "vite": "^6.4.2"
   },
   "dependencies": {
     "utools-helper": "^2.2.0"

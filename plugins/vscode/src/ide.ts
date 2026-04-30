@@ -1,7 +1,6 @@
 import { IListItem, ListItem, Plugin } from "utools-helper";
 import { VSCode } from "./vscode";
-import { NewConfig, SaveConfig, Setting, Config } from "./setting";
-import { join } from "path";
+import { NewConfig, SaveConfig, Setting, Config, GetVSCodeStoragePath } from "./setting";
 import { Action } from "utools-helper/dist/template_plugin";
 
 // 列出所有已安装的 IDE
@@ -51,13 +50,7 @@ export function NewIDEDefault() {
 export function NewIDEVsc() {
     let config = NewConfig("vsc")
     config.command = "code"
-    config.database = join(
-        utools.getPath("appData"),
-        "Code",
-        "User",
-        "globalStorage",
-        "state.vscdb"
-    )
+    config.database = GetVSCodeStoragePath()
 
     SaveConfig(config)
 }

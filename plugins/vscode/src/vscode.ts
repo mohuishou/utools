@@ -3,12 +3,12 @@ import { basename, join, extname } from "path";
 import { readdirSync } from "fs";
 import { ExecOptions, exec, execSync } from "child_process";
 import { GetFiles, DeleteFiles } from "./files";
-import { Config, GetConfig, SaveConfig } from "./setting";
+import { Config, GetConfig, NewConfig, SaveConfig } from "./setting";
 
 
 export class VSCode implements Plugin {
   code = "vsc";
-  _storage: string;
+  _storage = "";
   delay = 100;
   config: Config;
   placeholder = "输出关键词查询, -rm 激活删除模式";
@@ -16,7 +16,24 @@ export class VSCode implements Plugin {
 
   constructor(code: string) {
     this.code = code;
-    this.config = GetConfig(this.code);
+    this.config = this.loadConfig(this.code);
+  }
+
+  private loadConfig(code: string): Config {
+    const config = NewConfig(code);
+    if (code === "vsc" || code === "vscode") {
+      config.command = "code";
+    }
+
+    const saved = GetConfig(code);
+    Object.keys(saved).forEach((key) => {
+      const value = saved[key];
+      if (value !== undefined && value !== "") {
+        config[key] = value;
+      }
+    });
+
+    return config;
   }
 
   async files() {
@@ -24,7 +41,7 @@ export class VSCode implements Plugin {
   }
 
   get storage(): string {
-    if (!this._storage) this._storage = this.config.database;
+    if (!this._storage) this._storage = this.config.database || "";
     return this._storage;
   }
 

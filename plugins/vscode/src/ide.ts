@@ -3,13 +3,17 @@ import { VSCode } from "./vscode";
 import { NewConfig, SaveConfig, Setting, Config, GetVSCodeStoragePath } from "./setting";
 import { Action } from "utools-helper/dist/template_plugin";
 
+const BUILTIN_FEATURE_CODES = new Set(["vsc-ide", "vsc-add-ide"]);
+
+function listIDEFeatures(): PluginFeature[] {
+    return utools.getFeatures().filter((feature: PluginFeature) => {
+        return feature.code && !feature.code.endsWith("setting") && !BUILTIN_FEATURE_CODES.has(feature.code);
+    });
+}
+
 // 列出所有已安装的 IDE
 export function ListIDE(): Plugin[] {
-    let features = utools.getFeatures()
-    // 只需要 code 不以 setting 结尾的 features
-    features = features.filter((feature: any) => {
-        return feature.code && !feature.code.endsWith("setting")
-    })
+    const features = listIDEFeatures();
     console.log(features)
 
     let plugins: Plugin[] = []
@@ -70,13 +74,7 @@ export class IDE implements Plugin {
     }
 
     async search(word?: string): Promise<IListItem[]> {
-        let features = utools.getFeatures()
-        // 只需要 code 不以 setting 结尾的 features
-        features = features.filter((feature: any) => {
-            return feature.code && !feature.code.endsWith("setting")
-        })
-
-        return features.map((feature: PluginFeature) => {
+        return listIDEFeatures().map((feature: PluginFeature) => {
             console.log("feature list ", feature)
             let item = new ListItem(feature.code, feature.explain,)
             item.icon = feature.icon || "icon/icon.png"

@@ -41,6 +41,10 @@ function shouldFallbackToVSCodeSharedStorage(dbPath: string): boolean {
 }
 
 function getStorageCandidates(dbPath: string): string[] {
+  if (!dbPath) {
+    throw new Error("未配置 database 路径，请打开对应 IDE 设置重新保存配置");
+  }
+
   const candidates = [dbPath];
   const sharedStoragePath = getVSCodeSharedStoragePath();
 

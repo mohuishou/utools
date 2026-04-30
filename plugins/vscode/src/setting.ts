@@ -1,8 +1,8 @@
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { Plugin, ListItem, IListItem, } from "utools-helper";
 import { Action } from "utools-helper/dist/template_plugin";
-import { platform } from "process";
+import { env, platform } from "process";
 import { NewIDE } from "./ide";
 
 export interface Config {
@@ -16,6 +16,25 @@ export interface Config {
   [key: string]: string | IListItem[];
 }
 
+export function GetVSCodeStoragePath(): string {
+  const home = env.USERPROFILE || env.HOME;
+  const sharedStorage = home
+    ? join(home, ".vscode-shared", "sharedStorage", "state.vscdb")
+    : "";
+
+  if (sharedStorage && existsSync(sharedStorage)) {
+    return sharedStorage;
+  }
+
+  return join(
+    utools.getPath("appData"),
+    "Code",
+    "User",
+    "globalStorage",
+    "state.vscdb"
+  );
+}
+
 // 新建配置
 export function NewConfig(code: string): Config {
   const shells = {
@@ -25,18 +44,22 @@ export function NewConfig(code: string): Config {
   }
 
   code = code.toLowerCase()
-  return {
-    code: code,
-    icon: "icon/icon.png",
-    terminal: shells[platform as keyof typeof shells],
-    command: code.toLowerCase(),
-    database: join(
+  const database = code === "vsc" || code === "vscode"
+    ? GetVSCodeStoragePath()
+    : join(
       utools.getPath("appData"),
       code.charAt(0).toUpperCase() + code.slice(1),
       "User",
       "globalStorage",
       "state.vscdb"
-    ),
+    );
+
+  return {
+    code: code,
+    icon: "icon/icon.png",
+    terminal: shells[platform as keyof typeof shells],
+    command: code.toLowerCase(),
+    database,
     timeout: "3000"
   }
 }

@@ -1,7 +1,8 @@
 import { Plugin, ListItem } from "utools-helper";
 import { basename, join, extname } from "path";
-import { readdirSync } from "fs";
+import { existsSync, readdirSync } from "fs";
 import { ExecOptions, exec, execSync } from "child_process";
+import { fileURLToPath } from "url";
 import { GetFiles, DeleteFiles } from "./files";
 import { Config, GetConfig, NewConfig, SaveConfig } from "./setting";
 
@@ -130,10 +131,58 @@ export class VSCode implements Plugin {
     return [trimmedCommand.includes(" ") ? `"${trimmedCommand}"` : trimmedCommand];
   }
 
+  private decodePath(path: string): string {
+    try {
+      return decodeURIComponent(path);
+    } catch (error) {
+      console.error("路径解码失败:", error);
+      return path;
+    }
+  }
+
+  private getLocalPath(path: string): string | undefined {
+    const trimmedPath = path.trim();
+    const decodedPath = this.decodePath(trimmedPath);
+    if (/^vscode-remote:\/\//i.test(decodedPath)) return undefined;
+
+    if (/^file:/i.test(trimmedPath)) {
+      const windowsDriveFileUri = trimmedPath.match(/^file:\/+([a-zA-Z])(?::|%3A)([\\/].*)?$/i);
+      if (windowsDriveFileUri) {
+        return `${windowsDriveFileUri[1]}:${this.decodePath(windowsDriveFileUri[2] || "")}`;
+      }
+
+      const normalizedPath = trimmedPath.replace(/^file:\/{4}(?=[a-zA-Z](?::|%3A))/i, "file:///");
+      try {
+        return fileURLToPath(normalizedPath);
+      } catch (error) {
+        console.error("解析本地路径失败:", error);
+        return undefined;
+      }
+    }
+
+    if (/^[a-zA-Z]:[\\/]/.test(decodedPath) || decodedPath.startsWith("\\\\") || decodedPath.startsWith("/")) {
+      return decodedPath;
+    }
+
+    return undefined;
+  }
+
+  private notifyIfPathMissing(path: string): boolean {
+    const localPath = this.getLocalPath(path);
+    if (!localPath || existsSync(localPath)) return false;
+
+    utools.showNotification(`路径不存在，已取消启动: ${localPath}`);
+    return true;
+  }
+
   select(item: ListItem<string>) {
     // 如果是删除模式，执行删除操作
     if (this.isRemoveMode) {
       this.handleRemoveOperation(item);
+      return;
+    }
+
+    if (this.notifyIfPathMissing(item.data)) {
       return;
     }
 

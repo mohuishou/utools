@@ -3,7 +3,7 @@ import { basename, join, extname } from "path";
 import { existsSync, readdirSync } from "fs";
 import { ExecOptions, exec, execSync } from "child_process";
 import { fileURLToPath } from "url";
-import { GetFiles, DeleteFiles } from "./files";
+import { GetFiles, DeleteFiles, DeleteMultipleFiles } from "./files";
 import { Config, GetConfig, NewConfig, SaveConfig } from "./setting";
 
 export class VSCode implements Plugin {
@@ -11,8 +11,9 @@ export class VSCode implements Plugin {
   _storage = "";
   delay = 100;
   config: Config;
-  placeholder = "输出关键词查询, -rm 激活删除模式";
+  placeholder = "输出关键词查询, -rm 激活删除模式, -clean 清理无效记录";
   private isRemoveMode = false;
+  private isCleanMode = false;
 
   constructor(code: string) {
     this.code = code;
@@ -52,13 +53,23 @@ export class VSCode implements Plugin {
   async search(word?: string): Promise<ListItem[]> {
     let files = await this.files();
 
-    // 检查是否为删除模式
-    this.isRemoveMode = word && word.includes("-rm");
+    // 检查是否为删除模式或清理模式（互斥，-clean 优先）
+    this.isRemoveMode = false;
+    this.isCleanMode = false;
 
-    // 如果是删除模式，从搜索词中移除 -rm 标识
+    if (word && word.includes("-clean")) {
+      this.isCleanMode = true;
+    } else if (word && word.includes("-rm")) {
+      this.isRemoveMode = true;
+    }
+
+    // 从搜索词中移除模式标识
     let searchWord = word;
     if (this.isRemoveMode) {
       searchWord = word.replace(/-rm/g, "").trim();
+    }
+    if (this.isCleanMode) {
+      searchWord = word.replace(/-clean/g, "").trim();
     }
 
     // 搜索
@@ -72,12 +83,23 @@ export class VSCode implements Plugin {
       });
     }
 
+    // 如果是清理模式，过滤出无效路径（本地路径不存在）
+    if (this.isCleanMode) {
+      files = files.filter((file: string) => {
+        const localPath = this.getLocalPath(file);
+        // 只保留能解析为本地路径且路径不存在的记录（即无效记录）
+        return localPath !== undefined && !existsSync(localPath);
+      });
+    }
+
     let items = files.map((file: any): ListItem => {
       let address = file;
       file = decodeURIComponent(file);
       let itemTitle = basename(file);
       if (this.isRemoveMode) {
         itemTitle = `rm: ${itemTitle}`;
+      } else if (this.isCleanMode) {
+        itemTitle = `⚠ ${itemTitle}`;
       } else {
         itemTitle = `${itemTitle}`;
       }
@@ -87,6 +109,17 @@ export class VSCode implements Plugin {
 
       return item;
     });
+
+    // 在清理模式下，如果有无效记录，在最前面添加一个"清理全部"的条目
+    if (this.isCleanMode && items.length > 0) {
+      const cleanAllItem = new ListItem<string>(
+        `🧹 清理全部 ${items.length} 条无效记录`,
+        `确定要删除全部 ${items.length} 条无效历史记录吗？`,
+        "__clean_all__",
+      );
+      cleanAllItem.icon = "icon/icon.png";
+      items.unshift(cleanAllItem);
+    }
 
     return items;
   }
@@ -179,6 +212,12 @@ export class VSCode implements Plugin {
     // 如果是删除模式，执行删除操作
     if (this.isRemoveMode) {
       this.handleRemoveOperation(item);
+      return;
+    }
+
+    // 如果是清理模式，执行清理操作
+    if (this.isCleanMode) {
+      this.handleCleanOperation(item);
       return;
     }
 
@@ -276,6 +315,53 @@ export class VSCode implements Plugin {
     }
 
     utools.setSubInputValue("-rm");
+  }
+
+  /**
+   * 处理清理操作（批量/单个删除无效历史记录）
+   * @param item 要清理的项目（"__clean_all__" 表示清理全部）
+   */
+  private async handleCleanOperation(item: ListItem<string>) {
+    if (item.data === "__clean_all__") {
+      const fileName = `全部无效历史记录`;
+      const confirmed = this.showConfirmDialog(fileName);
+      if (!confirmed) return;
+
+      try {
+        const files = await this.files();
+        const invalidPaths = files.filter((f: string) => {
+          const localPath = this.getLocalPath(f);
+          return localPath !== undefined && !existsSync(localPath);
+        });
+
+        if (invalidPaths.length === 0) {
+          utools.showNotification("没有需要清理的无效记录");
+          return;
+        }
+
+        const count = await DeleteMultipleFiles(this.storage, invalidPaths);
+        utools.showNotification(`已清理 ${count} 条无效历史记录`);
+      } catch (error) {
+        console.error("批量清理失败:", error);
+        utools.showNotification(`清理失败: ${error.message}`);
+      }
+
+      utools.setSubInputValue("-clean");
+    } else {
+      const fileName = decodeURIComponent(item.data);
+      const confirmed = this.showConfirmDialog(fileName);
+      if (!confirmed) return;
+
+      try {
+        await DeleteFiles(this.storage, item.data);
+        utools.showNotification(`已删除无效记录: ${basename(fileName)}`);
+      } catch (error) {
+        console.error("删除无效记录失败:", error);
+        utools.showNotification(`删除失败: ${error.message}`);
+      }
+
+      utools.setSubInputValue("-clean");
+    }
   }
 
   /**

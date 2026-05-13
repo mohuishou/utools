@@ -17,7 +17,7 @@ interface CleanScanState {
 export class VSCode implements Plugin {
   code = "vsc";
   _storage = "";
-  delay = 100;
+  delay = 1;
   config: Config;
   placeholder = "输出关键词查询, -rm 激活删除模式, -clean 清理无效记录";
   private isRemoveMode = false;
@@ -131,32 +131,33 @@ export class VSCode implements Plugin {
   }
 
   private createCleanStatusItem(title: string, description: string, data: string): ListItem<string> {
-    const item = new ListItem<string>(title, description, data);
-    item.icon = "icon/icon.png";
-    return item;
+    return {
+      title,
+      description,
+      data,
+      icon: "icon/icon.png",
+      text: `${title}\n${description}`,
+    } as ListItem<string>;
+  }
+
+  private createCleanScanningItem(inputWord: string): ListItem<string> {
+    const titlePrefix = inputWord.trim() || "-clean";
+    return this.createCleanStatusItem(
+      `${titlePrefix} 正在扫描无效历史记录`,
+      "正在检查本地路径是否存在，请稍候",
+      this.cleanScanningData,
+    );
   }
 
   private searchCleanItems(inputWord: string, searchWord: string): ListItem<string>[] {
     const state = this.cleanScanState;
-    if (!state || state.inputWord !== inputWord || state.searchWord !== searchWord) {
+    if (!state || state.searchWord !== searchWord) {
       this.startCleanScan(inputWord, searchWord);
-      return [
-        this.createCleanStatusItem(
-          "🔍 正在扫描无效历史记录",
-          "正在检查本地路径是否存在，请稍候",
-          this.cleanScanningData,
-        ),
-      ];
+      return [this.createCleanScanningItem(inputWord)];
     }
 
     if (state.status === "scanning") {
-      return [
-        this.createCleanStatusItem(
-          "🔍 正在扫描无效历史记录",
-          "正在检查本地路径是否存在，请稍候",
-          this.cleanScanningData,
-        ),
-      ];
+      return [this.createCleanScanningItem(inputWord)];
     }
 
     if (state.status === "error") {
@@ -197,38 +198,51 @@ export class VSCode implements Plugin {
       files: [],
     };
 
-    this.getInvalidLocalFiles(searchWord)
-      .then((files) => {
-        if (sequence !== this.cleanScanSequence) return;
+    setTimeout(() => {
+      if (sequence !== this.cleanScanSequence) return;
 
-        this.cleanScanState = {
-          inputWord,
-          searchWord,
-          status: "ready",
-          files,
-        };
+      this.getInvalidLocalFiles(searchWord)
+        .then((files) => {
+          if (sequence !== this.cleanScanSequence) return;
 
-        if (this.lastSearchWord === inputWord) {
-          utools.setSubInputValue(inputWord);
-        }
-      })
-      .catch((error) => {
-        if (sequence !== this.cleanScanSequence) return;
+          this.cleanScanState = {
+            inputWord,
+            searchWord,
+            status: "ready",
+            files,
+          };
 
-        const message = error instanceof Error ? error.message : String(error);
-        console.error("扫描无效历史记录失败:", error);
-        this.cleanScanState = {
-          inputWord,
-          searchWord,
-          status: "error",
-          files: [],
-          error: message,
-        };
+          this.refreshCleanSearch(inputWord, searchWord);
+        })
+        .catch((error) => {
+          if (sequence !== this.cleanScanSequence) return;
 
-        if (this.lastSearchWord === inputWord) {
-          utools.setSubInputValue(inputWord);
-        }
-      });
+          const message = error instanceof Error ? error.message : String(error);
+          console.error("扫描无效历史记录失败:", error);
+          this.cleanScanState = {
+            inputWord,
+            searchWord,
+            status: "error",
+            files: [],
+            error: message,
+          };
+
+          this.refreshCleanSearch(inputWord, searchWord);
+        });
+    }, 120);
+  }
+
+  private refreshCleanSearch(inputWord: string, searchWord: string): void {
+    if (!this.lastSearchWord.includes("-clean")) return;
+    if (this.lastSearchWord.replace(/-clean/g, "").trim() !== searchWord) return;
+
+    const refreshWord = inputWord.endsWith(" ") ? inputWord.slice(0, -1) : `${inputWord} `;
+    utools.setSubInputValue(refreshWord);
+    setTimeout(() => {
+      if (this.lastSearchWord === refreshWord) {
+        utools.setSubInputValue(inputWord);
+      }
+    }, 0);
   }
 
   private async getInvalidLocalFiles(searchWord: string): Promise<string[]> {

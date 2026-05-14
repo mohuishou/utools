@@ -6,14 +6,29 @@ import { fileURLToPath } from "url";
 import { GetFiles, DeleteFiles, DeleteMultipleFiles } from "./files";
 import { Config, GetConfig, NewConfig, SaveConfig } from "./setting";
 
+interface CleanScanState {
+  inputWord: string;
+  searchWord: string;
+  status: "scanning" | "ready" | "error";
+  files: string[];
+  error?: string;
+}
+
 export class VSCode implements Plugin {
   code = "vsc";
   _storage = "";
-  delay = 100;
+  delay = 1;
   config: Config;
   placeholder = "输出关键词查询, -rm 激活删除模式, -clean 清理无效记录";
   private isRemoveMode = false;
   private isCleanMode = false;
+  private readonly cleanAllData = "__clean_all__";
+  private readonly cleanScanningData = "__clean_scanning__";
+  private readonly cleanEmptyData = "__clean_empty__";
+  private readonly cleanErrorData = "__clean_error__";
+  private cleanScanSequence = 0;
+  private cleanScanState?: CleanScanState;
+  private lastSearchWord = "";
 
   constructor(code: string) {
     this.code = code;
@@ -51,51 +66,55 @@ export class VSCode implements Plugin {
   }
 
   async search(word?: string): Promise<ListItem[]> {
-    let files = await this.files();
+    const inputWord = word || "";
+    this.lastSearchWord = inputWord;
 
     // 检查是否为删除模式或清理模式（互斥，-clean 优先）
     this.isRemoveMode = false;
     this.isCleanMode = false;
 
-    if (word && word.includes("-clean")) {
+    if (inputWord.includes("-clean")) {
       this.isCleanMode = true;
-    } else if (word && word.includes("-rm")) {
+    } else if (inputWord.includes("-rm")) {
       this.isRemoveMode = true;
     }
 
     // 从搜索词中移除模式标识
-    let searchWord = word;
+    let searchWord = inputWord;
     if (this.isRemoveMode) {
-      searchWord = word.replace(/-rm/g, "").trim();
+      searchWord = inputWord.replace(/-rm/g, "").trim();
     }
     if (this.isCleanMode) {
-      searchWord = word.replace(/-clean/g, "").trim();
+      searchWord = inputWord.replace(/-clean/g, "").trim();
+      return this.searchCleanItems(inputWord, searchWord);
     }
 
-    // 搜索
-    if (searchWord) {
-      searchWord.split(/\s+/g).forEach((keyword) => {
-        if (keyword.trim()) {
-          files = files.filter((file: string) => {
-            return decodeURIComponent(file).toLowerCase().includes(keyword.trim().toLowerCase());
-          });
-        }
+    this.resetCleanScan();
+
+    let files = await this.files();
+    files = this.filterFilesBySearchWord(files, searchWord);
+
+    return this.createFileItems(files);
+  }
+
+  private filterFilesBySearchWord(files: string[], searchWord?: string): string[] {
+    if (!searchWord) return files;
+
+    return searchWord.split(/\s+/g).reduce((result, keyword) => {
+      const normalizedKeyword = keyword.trim().toLowerCase();
+      if (!normalizedKeyword) return result;
+
+      return result.filter((file: string) => {
+        return this.decodePath(file).toLowerCase().includes(normalizedKeyword);
       });
-    }
+    }, files);
+  }
 
-    // 如果是清理模式，过滤出无效路径（本地路径不存在）
-    if (this.isCleanMode) {
-      files = files.filter((file: string) => {
-        const localPath = this.getLocalPath(file);
-        // 只保留能解析为本地路径且路径不存在的记录（即无效记录）
-        return localPath !== undefined && !existsSync(localPath);
-      });
-    }
-
-    let items = files.map((file: any): ListItem => {
-      let address = file;
-      file = decodeURIComponent(file);
-      let itemTitle = basename(file);
+  private createFileItems(files: string[]): ListItem<string>[] {
+    return files.map((file: string): ListItem<string> => {
+      const address = file;
+      const decodedFile = this.decodePath(file);
+      let itemTitle = basename(decodedFile);
       if (this.isRemoveMode) {
         itemTitle = `rm: ${itemTitle}`;
       } else if (this.isCleanMode) {
@@ -103,25 +122,141 @@ export class VSCode implements Plugin {
       } else {
         itemTitle = `${itemTitle}`;
       }
-      let item = new ListItem<string>(itemTitle, file, address);
-      let ext = file.includes("remote") ? ".remote" : extname(file);
+      let item = new ListItem<string>(itemTitle, decodedFile, address);
+      let ext = decodedFile.includes("remote") ? ".remote" : extname(decodedFile);
       item.icon = this.getIcon(ext);
 
       return item;
     });
+  }
 
-    // 在清理模式下，如果有无效记录，在最前面添加一个"清理全部"的条目
-    if (this.isCleanMode && items.length > 0) {
-      const cleanAllItem = new ListItem<string>(
-        `🧹 清理全部 ${items.length} 条无效记录`,
-        `确定要删除全部 ${items.length} 条无效历史记录吗？`,
-        "__clean_all__",
-      );
-      cleanAllItem.icon = "icon/icon.png";
-      items.unshift(cleanAllItem);
+  private createCleanStatusItem(title: string, description: string, data: string): ListItem<string> {
+    return {
+      title,
+      description,
+      data,
+      icon: "icon/icon.png",
+      text: `${title}\n${description}`,
+    } as ListItem<string>;
+  }
+
+  private createCleanScanningItem(inputWord: string): ListItem<string> {
+    const titlePrefix = inputWord.trim() || "-clean";
+    return this.createCleanStatusItem(
+      `${titlePrefix} 正在扫描无效历史记录`,
+      "正在检查本地路径是否存在，请稍候",
+      this.cleanScanningData,
+    );
+  }
+
+  private searchCleanItems(inputWord: string, searchWord: string): ListItem<string>[] {
+    const state = this.cleanScanState;
+    if (!state || state.searchWord !== searchWord) {
+      this.startCleanScan(inputWord, searchWord);
+      return [this.createCleanScanningItem(inputWord)];
     }
 
+    if (state.status === "scanning") {
+      return [this.createCleanScanningItem(inputWord)];
+    }
+
+    if (state.status === "error") {
+      return [this.createCleanStatusItem("扫描失败", state.error || "请稍后重试", this.cleanErrorData)];
+    }
+
+    return this.createCleanResultItems(state.files, searchWord);
+  }
+
+  private createCleanResultItems(files: string[], searchWord: string): ListItem<string>[] {
+    if (files.length === 0) {
+      const description = searchWord
+        ? `已完成扫描，没有找到匹配“${searchWord}”的无效本地路径`
+        : "已完成扫描，可检测的本地路径都存在";
+      return [this.createCleanStatusItem("未发现无效历史记录", description, this.cleanEmptyData)];
+    }
+
+    const items = this.createFileItems(files);
+
+    // 在清理模式下，如果有无效记录，在最前面添加一个"清理全部"的条目
+    const cleanAllItem = new ListItem<string>(
+      `🧹 清理全部 ${items.length} 条无效记录`,
+      `确定要删除全部 ${items.length} 条无效历史记录吗？`,
+      this.cleanAllData,
+    );
+    cleanAllItem.icon = "icon/icon.png";
+    items.unshift(cleanAllItem);
+
     return items;
+  }
+
+  private startCleanScan(inputWord: string, searchWord: string): void {
+    const sequence = ++this.cleanScanSequence;
+    this.cleanScanState = {
+      inputWord,
+      searchWord,
+      status: "scanning",
+      files: [],
+    };
+
+    setTimeout(() => {
+      if (sequence !== this.cleanScanSequence) return;
+
+      this.getInvalidLocalFiles(searchWord)
+        .then((files) => {
+          if (sequence !== this.cleanScanSequence) return;
+
+          this.cleanScanState = {
+            inputWord,
+            searchWord,
+            status: "ready",
+            files,
+          };
+
+          this.refreshCleanSearch(inputWord, searchWord);
+        })
+        .catch((error) => {
+          if (sequence !== this.cleanScanSequence) return;
+
+          const message = error instanceof Error ? error.message : String(error);
+          console.error("扫描无效历史记录失败:", error);
+          this.cleanScanState = {
+            inputWord,
+            searchWord,
+            status: "error",
+            files: [],
+            error: message,
+          };
+
+          this.refreshCleanSearch(inputWord, searchWord);
+        });
+    }, 120);
+  }
+
+  private refreshCleanSearch(inputWord: string, searchWord: string): void {
+    if (!this.lastSearchWord.includes("-clean")) return;
+    if (this.lastSearchWord.replace(/-clean/g, "").trim() !== searchWord) return;
+
+    const refreshWord = inputWord.endsWith(" ") ? inputWord.slice(0, -1) : `${inputWord} `;
+    utools.setSubInputValue(refreshWord);
+    setTimeout(() => {
+      if (this.lastSearchWord === refreshWord) {
+        utools.setSubInputValue(inputWord);
+      }
+    }, 0);
+  }
+
+  private async getInvalidLocalFiles(searchWord: string): Promise<string[]> {
+    const files = this.filterFilesBySearchWord(await this.files(), searchWord);
+    return files.filter((file: string) => {
+      const localPath = this.getLocalPath(file);
+      // 只保留能解析为本地路径且路径不存在的记录（即无效记录）
+      return localPath !== undefined && !existsSync(localPath);
+    });
+  }
+
+  private resetCleanScan(): void {
+    this.cleanScanSequence += 1;
+    this.cleanScanState = undefined;
   }
 
   private execCmd(command: string, options: { encoding: BufferEncoding } & ExecOptions): Promise<string> {
@@ -322,7 +457,21 @@ export class VSCode implements Plugin {
    * @param item 要清理的项目（"__clean_all__" 表示清理全部）
    */
   private async handleCleanOperation(item: ListItem<string>) {
-    if (item.data === "__clean_all__") {
+    if (item.data === this.cleanScanningData) {
+      utools.showNotification("正在扫描无效历史记录，请稍候");
+      return;
+    }
+
+    if (item.data === this.cleanEmptyData) {
+      return;
+    }
+
+    if (item.data === this.cleanErrorData) {
+      utools.showNotification("无效历史记录扫描失败，请重新输入 -clean 重试");
+      return;
+    }
+
+    if (item.data === this.cleanAllData) {
       const fileName = `全部无效历史记录`;
       const confirmed = this.showConfirmDialog(fileName);
       if (!confirmed) return;
@@ -341,6 +490,7 @@ export class VSCode implements Plugin {
 
         const count = await DeleteMultipleFiles(this.storage, invalidPaths);
         utools.showNotification(`已清理 ${count} 条无效历史记录`);
+        this.resetCleanScan();
       } catch (error) {
         console.error("批量清理失败:", error);
         utools.showNotification(`清理失败: ${error.message}`);
@@ -355,6 +505,7 @@ export class VSCode implements Plugin {
       try {
         await DeleteFiles(this.storage, item.data);
         utools.showNotification(`已删除无效记录: ${basename(fileName)}`);
+        this.resetCleanScan();
       } catch (error) {
         console.error("删除无效记录失败:", error);
         utools.showNotification(`删除失败: ${error.message}`);

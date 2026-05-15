@@ -1,11 +1,21 @@
 import { InitPlugins, Plugin } from "utools-helper";
 import { VSCode } from "./vscode";
-import { Setting } from "./setting";
+import { ClearSettingPage, Setting } from "./setting";
 import { IDE, ListIDE, NewIDE, NewIDEDefault } from "./ide";
 import { Add } from "./add";
 
 
 try {
+  utools.onPluginEnter(({ code }) => {
+    if (!code.endsWith("-setting")) {
+      ClearSettingPage();
+    }
+  });
+
+  utools.onPluginOut(() => {
+    ClearSettingPage();
+  });
+
   let plugins: Plugin[] = [new IDE(), new Add()]
   plugins = plugins.concat(init())
 

@@ -1,7 +1,6 @@
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
-import { Plugin, ListItem, IListItem, } from "utools-helper";
-import { Action } from "utools-helper/dist/template_plugin";
+import { Plugin, IListItem, } from "utools-helper";
 import { env, platform } from "process";
 import { NewIDE } from "./ide";
 
@@ -13,7 +12,7 @@ export interface Config {
   database?: string;
   timeout?: string;
   collections?: IListItem[];
-  [key: string]: string | IListItem[];
+  [key: string]: string | IListItem[] | undefined;
 }
 
 export function GetVSCodeStoragePath(): string {
@@ -78,33 +77,47 @@ export function SaveConfig(config: Config, ide: boolean = true) {
   utools.dbStorage.setItem(key, config)
 }
 
+const SETTING_CONTAINER_ID = "vsc-setting-page";
+
+export function ClearSettingPage() {
+  document.getElementById(SETTING_CONTAINER_ID)?.remove();
+}
+
 export class Setting implements Plugin {
   code = "vsc-setting"
   config: Config;
+  private ideCode: string;
 
   constructor(code: string) {
+    this.ideCode = code;
     this.code = `${code}-setting`;
     this.config = GetConfig(code);
     console.log("init config success: ", this.config)
   }
 
-  enter(action?: Action) {
+  enter() {
     utools.setExpendHeight(600);
+    this.config = GetConfig(this.ideCode);
 
     // 渲染设置页面
     this.render()
 
-    // 初始化表单逻辑
-    this.initForm(this.config);
+    // 初始化表单逻辑，未保存的修改不写回当前配置
+    this.initForm({ ...this.config });
   }
 
   private render() {
+    ClearSettingPage();
+
     const html = readFileSync(join(__dirname, "public/setting.html"), "utf8");
-    // 使用DOM API添加内容到 body 标签内
+    // 使用DOM API添加内容到独立容器内，便于切换功能时清理
     const template = document.createElement('template');
     template.innerHTML = html;
     const fragment = document.importNode(template.content, true);
-    document.body.appendChild(fragment);
+    const container = document.createElement('div');
+    container.id = SETTING_CONTAINER_ID;
+    container.appendChild(fragment);
+    document.body.appendChild(container);
   }
 
   private initForm(config: Config) {
@@ -128,12 +141,13 @@ export class Setting implements Plugin {
       e.preventDefault();
 
       console.log('表单数据:', config);
-      if (!config.icon.includes("png")) {
+      if (!config.icon?.includes("png")) {
         alert("图标格式必须是png")
         return
       }
 
       SaveConfig(config)
+      this.config = config;
       utools.showNotification(`${config.code} 配置已保存`);
       utools.outPlugin(true)
     });

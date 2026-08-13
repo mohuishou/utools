@@ -1,7 +1,7 @@
 import { Plugin, ListItem } from "utools-helper";
-import { basename, join, extname } from "path";
+import { basename, join, extname, isAbsolute } from "path";
 import { existsSync, readdirSync } from "fs";
-import { ExecOptions, exec, execSync } from "child_process";
+import { ExecOptions, exec, execSync, spawn } from "child_process";
 import { fileURLToPath } from "url";
 import { GetFiles, DeleteFiles, DeleteMultipleFiles } from "./files";
 import { Config, GetConfig, NewConfig, SaveConfig } from "./setting";
@@ -44,7 +44,7 @@ export class VSCode implements Plugin {
     const saved = GetConfig(code);
     Object.keys(saved).forEach((key) => {
       const value = saved[key];
-      if (value !== undefined && value !== "") {
+      if (value !== undefined) {
         config[key] = value;
       }
     });
@@ -344,49 +344,55 @@ export class VSCode implements Plugin {
   }
 
   select(item: ListItem<string>) {
-    // 如果是删除模式，执行删除操作
-    if (this.isRemoveMode) {
-      this.handleRemoveOperation(item);
-      return;
-    }
-
-    // 如果是清理模式，执行清理操作
+    if (this.isRemoveMode) return this.handleRemoveOperation(item);
     if (this.isCleanMode) {
       this.handleCleanOperation(item);
       return;
     }
+    if (this.notifyIfPathMissing(item.data)) return;
 
-    if (this.notifyIfPathMissing(item.data)) {
+    const cmds = this.getCommandParts(this.config.command || "code");
+    if (!cmds.some((part) => /^--reuse-window$/.test(part))) {
+      cmds.push("--reuse-window");
+    }
+
+    const localPath = this.getLocalPath(item.data);
+    const target = localPath || item.data;
+
+    if (!localPath) {
+      cmds.push(item.data.includes(".code-workspace") ? "--file-uri" : "--folder-uri");
+    }
+
+    const [command, ...baseArgs] = cmds;
+    let shell = (this.config.terminal || "").trim();
+    if (!shell && !utools.isWindows() && !isAbsolute(command.replace(/^"|"$/g, ""))) {
+      // 相对命令依赖 PATH，需要登录 shell 加载用户环境；绝对路径直接 spawn
+      shell = process.env.SHELL || "/bin/bash";
+    }
+
+    if (shell) {
+      const timeout = parseInt(this.config.timeout || "3000") || 3000;
+      this.execCmd(`${shell} -i -c "env; ${command} ${[...baseArgs, `"${target}"`].join(" ")}"`, {
+        timeout,
+        windowsHide: true,
+        encoding: "utf-8",
+        env: this.getShellEnv(),
+      })
+        .then(() => utools.hideMainWindow())
+        .catch((err) => alert(err));
       return;
     }
 
-    // 原有的打开 VSCode 逻辑
-    let cmds: string[] = this.getCommandParts(this.config.command);
-    if (item.data.includes(".code-workspace")) cmds.push("--file-uri");
-    else cmds.push("--folder-uri");
-
-    cmds.push(`"${item.data}"`);
-
-    let cmd = cmds.join(" ");
-    let shell = this.config.terminal;
-    if (shell.trim()) cmd = `${shell} "env; ${cmd}"`;
-    console.log(cmd);
-
-    let timeout = parseInt(this.config.timeout);
-    if (!timeout || timeout < 3000) timeout = 3000;
-
-    this.execCmd(cmd, {
-      timeout: timeout,
-      windowsHide: true,
-      encoding: "utf-8",
+    const child = spawn(command.replace(/^"|"$/g, ""), [...baseArgs, target], {
+      shell: true,
       env: this.getShellEnv(),
-    })
-      .then((res) => {
-        utools.hideMainWindow();
-      })
-      .catch((reason) => {
-        alert(reason);
-      });
+      stdio: "ignore",
+      detached: true,
+    });
+
+    child.on("error", (err) => alert(err.message));
+    child.unref();
+    utools.hideMainWindow();
   }
 
   // 获取当前 shell 的环境变量（适用于 macOS/Linux）
@@ -395,8 +401,8 @@ export class VSCode implements Plugin {
       return process.env;
     }
 
-    let shell = this.config.terminal.split(" ")[0].trim();
-    shell = shell || process.env.SHELL;
+    let shell = (this.config.terminal || "").split(" ")[0].trim();
+    shell = shell || process.env.SHELL || "/bin/bash";
     // 获取所有环境变量
     const envStr = execSync(`${shell} -i -c "env"`).toString();
 
@@ -443,7 +449,7 @@ export class VSCode implements Plugin {
         // 未找到记录
         utools.showNotification(`未找到要删除的记录: ${basename(fileName)}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       // 删除失败，显示错误消息
       console.error("删除历史记录失败:", error);
       utools.showNotification(`删除失败: ${error.message}`);
@@ -491,7 +497,7 @@ export class VSCode implements Plugin {
         const count = await DeleteMultipleFiles(this.storage, invalidPaths);
         utools.showNotification(`已清理 ${count} 条无效历史记录`);
         this.resetCleanScan();
-      } catch (error) {
+      } catch (error: any) {
         console.error("批量清理失败:", error);
         utools.showNotification(`清理失败: ${error.message}`);
       }
@@ -506,7 +512,7 @@ export class VSCode implements Plugin {
         await DeleteFiles(this.storage, item.data);
         utools.showNotification(`已删除无效记录: ${basename(fileName)}`);
         this.resetCleanScan();
-      } catch (error) {
+      } catch (error: any) {
         console.error("删除无效记录失败:", error);
         utools.showNotification(`删除失败: ${error.message}`);
       }
@@ -532,6 +538,6 @@ export class VSCode implements Plugin {
     });
     if (!icon && !ext) icon = "folder.svg";
     if (!icon && ext) icon = "file.svg";
-    return join("icon", icon);
+    return join("icon", icon || "file.svg");
   }
 }

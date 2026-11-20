@@ -105,7 +105,7 @@ export class VSCode implements Plugin {
       if (!normalizedKeyword) return result;
 
       return result.filter((file: string) => {
-        return this.decodePath(file).toLowerCase().includes(normalizedKeyword);
+        return this.formatRemotePath(file).toLowerCase().includes(normalizedKeyword);
       });
     }, files);
   }
@@ -113,7 +113,7 @@ export class VSCode implements Plugin {
   private createFileItems(files: string[]): ListItem<string>[] {
     return files.map((file: string): ListItem<string> => {
       const address = file;
-      const decodedFile = this.decodePath(file);
+      const decodedFile = this.formatRemotePath(file);
       let itemTitle = basename(decodedFile);
       if (this.isRemoveMode) {
         itemTitle = `rm: ${itemTitle}`;
@@ -299,6 +299,52 @@ export class VSCode implements Plugin {
     return [trimmedCommand.includes(" ") ? `"${trimmedCommand}"` : trimmedCommand];
   }
 
+  /**
+   * 解码 Remote-SSH 的十六进制 authority。
+   * Host 别名包含大写字母、用户名或端口时，Remote-SSH 会把连接信息序列化成 JSON 再转成十六进制，
+   * 以保证 URI authority 的大小写不被规范化，例如：
+   *   vscode-remote://ssh-remote+7b22686f73744e616d65223a226d696e69504332303236227d/home/cjy
+   * 解码后为 {"hostName":"miniPC2026"}。
+   * @returns 形如 user@host:port 的可读字符串；无法解码时返回 undefined
+   */
+  private decodeSshRemoteAuthority(authority: string): string | undefined {
+    if (authority.length === 0 || authority.length % 2 !== 0 || !/^[0-9a-f]+$/i.test(authority)) {
+      return undefined;
+    }
+
+    try {
+      const value = JSON.parse(Buffer.from(authority, "hex").toString("utf8"));
+      if (!value || typeof value.hostName !== "string" || value.hostName.length === 0) {
+        return undefined;
+      }
+
+      const user = typeof value.user === "string" && value.user.length > 0 ? `${value.user}@` : "";
+      const port =
+        typeof value.port === "number" && Number.isInteger(value.port) && value.port > 0
+          ? `:${value.port}`
+          : "";
+      return `${user}${value.hostName}${port}`;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  /**
+   * 展示用路径：把 vscode-remote://ssh-remote+<hex> 换成可读主机名。
+   * 仅用于列表展示、搜索匹配和删除确认；打开与删除仍然使用原始 URI。
+   */
+  private formatRemotePath(path: string): string {
+    const decodedPath = this.decodePath(path);
+
+    return decodedPath.replace(
+      /^(vscode-remote:\/\/ssh-remote\+)([^/]+)/i,
+      (match, prefix: string, authority: string) => {
+        const readableAuthority = this.decodeSshRemoteAuthority(authority);
+        return readableAuthority ? `${prefix}${readableAuthority}` : match;
+      },
+    );
+  }
+
   private decodePath(path: string): string {
     try {
       return decodeURIComponent(path);
@@ -421,7 +467,7 @@ export class VSCode implements Plugin {
    */
   private handleRemoveOperation(item: ListItem<string>) {
     // 显示确认对话框
-    const fileName = decodeURIComponent(item.data);
+    const fileName = this.formatRemotePath(item.data);
     const confirmed = this.showConfirmDialog(fileName);
 
     if (!confirmed) {
@@ -504,7 +550,7 @@ export class VSCode implements Plugin {
 
       utools.setSubInputValue("-clean");
     } else {
-      const fileName = decodeURIComponent(item.data);
+      const fileName = this.formatRemotePath(item.data);
       const confirmed = this.showConfirmDialog(fileName);
       if (!confirmed) return;
 
